@@ -3,25 +3,25 @@
 
 Source: 
 
-Google:
+# Google:
 - BigQuery: https://github.com/googleapis/google-cloud-java/tree/master/google-cloud-clients/google-cloud-bigquery
 
-Microsoft:
+# Microsoft:
 - Hadoop on Azure (HDInsight): https://github.com/hdinsight
 - MMLSpark: https://github.com/Azure/mmlspark
 
-Amazon:
+# Amazon:
 - AWS: https://github.com/aws/aws-sdk-java-v2
 
-Intel:
+# Intel:
 - OAP: https://github.com/Intel-bigdata/OAP
 
-Cloudera:
+# Cloudera:
 - Hue: https://github.com/cloudera/hue
 - Impala: https://github.com/cloudera/Impala
 
-Teradata: 
+# Teradata: 
 - Kylo: https://github.com/Teradata/kylo
 
-Salesforce:
+# Salesforce:
 - TransmogrifAI: https://github.com/salesforce/TransmogrifAI
