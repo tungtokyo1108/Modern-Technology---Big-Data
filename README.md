@@ -7,8 +7,11 @@ Google:
 - BigQuery: https://github.com/googleapis/google-cloud-java/tree/master/google-cloud-clients/google-cloud-bigquery
 
 Microsoft:
-- HDInsight: https://github.com/hdinsight
+- Hadoop on Azure (HDInsight): https://github.com/hdinsight
 - MMLSpark: https://github.com/Azure/mmlspark
+
+Amazon:
+- AWS: https://github.com/aws/aws-sdk-java-v2
 
 Intel:
 - OAP: https://github.com/Intel-bigdata/OAP
