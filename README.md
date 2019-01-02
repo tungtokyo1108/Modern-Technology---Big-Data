@@ -5,6 +5,7 @@ Source
 
 # Google
 - BigQuery: https://github.com/googleapis/google-cloud-java/tree/master/google-cloud-clients/google-cloud-bigquery
+- OpenRefine: https://github.com/OpenRefine/OpenRefine
 
 # Microsoft
 - Hadoop on Azure (HDInsight): https://github.com/hdinsight
