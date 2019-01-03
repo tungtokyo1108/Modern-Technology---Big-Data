@@ -3,13 +3,14 @@
 
 Source
 
+# Microsoft
+- Azure Stream Analytics: https://github.com/Azure/azure-stream-analytics
+- Azure Event Hubs: https://github.com/Azure/azure-event-hubs
+- MMLSpark: https://github.com/Azure/mmlspark
+
 # Google
 - BigQuery: https://github.com/googleapis/google-cloud-java/tree/master/google-cloud-clients/google-cloud-bigquery
 - OpenRefine: https://github.com/OpenRefine/OpenRefine
-
-# Microsoft
-- Hadoop on Azure (HDInsight): https://github.com/hdinsight
-- MMLSpark: https://github.com/Azure/mmlspark
 
 # Amazon
 - AWS: https://github.com/aws/aws-sdk-java-v2
