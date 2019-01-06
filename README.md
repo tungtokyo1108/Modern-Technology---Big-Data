@@ -4,6 +4,7 @@
 Source
 
 # Microsoft
+- Hadoop on Azure: https://github.com/apache/hadoop/tree/trunk/hadoop-tools/hadoop-azure
 - Azure Stream Analytics: https://github.com/Azure/azure-stream-analytics
 - Azure Event Hubs: https://github.com/Azure/azure-event-hubs
 - MMLSpark: https://github.com/Azure/mmlspark
@@ -13,7 +14,7 @@ Source
 - OpenRefine: https://github.com/OpenRefine/OpenRefine
 
 # Amazon
-- AWS: https://github.com/aws/aws-sdk-java-v2
+- Elastic MapReduce (Hadoop): https://github.com/aws/aws-sdk-java/tree/master/aws-java-sdk-emr/src/main/java/com/amazonaws
 
 # Intel
 - OAP: https://github.com/Intel-bigdata/OAP
