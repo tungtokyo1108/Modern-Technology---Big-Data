@@ -1,7 +1,8 @@
 # Giants' modern approaches to dominate the era of big data
 -----------------------------------------------------------------------------------------------------------------------------------------
 
-Source
+# Academic Survey 
+- Competition among Giants (Microsoft - Google - Amazon): https://www.sciencedirect.com/science/article/pii/S0306437914001288
 
 # Microsoft
 - Hadoop on Azure: https://github.com/apache/hadoop/tree/trunk/hadoop-tools/hadoop-azure
