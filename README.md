@@ -6,6 +6,7 @@
 
 # Microsoft
 - Hadoop on Azure: https://github.com/apache/hadoop/tree/trunk/hadoop-tools/hadoop-azure
+- HDInsight: https://github.com/Azure/azure-sdk-for-java/tree/master/hdinsight
 - Azure Stream Analytics: https://github.com/Azure/azure-stream-analytics
 - Azure Event Hubs: https://github.com/Azure/azure-event-hubs
 - MMLSpark: https://github.com/Azure/mmlspark
