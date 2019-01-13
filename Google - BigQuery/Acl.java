@@ -15,15 +15,9 @@ import com.google.api.services.bigquery.model.Dataset.Access;
 import com.google.cloud.StringEnumType;
 import com.google.cloud.StringEnumValue;
 import com.google.cloud.bigquery.BigQueryException;
-import com.google.cloud.bigquery.TableId;
-import com.google.rpc.RetryInfo;
-
-import io.opencensus.stats.View;
 
 import java.io.Serializable;
 import java.util.Objects;
-
-import javax.jws.soap.SOAPBinding.Use;
 
 /**
  * Access Control for BigQuery DataSet
@@ -331,5 +325,118 @@ import javax.jws.soap.SOAPBinding.Use;
         }
     }
 
-    
+    public static final class View extends Entity 
+    {
+        private static final long serialVersionUID = -6851072781269419383L;
+
+        private final TableId id;
+
+        public View(TableId id)
+        {
+            super(Type.VIEW);
+            this.id = id;
+        }
+
+        @Override
+        public boolean equals(Object obj)
+        {
+            if (this == obj)
+            {
+                return true;
+            }
+            if (obj == null || getClass() != obj.getClass())
+            {
+                return false;
+            }
+            View view = (View) obj;
+            return Objects.equals(getType(), view.getType()) && Objects.equals(id, view.id);
+        }
+
+        @Override
+        public int hashCode()
+        {
+            return Objects.hash(getType(), id);
+        }
+
+        @Override
+        public String toString()
+        {
+            return toPb().toString();
+        }
+
+        @Override
+        Access toPb()
+        {
+            return new Access().setView(id.toPb());
+        }
+    }
+
+    private Acl(Entity entity, Role role)
+    {
+        this.entity = entity;
+        this.role = role;
+    }
+
+    public Entity getEntity()
+    {
+        return entity;
+    }
+
+    public Role getRole()
+    {
+        return role;
+    }
+
+    public static Acl of(Entity entity, Role role)
+    {
+        return new Acl(entity, role);
+    }
+
+    public static Acl of(View view)
+    {
+        return new Acl(view, null);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(entity,role);
+    }
+
+    @Override
+    public String toString()
+    {
+        return toPb().toString();
+    }
+
+    @Override
+    public boolean equals(Object obj) 
+    {
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final Acl other = (Acl) obj;
+        return Objects.equals(this.entity, other.entity)
+            && Objects.equals(this.role, other.role);
+    }
+
+    Access toPb() {
+        Access accessPb = entity.toPb();
+        if (role != null)
+        {
+            accessPb.setRole(role.name());
+        }
+        return accessPb;
+    }
+
+    static Acl fromPb(Access access)
+    {
+        return Acl.of(
+            Entity.fromPb(access), access.getRole() != null ? Role.valueOf(access.getRole()) : null);
+    }
  }
