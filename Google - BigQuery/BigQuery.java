@@ -10,8 +10,10 @@
 
  import static com.google.common.base.Preconditions.checkArgument;
 
- import com.google.api.core.InternalApi;
+import com.google.api.client.util.Data;
+import com.google.api.core.InternalApi;
  import com.google.api.gax.paging.Page;
+import com.google.api.services.bigquery.Bigquery;
 import com.google.api.services.bigquery.model.Dataset;
 import com.google.api.services.bigquery.model.JobList;
 import com.google.api.services.bigquery.model.JobStatus;
@@ -26,8 +28,9 @@ import com.google.cloud.FieldSelector;
  import com.google.common.collect.Lists;
 
  import com.google.cloud.bigquery.BigQueryOptions;
+import com.google.cloud.bigquery.DatasetInfo;
 
- import java.io.Serializable;
+import java.io.Serializable;
  import java.util.ArrayList;
  import java.util.List;
 
@@ -332,4 +335,120 @@ import javax.swing.text.html.Option;
             );
         }
     }
+
+    class QueryResultsOption extends Option 
+    {
+        private static final long serialVersionUID = 3788898503226985525L;
+
+        private QueryResultsOption(BigQueryRpc.Option option, Object value) 
+        {
+            super(option, value);
+        }
+
+        public static QueryResultsOption pageSize(long pageSize)
+        {
+            checkArgument(pageSize >= 0);
+            return new QueryResultsOption(BigQueryRpc.Option.MAX_RESULTS, pageSize);
+        }
+
+        public static QueryResultsOption pageToken(String pageToken)
+        {
+            return new QueryResultsOption(BigQueryRpc.Option.PAGE_TOKEN, pageToken);
+        }
+
+        public static QueryResultsOption startIndex(long startIndex)
+        {
+            checkArgument(startIndex >= 0);
+            return new QueryResultsOption(BigQueryRpc.Option.START_INDEX, startIndex);
+        }
+
+        public static QueryResultsOption maxWaitTime(long maxWaitTime)
+        {
+            checkArgument(maxWaitTime >= 0);
+            return new QueryResultsOption(BigQueryRpc.Option.TIMEOUT, maxWaitTime);
+        }
+    }
+
+    class QueryOption implements Serializable
+    {
+        private static final long serialVersionUID = 6206193419355824689L;
+
+        private final Object option;
+
+        private QueryOption(Object option)
+        {
+            this.option = option;
+        }
+
+        public QueryResultsOption getQueryResultsOption() 
+        {
+            return option instanceof QueryResultsOption ? (QueryResultsOption) option : null;
+        }
+
+        public RetryOption getRetryOption()
+        {
+            return option instanceof RetryOption ? (RetryOption) option : null;
+        }
+
+        static QueryResultsOption[] filterQueryResultsOptions(QueryOption... options)
+        {
+            List<QueryResultsOption> queryResultsOptions = new ArrayList<>(options.length);
+            for (QueryOption opt : options)
+            {
+                if (opt.getQueryResultsOption() != null)
+                {
+                    queryResultsOptions.add(opt.getQueryResultsOption());
+                }
+            }
+            return queryResultsOptions.toArray(new QueryResultsOption[queryResultsOptions.size()]);
+        }
+
+        static RetryOption[] filterRetryOptions(QueryOption... options)
+        {
+            List<RetryOption> retryOptions = new ArrayList<>(options.length);
+            for (QueryOption opt : options)
+            {
+                if (opt.getRetryOption() != null)
+                {
+                    retryOptions.add(opt.getRetryOption());
+                }
+            }
+            return retryOptions.toArray(new RetryOption[retryOptions.size()]);
+        }
+
+        public static QueryOption of(QueryResultsOption resultsOption)
+        {
+            return new QueryOption(resultsOption);
+        }
+
+        public static QueryOption of(RetryOption waitOption)
+        {
+            return new QueryOption(waitOption);
+        }
+
+        @Override 
+        public int hashCode() 
+        {
+            return option != null ? option.hashCode() : 0;
+        }
+
+        @Override
+        public boolean equals(Object obj) 
+        {
+            if (this == obj)
+            {
+                return true;
+            }
+            if (obj == null || getClass() != obj.getClass())
+            {
+                return false;
+            }
+
+            QueryOption that = (QueryOption) obj;
+            return option != null ? option.equals(that.option) : that.option == null;
+        }
+    }
+
+
+    Dataset create(DatasetInfo datasetInfo, DatasetOption...options);
  }
