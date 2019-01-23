@@ -6,33 +6,49 @@
  *  Student (MIG Virtual Developer): Tung Dang
  */
 
- package com.google.cloud.bigquery.mirror;
+package com.google.cloud.bigquery.mirror;
 
- import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkArgument;
 
 import com.google.api.client.util.Data;
 import com.google.api.core.InternalApi;
- import com.google.api.gax.paging.Page;
+import com.google.api.gax.paging.Page;
 import com.google.api.services.bigquery.Bigquery;
+import com.google.api.services.bigquery.Bigquery.Jobs.Query;
 import com.google.api.services.bigquery.model.Dataset;
+import com.google.api.services.bigquery.model.DatasetList;
+import com.google.api.services.bigquery.model.Job;
 import com.google.api.services.bigquery.model.JobList;
 import com.google.api.services.bigquery.model.JobStatus;
+import com.google.api.services.bigquery.model.QueryResponse;
 import com.google.api.services.bigquery.model.Table;
 import com.google.cloud.FieldSelector;
- import com.google.cloud.FieldSelector.Helper;
- import com.google.cloud.RetryOption;
- import com.google.cloud.Service;
- import com.google.cloud.bigquery.spi.v2.BigQueryRpc;
- import com.google.common.base.Function;
- import com.google.common.collect.ImmutableList;
- import com.google.common.collect.Lists;
+import com.google.cloud.FieldSelector.Helper;
+import com.google.cloud.RetryOption;
+import com.google.cloud.Service;
+import com.google.cloud.bigquery.spi.v2.BigQueryRpc;
+import com.google.common.base.Function;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 
- import com.google.cloud.bigquery.BigQueryOptions;
+import com.google.cloud.bigquery.BigQueryOptions;
+import com.google.cloud.bigquery.DatasetId;
 import com.google.cloud.bigquery.DatasetInfo;
+import com.google.cloud.bigquery.InsertAllRequest;
+import com.google.cloud.bigquery.InsertAllResponse;
+import com.google.cloud.bigquery.JobException;
+import com.google.cloud.bigquery.JobId;
+import com.google.cloud.bigquery.JobInfo;
+import com.google.cloud.bigquery.QueryJobConfiguration;
+import com.google.cloud.bigquery.Schema;
+import com.google.cloud.bigquery.TableDataWriteChannel;
+import com.google.cloud.bigquery.TableInfo;
+import com.google.cloud.bigquery.TableResult;
+import com.google.cloud.bigquery.WriteChannelConfiguration;
 
 import java.io.Serializable;
- import java.util.ArrayList;
- import java.util.List;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.print.attribute.standard.RequestingUserName;
 import javax.swing.text.html.Option;
@@ -449,6 +465,52 @@ import javax.swing.text.html.Option;
         }
     }
 
-
     Dataset create(DatasetInfo datasetInfo, DatasetOption...options);
- }
+    Table create(TableInfo tableInfo, TableOption... options);
+    Job create(JobInfo jobInfo, JobOption... options);
+
+    Dataset getDataset(String datasetId, DatasetOption... options);
+    Dataset getDataset(DatasetId datasetId, DatasetOption... options);
+
+    Page<Dataset> listDatasets(DatasetListOption... options);
+    Page<Dataset> listDatasets(String projectId, DatasetListOption... options);
+    Page<Table> listTables(String datasetId, TableListOption...options);
+    Page<Table> listTables(DatasetId datasetId, TableListOption...options);
+    
+    boolean delete(String datasetId, DatasetDeleteOption...options);
+    boolean delete(DatasetId datasetId, DatasetDeleteOption... options);
+    boolean delete(String datasetId, String tableId);
+    boolean delete(TableId tableId);
+
+    Dataset update(DatasetInfo datasetInfo, DatasetOption...options);
+    Table update(TableInfo tableInfo, TableOption...options);
+    
+    Table getTable(String datasetId, String tableId, TableOption...options);
+    Table getTable(TableId tableId, TableOption... options);
+    TableResult listTableData(String datasetId, String tableId, TableDataListOpt... options);
+    TableResult listTableData(TableId tableId, TableDataListOpt... options);
+    TableResult listTableData(String datasetId, String tableId, Schema schema, TableDataListOpt... options);
+    TableResult listTableData(TableId tableId, Schema schema, TableDataListOpt... options);
+
+    InsertAllResponse insretAll(InsertAllRequest request);
+
+    Job getJob(String jobId, JobOption...options);
+    Job getJob(JobId jobId, JobOption...options);
+    Page<Job> listJobs(JobListOption...options);
+
+    boolean cancel(String jobId);
+    boolean cancel(JobId jobId);
+
+    TableResult query(QueryJobConfiguration configuration, JobOption...options)
+        throws InterruptedException, JobException;
+    
+    TableResult query(QueryJobConfiguration configuration, JobId jobId, JobOption...options)
+        throws InterruptedException, JobException;
+
+    @InternalApi
+    QueryResponse getQueryResponse(JobId jobId, QueryResultsOption...options);
+
+    TableDataWriteChannel writer(WriteChannelConfiguration writeChannelConfiguration);
+    TableDataWriteChannel writer(JobId jobId, WriteChannelConfiguration writeChannelConfiguration);
+}
+
