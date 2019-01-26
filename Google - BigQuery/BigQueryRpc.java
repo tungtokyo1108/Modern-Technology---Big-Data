@@ -21,4 +21,53 @@ import com.google.cloud.Tuple;
 import com.google.cloud.bigquery.BigQueryException;
 import java.util.Map;
 
+@InternalExtensionOnly
+public interface BigQueryRpc extends ServiceRpc {
+    enum Option 
+    {
+        FIELDS("fields"),
+        DELETE_CONTENTS("deleteContents"),
+        ALL_DATASETS("all"),
+        ALL_USERS("allUsers"),
+        MAX_RESULTS("maxResults"),
+        PAGE_TOKEN("pageToken"),
+        START_INDEX("startIndex"),
+        STATE_FILTER("stateFilter"),
+        TIMEOUT("timeoutMs");
 
+        private final String value;
+
+        Option(String value) 
+        {
+            this.value = value;
+        }
+
+        public String value() 
+        {
+            return value;
+        }
+
+        @SuppressWarnings("unchecked")
+        <T> T get(Map<Option, ?> options) 
+        {
+            return (T) options.get(this);
+        }
+
+        String getString(Map<Option, ?> options)
+        {
+            return get(options);
+        }
+
+        Long getLong(Map<Option, ?> options)
+        {
+            return get(options);
+        }
+
+        Boolean getBoolean(Map<Option, ?> options)
+        {
+            return get(options);
+        }
+    }
+
+    
+}
