@@ -69,5 +69,20 @@ public interface BigQueryRpc extends ServiceRpc {
         }
     }
 
-    
+    Dataset getDataset(String projectId, String datasetId, Map<Option, ?> options);
+
+    Tuple<String, Iterable<Dataset>> listDatasets(String projectId, Map<Option, ?> options);
+
+    Dataset create(Dataset dataset, Map<Option, ?> options);
+    Table create(Table table, Map<Option, ?> options);
+    Job create(Job job, Map<Option, ?> options);
+
+    boolean deleteDataset(String projectId, String dataId, Map<Option, ?> options);
+
+    /**
+     * Updata information for dataset and table
+     */
+    Dataset patch(Dataset dataset, Map<Option, ?> options);
+    Table patch(Table table, Map<Option, ?> options);
+    Table getTable(String projectId, String datasetId, String tableId, Map<Option, ?> options);
 }
