@@ -18,7 +18,6 @@ import com.google.api.services.bigquery.model.TableDataInsertAllResponse;
 import com.google.api.services.bigquery.model.TableDataList;
 import com.google.cloud.ServiceRpc;
 import com.google.cloud.Tuple;
-import com.google.cloud.bigquery.BigQueryException;
 import java.util.Map;
 
 @InternalExtensionOnly
@@ -85,4 +84,38 @@ public interface BigQueryRpc extends ServiceRpc {
     Dataset patch(Dataset dataset, Map<Option, ?> options);
     Table patch(Table table, Map<Option, ?> options);
     Table getTable(String projectId, String datasetId, String tableId, Map<Option, ?> options);
+    
+    Tuple<String, Iterable<Table>> listTable (
+        String projectId, String dataset, Map<Option, ?> options
+    );
+
+    boolean deleteTable(String projectId, String datasetId, String tableId);
+    TableDataInsertAllResponse insertAll(
+        String projectId, String datasetId, String tableId, TableDataInsertAllRequest request
+    );
+
+    TableDataList listTableData(
+        String projectId, String dataId, String tableId, Map<Option, ?> options
+    );
+
+    Job getJob(String projectId, String jobId, String location, Map<Option, ?> options);
+
+    Tuple<String, Iterable<Job>> listJobs(String projectId, Map<Option, ?> options);
+
+    boolean cancel(String projectId, String jobId, String location);
+
+    GetQueryResultsResponse getQueryResults(
+        String projectId, String jobId, String location, Map<Option, ?> options
+    );
+
+    String open(Job job);
+
+    Job write (
+        String uploadId, 
+        byte[] toWrite,
+        int toWriteOffset,
+        long destOffset,
+        int length,
+        boolean last
+    );
 }
