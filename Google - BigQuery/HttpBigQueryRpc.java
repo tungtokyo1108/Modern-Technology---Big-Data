@@ -50,3 +50,49 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
+
+import javax.sound.sampled.DataLine;
+
+@InternalExtensionOnly
+public class HttpBigQueryRpc implements BigQueryRpc 
+{
+    public static final String DEFAULT_PROJECTION = "full";
+    private static final String BASE_RESUMABLE_URI = 
+        "https://www.googleapis.com/upload/bigquery/v2/projects/";
+    private static final int HTTP_RESUME_INCOMPLETE = 308;
+    private final BigQueryOptions options;
+    private final Bigquery bigquery;
+
+    @InternalApi("Visiable for testing")
+    static final Function<DatasetList.Datasets, Dataset> LIST_TO_DATASET = 
+        new Function<DatasetList.Datasets,Dataset>() {
+            @Override
+            public Dataset apply(DatasetList.Datasets datasetPb) {
+                return new Dataset()
+                    .setDatasetReference(datasetPb.getDatasetReference())
+                    .setFriendlyName(datasetPb.getFriendlyName())
+                    .setId(datasetPb.getId())
+                    .setKind(datasetPb.getKind())
+                    .setLabels(datasetPb.getLabels());
+            }
+        }; 
+
+    public HttpBigQueryRpc(BigQueryOptions options) 
+    {
+        HttpTransportOptions transportOptions = (HttpTransportOptions) options.getTransportOptions();
+        HttpTransport transport = transportOptions.getHttpTransportFactory().create();
+        HttpRequestInitializer initializer = transportOptions.getHttpRequestInitializer(options);
+        this.options = options;
+        bigquery = 
+            new Bigquery.Builder(transport, new JacksonFactory(), initializer)
+                .setRootUrl(options.getHost())
+                .setApplicationName(options.getApplicationName())
+                .build();
+    }
+
+    private static BigQueryException translate(IOException exception)
+    {
+        return new BigQueryException(exception);
+    }
+
+}
