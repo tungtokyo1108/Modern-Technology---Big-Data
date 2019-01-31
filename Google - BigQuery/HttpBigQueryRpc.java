@@ -95,4 +95,60 @@ public class HttpBigQueryRpc implements BigQueryRpc
         return new BigQueryException(exception);
     }
 
+    @Override 
+    public Dataset getDataset(String projectId, String datasetId, Map<Option, ?> options)
+    {
+        try {
+            return bigquery
+                .datasets()
+                .get(projectId, datasetId)
+                .setFields(Option.FIELDS.getString(options))
+                .execute();
+        } catch (IOException ex) {
+            BigQueryException serviceException = translate(ex);
+            if (serviceException.getCode() == HTTP_NOT_FOUND)
+            {
+                return null;
+            }
+            throw serviceException;
+        }
+    }
+
+    @Override
+    public Tuple <String, Iterable<Dataset>> listDatasets(String projectId, Map<Option, ?> options)
+    {
+        try {
+            DatasetList datasetList = 
+                bigquery 
+                    .datasets()
+                    .list(projectId)
+                    .setAll(Option.ALL_DATASETS.getBoolean(options))
+                    .setMaxResults(Option.MAX_RESULTS.getLong(options))
+                    .setPageToken(Option.PAGE_TOKEN.getString(options))
+                    .setPageToken(Option.PAGE_TOKEN.getString(options))
+                    .execute();
+            Iterable<DatasetList.Datasets> datasets = datasetList.getDatasets();
+            return Tuple.of(
+                datasetList.getNextPageToken(),
+                Iterables.transform(datasets != null ? datasets : ImmutableList.<DatasetList.Datasets>of(),
+                LIST_TO_DATASET)
+            );
+        } catch (IOException ex) {
+            throw translate(ex);
+        }
+    }
+
+    @Override
+    public Dataset create(Dataset dataset, Map<Option, ?> options)
+    {
+        try {
+            return bigquery 
+                .datasets()
+                .insert(dataset.getDatasetReference().getProjectId(), dataset)
+                .setFields(Option.FIELDS.getString(options))
+                .execute();
+        } catch (IOException ex) {
+            throw translate(ex);
+        }
+    }
 }
