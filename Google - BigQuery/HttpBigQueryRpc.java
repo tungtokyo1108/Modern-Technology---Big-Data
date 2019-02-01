@@ -178,7 +178,7 @@ public class HttpBigQueryRpc implements BigQueryRpc
                     : this.options.getProjectId();
             return bigquery 
                 .jobs()
-                .ins@ert(projectId, job)
+                .insert(projectId, job)
                 .setFields(Option.FIELDS.getString(options))
                 .execute();
         } catch (IOException ex) {
