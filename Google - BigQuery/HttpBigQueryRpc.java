@@ -151,4 +151,108 @@ public class HttpBigQueryRpc implements BigQueryRpc
             throw translate(ex);
         }
     }
+
+    @Override
+    public Table create(Table table, Map<Option, ?> options) 
+    {
+        try {
+            table.setType(null);
+            TableReference reference = table.getTableReference();
+            return bigquery 
+                .tables()
+                .insert(reference.getProjectId(), reference.getDatasetId(), table)
+                .setFields(Option.FIELDS.getString(options))
+                .execute();
+        } catch (IOException ex) {
+            throw translate(ex);
+        }
+    }
+
+    @Override
+    public Job create(Job job, Map<Option, ?> options) 
+    {
+        try {
+            String projectId = 
+                job.getJobReference() != null 
+                    ? job.getJobReference().getProjectId()
+                    : this.options.getProjectId();
+            return bigquery 
+                .jobs()
+                .ins@ert(projectId, job)
+                .setFields(Option.FIELDS.getString(options))
+                .execute();
+        } catch (IOException ex) {
+            throw translate(ex);
+        }
+    }
+
+    @Override
+    public boolean deleteDataset(String projectId, String datasetId, Map<Option, ?> options) 
+    {
+        try {
+            bigquery
+                .datasets()
+                .delete(projectId, datasetId)
+                .setDeleteContents(Option.DELETE_CONTENTS.getBoolean(options))
+                .execute();
+            return true;
+        } catch (IOException ex) {
+            BigQueryException serviceException = translate(ex);
+            if (serviceException.getCode() == HTTP_NOT_FOUND) 
+            {
+                return false;
+            }
+            throw serviceException;
+        }
+    }
+
+    @Override
+    public Dataset patch(Dataset dataset, Map<Option, ?> options)
+    {
+        try {
+            DatasetReference reference = dataset.getDatasetReference();
+            return bigquery 
+                .datasets()
+                .patch(reference.getProjectId(), reference.getDatasetId(), dataset)
+                .setFields(Option.FIELDS.getString(options))
+                .execute();
+        } catch (IOException ex) {
+            throw translate(ex);
+        }
+    }
+
+    @Override 
+    public Table patch(Table table, Map<Option, ?> options)
+    {
+        try {
+            table.setType(null);
+            TableReference reference = table.getTableReference();
+            return bigquery 
+                .tables()
+                .patch(reference.getProjectId(), reference.getDatasetId(), reference.getTableId(), table)
+                .setFields(Option.FIELDS.getString(options))
+                .execute();
+        } catch (IOException ex) {
+            throw translate(ex);
+        }
+    }
+
+    @Override
+    public Table getTable (String projectId, String datasetId, String tableId, Map<Option, ?> options)
+    {
+        try {
+            return bigquery 
+                .tables()
+                .get(projectId, datasetId, tableId)
+                .setFields(Option.FIELDS.getString(options))
+                .execute();
+        } catch (IOException ex) {
+            BigQueryException serviceException = translate(ex);
+            if (serviceException.getCode() == HTTP_NOT_FOUND)
+            {
+                return null;
+            }
+            throw serviceException;
+        }
+    }
 }
