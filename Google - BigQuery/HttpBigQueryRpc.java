@@ -255,4 +255,38 @@ public class HttpBigQueryRpc implements BigQueryRpc
             throw serviceException;
         }
     }
+
+    @Override
+    public Tuple<String, Iterable<Table>> listTables(String projectId, String datasetId, Map<Option, ?> options) 
+    {
+        try {
+            TableList tableList = 
+                bigquery 
+                    .tables()
+                    .list(projectId, datasetId)
+                    .setMaxResults(Option.MAX_RESULTS.getLong(options))
+                    .setPageToken(Option.PAGE_TOKEN.getString(options))
+                    .execute();
+            Iterable<TableList.Tables> tables = tableList.getTables();
+            return Tuple.of(
+                tableList.getNextPageToken(),
+                Iterables.transform(
+                    tables != null ? tables : ImmutableList.<TableList.Tables>of(),
+                    new Function<TableList.Tables, Table>() {
+                        @Override
+                        public Table apply(TableList.Tables tablePb) {
+                            return new Table()
+                                .setFriendlyName(tablePb.getFriendlyName())
+                                .setId(tablePb.getId())
+                                .setKind(tablePb.getKind())
+                                .setTableReference(tablePb.getTableReference())
+                                .setType(tablePb.getType());
+                        }
+                    }
+                )
+            );
+        } catch (IOException ex) {
+            throw translate(ex);
+        }
+    }
 }
