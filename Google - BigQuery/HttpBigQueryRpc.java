@@ -289,4 +289,33 @@ public class HttpBigQueryRpc implements BigQueryRpc
             throw translate(ex);
         }
     }
+
+    @Override 
+    public boolean deleteTable(String projectId, String datasetId, String tableId) 
+    {
+        try 
+        {
+            bigquery.tables().delete(projectId, datasetId, tableId).execute();
+            return true;
+        } catch (IOException ex) {
+            BigQueryException serviceException = translate(ex);
+            if (serviceException.getCode() == HTTP_NOT_FOUND) 
+            {
+                return false;
+            }
+            throw serviceException;
+        }
+    }
+
+    @Override
+    public TableDataInsertAllResponse insertAll(
+        String projectId, String datasetId, String tableId, TableDataInsertAllRequest request) 
+    {
+        try 
+        {
+            return bigquery.tabledata().insertAll(projectId, datasetId, tableId, request).execute();
+        } catch (IOException ex) {
+            throw translate(ex);
+        }
+    }
 }
