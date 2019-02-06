@@ -318,4 +318,25 @@ public class HttpBigQueryRpc implements BigQueryRpc
             throw translate(ex);
         }
     }
+
+    @Override
+    public TableDataList listTableData(
+      String projectId, String datasetId, String tableId, Map<Option, ?> options) 
+    {
+        try 
+        {
+            return bigquery
+                .tabledata()
+                .list(projectId, datasetId, tableId)
+                .setMaxResults(Option.MAX_RESULTS.getLong(options))
+                .setPageToken(Option.PAGE_TOKEN.getString(options))
+                .setStartIndex(
+                    Option.START_INDEX.getLong(options) != null
+                    ? BigInteger.valueOf(Option.START_INDEX.getLong(options))
+                    : null)
+                .execute();
+        } catch (IOException ex) {
+            throw translate(ex);
+        }
+    }
 }
