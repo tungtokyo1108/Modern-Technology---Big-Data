@@ -339,4 +339,189 @@ public class HttpBigQueryRpc implements BigQueryRpc
             throw translate(ex);
         }
     }
+
+    @Override
+    public Job getJob (String projectId, String jobId, String location, Map<Option, ?> options) 
+    {
+        try 
+        {
+            return bigquery
+                .jobs()
+                .get(projectId, jobId)
+                .setLocation(location)
+                .setFields(Option.FIELDS.getString(options))
+                .execute();
+        } catch (IOException ex) {
+            BigQueryException serviceException = translate(ex);
+            if (serviceException.getCode() == HTTP_NOT_FOUND)
+            {
+                return null;
+            }
+            throw serviceException;
+        } 
+    }
+
+    @Override
+    public Tuple<String, Iterable<Job>> listJobs(String projectId, Map<Option, ?> options)
+    {
+        try 
+        {
+            JobList jobList = 
+                bigquery
+                    .jobs()
+                    .list(projectId)
+                    .setAllUsers(Option.ALL_DATASETS.getBoolean(options))
+                    .setFields(Option.FIELDS.getString(options))
+                    .setStateFilter(Option.STATE_FILTER.<List<String>>get(options))
+                    .setMaxResults(Option.MAX_RESULTS.getLong(options))
+                    .setPageToken(Option.PAGE_TOKEN.getString(options))
+                    .setProjection(DEFAULT_PROJECTION)
+                    .execute();
+            Iterable<JobList.Jobs> jobs = jobList.getJobs();
+            return Tuple.of(
+                jobList.getNextPageToken(),
+                Iterables.transform(
+                    jobs != null ? jobs : ImmutableList.<JobList.Jobs>of(),
+                    new Function<JobList.Jobs, Job>() {
+                        @Override
+                        public Job apply(JobList.Jobs jobPb) {
+                            JobStatus statusPb = 
+                                jobPb.getStatus() != null ? jobPb.getStatus() : new JobStatus();
+                            if (statusPb.getState() == null)
+                            {
+                                statusPb.setState(jobPb.getState());
+                            }
+                            if (statusPb.getErrorResult() == null) 
+                            {
+                                statusPb.setErrorResult(jobPb.getErrorResult());
+                            }
+                            return new Job()
+                                .setConfiguration(jobPb.getConfiguration())
+                                .setId(jobPb.getId())
+                                .setJobReference(jobPb.getJobReference())
+                                .setKind(jobPb.getKind())
+                                .setStatistics(jobPb.getStatistics())
+                                .setStatus(statusPb)
+                                .setUserEmail(jobPb.getUserEmail());
+                        }
+                    }
+                )
+            );
+        } catch (IOException ex) {
+            throw translate(ex);
+        }
+    }
+
+    @Override
+    public boolean cancel(String projectId, String jobId, String location) 
+    {
+        try
+        {
+            bigquery.jobs().cancel(projectId, jobId).setLocation(location).execute();
+            return true;
+        } catch (IOException ex) {
+            BigQueryException serviceException = translate(ex);
+            if (serviceException.getCode() == HTTP_NOT_FOUND) 
+            {
+                return false;
+            }
+            throw serviceException;
+        }
+    }
+
+    @Override
+    public GetQueryResultsResponse getQueryResults(
+        String projectId, String jobId, String location, Map<Option, ?> options) {
+        try
+        {
+            return bigquery
+                .jobs()
+                .getQueryResults(projectId, jobId)
+                .setLocation(location)
+                .setMaxResults(Option.MAX_RESULTS.getLong(options))
+                .setPageToken(Option.PAGE_TOKEN.getString(options))
+                .setStartIndex(
+                    Option.START_INDEX.getLong(options) != null
+                        ? BigInteger.valueOf(Option.START_INDEX.getLong(options))
+                        : null)
+                .setTimeoutMs(Option.TIMEOUT.getLong(options))
+                .execute();
+        } catch (IOException ex) {
+            throw translate(ex);
+        }
+    }
+
+    @Override
+    public String open(Job loadJob)
+    {
+        try
+        {
+            String builder = BASE_RESUMABLE_URI + options.getProjectId() + "/jobs";
+            GenericUrl url = new GenericUrl();
+            url.set("uploadType", "resumable");
+            JsonFactory jsonFactory = bigquery.getJsonFactory();
+            HttpRequestFactory requestFactory = bigquery.getRequestFactory();
+            HttpRequest httpRequest = 
+                requestFactory.buildPostRequest(url, new JsonHttpContent(jsonFactory, loadJob));
+            httpRequest.getHeaders().set("X-Upload-Content-Value", "application/octet-stream");
+            HttpResponse response = httpRequest.execute();
+            return response.getHeaders().getLocation();
+        } catch (IOException ex) {
+            throw translate(ex);
+        }
+    }
+
+    @Override
+    public Job write (String uploadId, byte[] toWrite, int toWriteOffset, long destOffset, int length, boolean last) 
+    {
+        try
+        {
+            if (length == 0) 
+            {
+                return null;
+            }
+            GenericUrl url = new GenericUrl(uploadId);
+            HttpRequest httpRequest = 
+                bigquery
+                    .getRequestFactory()
+                    .buildPutRequest(url, new ByteArrayContent(null, toWrite, toWriteOffset, length));
+            httpRequest.setParser(bigquery.getObjectParser());
+            long limit = destOffset + length;
+            StringBuilder range = new StringBuilder("bytes");
+            range.append(destOffset).append('-').append(limit - 1).append('/');
+            if (last)
+            {
+                range.append(limit);
+            } else {
+                range.append('*');
+            }
+            httpRequest.getHeaders().setContentRange(range.toString());
+            int code;
+            String message;
+            IOException exception = null;
+            HttpResponse response = null;
+            try
+            {
+                response = httpRequest.execute();
+                code = response.getStatusCode();
+                message = response.getStatusMessage();
+            } catch (HttpResponseException ex) {
+                exception = ex;
+                code = ex.getStatusCode();
+                message = ex.getStatusMessage();
+            }
+            if (!last && code != HTTP_RESUME_INCOMPLETE
+                || last && !(code == HTTP_OK || code == HTTP_CREATED)) 
+            {
+                if (exception != null)
+                {
+                    throw exception;
+                }
+                throw new BigQueryException(code, message);
+            }
+            return last && response != null ? response.parseAs(Job.class) : null;
+        } catch (IOException ex) {
+            throw translate(ex)
+        }
+    }
 }
