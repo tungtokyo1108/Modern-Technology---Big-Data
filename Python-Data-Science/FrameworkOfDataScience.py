@@ -45,7 +45,7 @@ wines.head()
 ################# Exploratory Data Analysis and Visualization ########################
 ######################################################################################
 
-# Descriptive Statistics
+########################### Descriptive Statistics ###################################
 
 subset_attributes = ['residual sugar', 'total sulfur dioxide', 'sulphates', 'alcohol', 
                      'volatile acidity', 'quality']
@@ -61,7 +61,7 @@ ls_ms_hs = pd.concat([ls,ms,hs], axis=1, keys=['Low Quality Wine', 'Medium Quali
                                                  'High Quality Wine'])
 
 
-# Visualizing one dimension
+########################### Visualizing one dimension ################################
 
 wines.hist(bins=15, color='steelblue', edgecolor='black',linewidth=1.0,
            xlabelsize=8, ylabelsize=8, grid=False)
@@ -85,7 +85,7 @@ ax1.set_xlabel("Sulphates")
 ax1.set_ylabel("Density")
 sns.kdeplot(wines['sulphates'], ax=ax1, shade=True, color='steelblue')
 
-# Visualizing two dimensions
+########################### Visualizing two dimensions ###############################
 
 f, ax = plt.subplots(figsize=(10,6))
 corr = wines.corr()
@@ -121,40 +121,28 @@ jp = sns.jointplot(x='sulphates', y='alcohol', data = wines,
 cp = sns.countplot(x="quality", hue="wine_type", data=wines, 
                    palette={"red": "#FF9999", "white": "#FFE888"})
 
+# The distribution of two variabels                    
 fig = plt.figure(figsize = (6,4))
 title = fig.suptitle("Sulphates Content in Wine", fontsize = 14)
 fig.subplots_adjust(top=0.85, wspace=0.3)
 ax = fig.add_subplot(1,1,1)
+ax.set_xlabel("Sulphates")
+ax.set_ylabel("Frequency")
+g = sns.FacetGrid(wines, hue='wine_type', palette={"red": "r", "white": "y"})
+g.map(sns.distplot, 'sulphates', kde=False, bins=15, ax=ax)
+ax.legend(title='Wine Type')
+plt.close(2)
 
+# The bax plot of two variables
+f, (ax) = plt.subplots(1,1,figsize=(12,4))
+f.suptitle('Wine Quality - Alcohol Content', fontsize=14)
+sns.boxplot(x="quality", y="alcohol", data=wines, ax=ax)
+ax.set_xlabel("Wine Quality", size = 12, alpha=0.8)
+ax.set_ylabel("Wine Alcohol", size = 12, alpha=0.8)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# The Violin plot of two variables
+f, (ax) = plt.subplots(1,1,figsize=(12,4))
+f.suptitle('Wine Quality - Sulphates Content', fontsize=14)
+sns.violinplot(x="quality", y="sulphates", data=wines, ax=ax)
+ax.set_xlabel("Wine Quality", size=12, alpha=0.8)
+ax.set_ylabel("Wine Sulphates", size=12, alpha=0.8)
