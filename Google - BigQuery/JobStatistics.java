@@ -13,8 +13,12 @@ import com.google.api.services.bigquery.model.JobConfiguration;
 import com.google.api.services.bigquery.model.JobStatistics2;
 import com.google.api.services.bigquery.model.JobStatistics3;
 import com.google.api.services.bigquery.model.JobStatistics4;
+import com.google.api.services.bigquery.model.Table;
 import com.google.cloud.StringEnumType;
 import com.google.cloud.StringEnumValue;
+import com.google.cloud.bigquery.QueryStage;
+import com.google.cloud.bigquery.Schema;
+import com.google.cloud.bigquery.TimelineSample;
 import com.google.cloud.bigquery.JobStatistics.QueryStatistics.StatementType;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.MoreObjects.ToStringHelper;
@@ -24,6 +28,7 @@ import com.google.rpc.RetryInfo;
 
 import java.beans.Statement;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Objects;
 
@@ -395,7 +400,297 @@ public abstract class JobStatistics implements Serializable
 
         static final class Builder extends JobStatistics.Builder<QueryStatistics, Builder>
         {
-            
+            private Integer billingTier;
+            private Boolean cacheHit;
+            private String ddlOperationPerformed;
+            private TableId ddlTargetTable;
+            private Long estimatedBytesProcessed;
+            private Long numDmlAffectedRows;
+            private List<TableId> referencedTables;
+            private StatementType statementType;
+            private Long totalBytesBilled;
+            private Long totalBytesProcessed;
+            private Long totalPartitionsProcessed;
+            private Long totalSlotMs;
+            private List<QueryStage> queryPlan;
+            private List<TimelineSample> timeline;
+            private Schema schema;
+
+            private Builder() {}
+
+            private Builder (com.google.api.services.bigquery.model.JobStatistics statisticsPb) 
+            {
+                super(statisticsPb);
+                if (statisticsPb.getQuery() != null)
+                {
+                    this.billingTier = statisticsPb.getQuery().getBillingTier();
+                    this.cacheHit = statisticsPb.getQuery().getCacheHit();
+                    this.ddlOperationPerformed = statisticsPb.getQuery().getDdlOperationPerformed();
+                    if (statisticsPb.getQuery().getDdlTargetTable() != null)
+                    {
+                        this.ddlTargetTable = TableId.fromPb(statisticsPb.getQuery().getDdlTargetTable());
+                    }
+                    this.estimatedBytesProcessed = statisticsPb.getQuery().getEstimatedBytesProcessed();
+                    this.numDmlAffectedRows = statisticsPb.getQuery().getNumDmlAffectedRows();
+                    this.totalBytesBilled = statisticsPb.getQuery().getTotalBytesBilled();
+                    this.totalBytesProcessed = statisticsPb.getQuery().getTotalBytesProcessed();
+                    this.totalPartitionsProcessed = statisticsPb.getQuery().getTotalPartitionsProcessed();
+                    this.totalSlotMs = statisticsPb.getQuery().getTotalSlotMs();
+                    if (statisticsPb.getQuery().getStatementType() != null)
+                    {
+                        this.statementType = StatementType.valueOf(statisticsPb.getQuery().getStatementType());
+                    }
+                    if (statisticsPb.getQuery().getReferencedTables() != null)
+                    {
+                        this.referencedTables = 
+                            Lists.transform(statisticsPb.getQuery().getReferencedTables(), TableId.FROM_PB_FUNCTION);
+                    }
+                    if (statisticsPb.getQuery().getQueryPlan() != null)
+                    {
+                        this.queryPlan = 
+                            Lists.transform(statisticsPb.getQuery().getQueryPlan(), QueryStage.FROM_PB_FUNCTION);
+                    }
+                    if (statisticsPb.getQuery().getTimeline() != null)
+                    {
+                        this.timeline = 
+                            Lists.transform(statisticsPb.getQuery().getTimeline(), TimelineSample.FROM_PB_FUNCTION);
+                    }
+                    if (statisticsPb.getQuery().getSchema() != null)
+                    {
+                        this.schema = Schema.fromPb(statisticsPb.getQuery().getSchema());
+                    }
+                }
+            }
+
+            Builder setBillingTier(Integer billingTier)
+            {
+                this.billingTier = billingTier;
+                return self();
+            }
+
+            Builder setCacheHit(Boolean cacheHit)
+            {
+                this.cacheHit = cacheHit;
+                return self();
+            }
+
+            Builder setDDLOperationPerformed(String ddlOperationPerformed)
+            {
+                this.ddlOperationPerformed = ddlOperationPerformed;
+                return self();
+            }
+
+            Builder setDDLTargetTable(TableId ddlTargetTable)
+            {
+                this.ddlTargetTable = ddlTargetTable;
+                return self();
+            }
+
+            Builder setEstimatedBytesProcessed(Long estimatedBytesProcessed)
+            {
+                this.estimatedBytesProcessed = estimatedBytesProcessed;
+                return self();
+            }
+
+            Builder setNumDmlAffectedRows(Long numDmlAffectedRows)
+            {
+                this.numDmlAffectedRows = numDmlAffectedRows;
+                return self();
+            }
+
+            Builder setReferenceTables(List<TableId> referenceTables)
+            {
+                this.referencedTables = referenceTables;
+                return self();
+            }
+
+            Builder setStatementType(StatementType statementType)
+            {
+                this.statementType = statementType;
+                return self();
+            } 
+
+            Builder setStatementType(String strStatementType)
+            {
+                this.statementType = StatementType.valueOf(strStatementType);
+                return self();
+            }
+
+            Builder setTotalBytesBilled(Long totalBytesBilled)
+            {
+                this.totalBytesBilled = totalBytesBilled;
+                return self();
+            }
+
+            Builder setTotalBytesProcessed(Long totalBytesProcessed)
+            {
+                this.totalBytesProcessed = totalBytesProcessed;
+                return self();
+            }
+
+            Builder setTotalPartitionsProcessed(Long totalPartitionProcessed)
+            {
+                this.totalPartitionsProcessed = totalPartitionProcessed;
+                return self();
+            }
+
+            Builder setTotalSlotMs(Long totalSlotMs)
+            {
+                this.totalSlotMs = totalSlotMs;
+                return self();
+            }
+
+            Builder setQueryPlan(List<QueryStage> queryPlan)
+            {
+                this.queryPlan = queryPlan;
+                return self();
+            }
+
+            Builder setTimeline(List<TimelineSample> timeline)
+            {
+                this.timeline = timeline;
+                return self();
+            }
+
+            Builder setSchema(Schema schema)
+            {
+                this.schema = schema;
+                return self();
+            }
+
+            @Override
+            QueryStatistics build() 
+            {
+                return new QueryStatistics(this);
+            }
         }
+
+        private QueryStatistics(Builder builder)
+        {
+            super(builder);
+            this.billingTier = builder.billingTier;
+            this.cacheHit = builder.cacheHit;
+            this.ddlOperationPerformed = builder.ddlOperationPerformed;
+            this.ddlTargetTable = builder.ddlTargetTable;
+            this.estimatedBytesProcessed = builder.estimatedBytesProcessed;
+            this.numDmlAffectedRows = builder.numDmlAffectedRows;
+            this.referencedTables = builder.referencedTables;
+            this.statementType = builder.statementType;
+            this.totalBytesBilled = builder.totalBytesBilled;
+            this.totalBytesProcessed = builder.totalBytesProcessed;
+            this.totalPartitionsProcessed = builder.totalPartitionsProcessed;
+            this.totalSlotMs = builder.totalSlotMs;
+            this.queryPlan = builder.queryPlan;
+            this.timeLine = builder.timeline;
+            this.schema = builder.schema;
+        }
+
+        public Integer getBillingTier()
+        {
+            return billingTier;
+        }
+
+        public Boolean getCacheHit()
+        {
+            return cacheHit;
+        }
+
+        public String getDdlOperationPerformed()
+        {
+            return ddlOperationPerformed;
+        }
+
+        public TableId getDdlTargetTable()
+        {
+            return ddlTargetTable;
+        }
+
+        public Long getEstimatedBytesProcessed() 
+        {
+            return estimatedBytesProcessed;
+        }
+
+        public Long getNumDmlAffectedRows()
+        {
+            return numDmlAffectedRows;
+        }
+
+        public List<TableId> getReferencedTables()
+        {
+            return referencedTables;
+        }
+
+        public StatementType getStatementType()
+        {
+            return statementType;
+        }
+
+        public Long getTotalBytesProcessed()
+        {
+            return totalBytesProcessed;
+        }
+
+        public Long getTotalPartitionsProcessed()
+        {
+            return totalPartitionsProcessed;
+        }
+
+        public Long getTotalSlotMs()
+        {
+            return totalSlotMs;
+        }
+
+        public List<QueryStage> getQueryPlan()
+        {
+            return queryPlan;
+        }
+
+        public List<TimelineSample> getTimeline()
+        {
+            return timeLine;
+        }
+
+        public Schema getSchema() 
+        {
+            return schema;
+        }
+
+        @Override
+        ToStringHelper toStringHelper()
+        {
+            return super.toStringHelper()
+                .add("billingTier", billingTier)
+                .add("cacheHit", cacheHit)
+                .add("totalBytesBilled", totalBytesBilled)
+                .add("totalBytesProcessed", totalBytesProcessed)
+                .add("queryPlan", queryPlan)
+                .add("timeline", timeLine)
+                .add("schema", schema);
+        }
+
+        @Override
+        public final boolean equals(Object obj)
+        {
+            return obj == this
+                || obj != null
+                && obj.getClass().equals(QueryStatistics.class)
+                && baseEquals((QueryStatistics) obj);
+        }
+
+        @Override 
+        public final int hashCode()
+        {
+            return Objects.hash(
+                baseHashCode(),
+                billingTier,
+                cacheHit,
+                totalBytesBilled,
+                totalBytesProcessed,
+                queryPlan,
+                schema
+            );
+        }
+
+        
     }
 }
