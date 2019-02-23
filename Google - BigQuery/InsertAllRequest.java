@@ -10,7 +10,11 @@ package com.google.cloud.bigquery.mirror;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import com.google.api.services.bigquery.Bigquery.Tabledata.InsertAll;
+import com.google.api.services.bigquery.model.Table;
+import com.google.cloud.bigquery.TableInfo;
 import com.google.cloud.bigquery.InsertAllRequest.RowToInsert;
+import com.google.cloud.bigquery.mirror.DatasetInfo.BuilderImpl;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableBiMap;
@@ -159,5 +163,151 @@ public final class InsertAllRequest implements Serializable
             this.templateSuffix = templateSuffix;
             return this;
         }
+
+        public InsertAllRequest build()
+        {
+            return new InsertAllRequest(this);
+        }
+    }
+
+    private InsertAllRequest(Builder builder)
+    {
+        this.table = checkNotNull(builder.table);
+        this.rows = ImmutableList.copyOf(checkNotNull(builder.rows));
+        this.ignoreUnknownValues = builder.ignoreUnknownValues;
+        this.skipInvalidRows = builder.skipInvalidRows;
+        this.templateSuffix = builder.templateSuffix;
+    }
+
+    public TableId getTable()
+    {
+        return table;
+    }
+
+    public List<RowToInsert> getRows()
+    {
+        return rows;
+    }
+
+    public Boolean ignoreUnknownValues()
+    {
+        return ignoreUnknownValues;
+    }
+
+    public Boolean skipInvalidRows()
+    {
+        return skipInvalidRows;
+    }
+
+    public String getTemplateSuffix()
+    {
+        return templateSuffix;
+    }
+
+    public static Builder newBuilder(TableId table)
+    {
+        return new Builder().setTable(table);
+    }
+
+    public static Builder newBuilder(TableId table, Iterable<RowToInsert> rows)
+    {
+        return newBuilder(table).setRows(rows);
+    }
+
+    public static Builder newBuilder(TableId table, RowToInsert... rows)
+    {
+        return newBuilder(table, ImmutableList.copyOf(rows));
+    }
+
+    public static Builder newBuilder(String datasetId, String tableId)
+    {
+        return new Builder().setTable(TableId.of(datasetId, tableId));
+    }
+
+    public static Builder newBuilder(String datasetId, String tableId, Iterable<RowToInsert> rows)
+    {
+        return newBuilder(TableId.of(datasetId, tableId), rows);
+    }
+
+    public static Builder newBuilder(String datasetId, String tableId, RowToInsert... rows)
+    {
+        return newBuilder(TableId.of(datasetId, tableId), rows);
+    }
+
+    public static Builder newBuilder(TableInfo tableInfo, Iterable<RowToInsert> rows)
+    {
+        return newBuilder(tableInfo.getTableId(), rows);
+    }
+
+    public static Builder newBuilder(TableInfo tableInfo, RowToInsert... rows)
+    {
+        return newBuilder(tableInfo.getTableId(), rows);
+    }
+
+    public static InsertAllRequest of(TableId tableId, Iterable<RowToInsert> rows)
+    {
+        return newBuilder(tableId, rows).build();
+    }
+
+    public static InsertAllRequest of(TableId tableId, RowToInsert... rows)
+    {
+        return newBuilder(tableId, rows).build();
+    }
+
+    public static InsertAllRequest of(String datasetId, String tableId, Iterable<RowToInsert> rows)
+    {
+        return newBuilder(datasetId, tableId, rows).build();
+    }
+
+    public static InsertAllRequest of(String datasetId, String tableId, RowToInsert... rows)
+    {
+        return newBuilder(datasetId, tableId, rows).build();
+    }
+
+    public static InsertAllRequest of(TableInfo tableInfo, Iterable<RowToInsert> rows) 
+    {
+        return newBuilder(tableInfo.getTableId(), rows).build();
+    }
+
+    public static InsertAllRequest of(TableInfo tableInfo, RowToInsert... rows)
+    {
+        return newBuilder(tableInfo.getTableId(), rows).build();
+    }
+
+    @Override
+    public String toString()
+    {
+        return MoreObjects.toStringHelper(this)
+            .add("table", table)
+            .add("rows", rows)
+            .add("ignoreUnknownValues", ignoreUnknownValues)
+            .add("skipInvalidRows", skipInvalidRows)
+            .add("templateSuffix", templateSuffix)
+            .toString();
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(table, rows, ignoreUnknownValues, skipInvalidRows, templateSuffix);
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == this)
+        {
+            return true;
+        }
+        if (!(obj instanceof InsertAllRequest))
+        {
+            return false;
+        }
+        InsertAllRequest other = (InsertAllRequest) obj;
+        return Objects.equals(table, other.table)
+            && Objects.equals(rows, other.rows)
+            && Objects.equals(ignoreUnknownValues, other.ignoreUnknownValues)
+            && Objects.equals(skipInvalidRows, other.skipInvalidRows)
+            && Objects.equals(templateSuffix, other.templateSuffix);
     }
 }
