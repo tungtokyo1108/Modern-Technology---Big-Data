@@ -18,6 +18,9 @@
 # Amazon
 - Elastic MapReduce (Hadoop): https://github.com/aws/aws-sdk-java/tree/master/aws-java-sdk-emr/src/main/java/com/amazonaws
 
+# VMware
+- Hillview: https://github.com/vmware/hillview
+
 # Intel
 - OAP: https://github.com/Intel-bigdata/OAP
 
