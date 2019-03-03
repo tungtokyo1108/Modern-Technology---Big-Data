@@ -151,5 +151,69 @@ public class ApplicationsInner
                 .build(response);
     }
 
-    
+    public ApplicationsInner get(String resourceGroupName, String clusterName, String applicationName)
+    {
+        return getWithServiceResponseAsync(resourceGroupName, clusterName, applicationName).toBlocking().single().body();
+    }
+
+    public ServiceFuture<ApplicationsInner> getAsync(String resourceGroupName, String clusterName, 
+            String applicationName, final ServiceCallback<ApplicationsInner> serviceCallback)
+    {
+        return ServiceFuture.fromResponse(getWithServiceResponseAsync(resourceGroupName, clusterName, applicationName), 
+                                            serviceCallback);
+    }
+
+    public Observable<ApplicationsInner> getAsync(String resourceGroupName, String clusterName, String applicationName)
+    {
+        return getWithServiceResponseAsync(resourceGroupName, clusterName, applicationName).map(
+            new Func1<ServiceResponse<ApplicationsInner>, ApplicationsInner> () {
+                @Override
+                public ApplicationsInner call(ServiceResponse<ApplicationsInner> response) {
+                    return response.body();
+                }
+            });
+    }
+
+    public Observable<ServiceResponse<ApplicationsInner>> getWithServiceResponseAsync(String resourceGroupName, 
+                    String clusterName, String applicationName)
+    {
+        if (this.client.subscriptionId() == null) {
+            throw new IllegalArgumentException("Parameter this.client.subscriptionId() is required and cannot be null.");
+        }
+        if (resourceGroupName == null) {
+            throw new IllegalArgumentException("Parameter resourceGroupName is required and cannot be null.");
+        }
+        if (clusterName == null) {
+            throw new IllegalArgumentException("Parameter clusterName is required and cannot be null.");
+        }
+        if (applicationName == null) {
+            throw new IllegalArgumentException("Parameter applicationName is required and cannot be null.");
+        }
+        if (this.client.apiVersion() == null) {
+            throw new IllegalArgumentException("Parameter this.client.apiVersion() is required and cannot be null.");
+        }
+        return service.get(this.client.subscriptionId(), resourceGroupName, clusterName, applicationName, 
+                    this.client.apiVersion(), this.client.acceptLanguage(), this.client.userAgent())
+            .flatMap(new Func1<Response<ResponseBody>, Observable<ServiceResponse<ApplicationsInner>>>() {
+                @Override
+                public Observable<ServiceResponse<ApplicationsInner>> call(Response<ResponseBody> response) {
+                    try {
+                        ServiceResponse<ApplicationsInner> clientResponse = getDelegate(response);
+                        return Observable.just(clientResponse);
+                    } catch (Throwable t) {
+                        return Observable.error(t);
+                    }
+                }
+            });
+    }
+
+    private ServiceResponse<ApplicationsInner> getDelegate(Response<ResponseBody> response)
+                throws ErrorResponseException, IOException, IllegalArgumentException 
+    {
+        return this.client.restClient().responseBuilderFactory().<ApplicationsInner, 
+                    ErrorResponseException> newInstance(this.client.serializerAdapter())
+                .register(200,new TypeToken<ApplicationsInner>(){}.getType())
+                .registerError(ErrorResponseException.class)
+                .build(response);
+    } 
 };
