@@ -129,7 +129,7 @@ public final class Iterators {
         return Ints.saturatedCast(count);
     }
 
-    public static boolean contains(Iterator<?> iterator, @NullableDecl Object element) 
+    public static boolean contains(Iterator<?> iterator, @NullableDecl Object element)
     {
         if (element == null)
         {
@@ -171,11 +171,11 @@ public final class Iterators {
     }
 
     @CanIgnoreReturnValue
-    public static <T> boolean removeIf(Iterator<T> removeFrom, Predicate<? super T> predicate) 
+    public static <T> boolean removeIf(Iterator<T> removeFrom, Predicate<? super T> predicate)
     {
         checkNotNull(predicate);
         boolean modified = false;
-        while (removeFrom.hasNext()) 
+        while (removeFrom.hasNext())
         {
             if (predicate.apply(removeFrom.next()))
             {
@@ -186,12 +186,12 @@ public final class Iterators {
         return modified;
     }
 
-    @CanIgnoreReturnValue
+    @@CanIgnoreReturnValue
     public static boolean retainAll(Iterator<?> removeFrom, Collection<?> elementsToRetain)
     {
         checkNotNull(elementsToRetain);
         boolean result = false;
-        while (removeFrom.hasNext()) 
+        while (removeFrom.hasNext())
         {
             if (!elementsToRetain.contains(removeFrom.next()))
             {
@@ -246,7 +246,7 @@ public final class Iterators {
         }
 
         StringBuilder sb = new StringBuilder().append("expected one element but was: <").append(first);
-        for (int i=0; i < 4 && iterator.hasNext(); i++)
+        for (int i = 0; i < 4 && iterator.hasNext(); i++)
         {
             sb.append(", ").append(iterator.next());
         }
@@ -255,7 +255,6 @@ public final class Iterators {
             sb.append(", ...");
         }
         sb.append('>');
-
         throw new IllegalAccessException(sb.toString());
     }
 
@@ -336,12 +335,17 @@ public final class Iterators {
         return cycle(Lists.newArrayList(elements));
     }
 
+    /**
+     * Returns an Iterator that walks the specified array, nulling out elements behind it.
+     * This can avoid memory leaks when an element is no longer necessary.
+     * This is mainly just to avoid the itermediate ArrayDeque in ConsummingQueueIterator 
+     */
     private static <T> Iterator<T> consumingForArray(final T... elements)
     {
         return new UnmodifiableIterator<T>() {
             int index = 0;
 
-            @Override 
+            @Override
             public boolean hasNext()
             {
                 return index < elements.length;
@@ -400,4 +404,14 @@ public final class Iterators {
     {
         return new ConcatenatedIterator<T>(inputs);
     }
+
+    static <T> Iterator<T> concatNoDefensiveCopy(Iterator<? extends T>... inputs)
+    {
+        for (Iterator<? extends T> input : checkNotNull(inputs))
+        {
+            checkNotNull(input);
+        }
+        return concat(consumingForArray(inputs));
+    }
+    
 }
