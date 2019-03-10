@@ -13,6 +13,7 @@ import static com.google.common.base.Preconditions.checkState;
 import static com.google.common.base.Predicates.instanceOf;
 // import static com.google.common.collect.CollectPreconditions.checkRemove;
 
+import com.google.common.collect.AbstractIterator;
 import com.google.api.client.util.Lists;
 import com.google.common.annotations.Beta;
 import com.google.common.annotations.GwtCompatible;
@@ -186,7 +187,7 @@ public final class Iterators {
         return modified;
     }
 
-    @@CanIgnoreReturnValue
+    @CanIgnoreReturnValue
     public static boolean retainAll(Iterator<?> removeFrom, Collection<?> elementsToRetain)
     {
         checkNotNull(elementsToRetain);
@@ -413,5 +414,146 @@ public final class Iterators {
         }
         return concat(consumingForArray(inputs));
     }
+
+    public static <T> UnmodifiableIterator<List<T>> partition(Iterator<T> iterator, int size)
+    {
+        return partitionImpl(iterator, size, false);
+    }
+
+    public static <T> UnmodifiableIterator<List<T>> paddedParitition(Iterator<T> iterator, int size)
+    {
+        return partitionImpl(iterator, size, true);
+    }
+
+    private static <T> UnmodifiableIterator<List<T>> partitionImpl(
+        final Iterator<T> iterator, final int size, final boolean pad)
+    {
+        checkNotNull(iterator);
+        checkArgument(size > 0);
+        return new UnmodifiableIterator<List<T>>() {
+            @Override
+            public boolean hasNext()
+            {
+                return iterator.hasNext();
+            }
+
+            @Override
+            public List<T> next()
+            {
+                if (!hasNext())
+                {
+                    throw new NoSuchElementException();
+                }
+                Object[] array = new Object[size];
+                int count = 0;
+                for (; count < size && iterator.hasNext(); count++)
+                {
+                    array[count] = iterator.next();
+                }
+                for (int i = count; i < size; i++)
+                {
+                    array[i] = null;
+                }
+
+                @SuppressWarnings("unchecked")
+                List<T> list = Collections.unmodifiableList((List<T>) Arrays.asList(array));
+                return (pad || count == size) ? list : list.subList(0, count);
+            }
+        };
+    }
+
+    public static <T> UnmodifiableIterator<T> filter (
+        final Iterator<T> unfiltered, final Predicate<? super T> retainIfTrue)
+    {
+        checkNotNull(unfiltered);
+        checkNotNull(retainIfTrue);
+        return new AbstractIterator<T>()
+        {
+            @Override
+            protected T computeNext()
+            {
+                while (unfiltered.hasNext())
+                {
+                    T element = unfiltered.next();
+                    if (retainIfTrue.apply(element))
+                    {
+                        return element;
+                    }
+                }
+                return endOfData();
+            }
+        };
+    }
+
+    @SuppressWarnings("unchecked")
+    @GwtIncompatible
+    public static <T> UnmodifiableIterator<T> filter(Iterator<?> unfiltered, Class<T> desiredType)
+    {
+        return (UnmodifiableIterator<T>) filter(unfiltered, instanceOf(desiredType));
+    }
+
+    public static <T> boolean any(Iterator<T> iterator, Predicate<? super T> predicate)
+    {
+        return indexOf(iterator, predicate) != -1;
+    }
+
+    public static <T> boolean all(Iterator<T> iterator, Predicate<? super T> predicate)
+    {
+        checkNotNull(predicate);
+        while (iterator.hasNext())
+        {
+            T element = iterator.next();
+            if (!predicate.apply(element))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static <T> T find(Iterator<T> iterator, Predicate<? super T> predicate)
+    {
+        checkNotNull(iterator);
+        checkNotNull(predicate);
+        while(iterator.hasNext())
+        {
+            T t = iterator.next();
+            if (predicate.apply(t))
+            {
+                return t;
+            }
+        }
+        throw new NoSuchElementException();
+    }
+
+    public static <T> Optional<T> tryFind(Iterator<T> iterator, Predicate<? super T> predicate)
+    {
+        checkNotNull(iterator);
+        checkNotNull(predicate);
+        while (iterator.hasNext())
+        {
+            T t = iterator.next();
+            if (predicate.apply(t))
+            {
+                return Optional.of(t);
+            }
+        }
+        return Optional.absent();
+    }
+
+    public static <T> int indexOf(Iterator<T> iterator, Predicate<? super T> predicate)
+    {
+        checkNotNull(predicate, "predicate");
+        for (int i=0; iterator.hasNext(); i++)
+        {
+            T current = iterator.next();
+            if (predicate.apply(current))
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     
 }
