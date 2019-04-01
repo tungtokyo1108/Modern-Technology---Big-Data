@@ -229,4 +229,112 @@ public class ADLFileInputStream extends InputStream
             return readRemote(position, b, offset, length, false);
         }
     }
+
+    int readRemote(long position, byte[] b, int offset, int length, boolean speculative) throws IOException
+    {
+        if (position < 0) throw new IllegalArgumentException("attempting to read from negative offset");
+        if (position >= directoryEntry.length) return -1;
+        if (offset >= b.length) throw new IllegalArgumentException("offset greater than length of array");
+        if (length < 0) throw new IllegalArgumentException("requested read length is less than zero");
+        if (length > (b.length - offset))
+        {
+            throw new IllegalArgumentException("requested read length is more than will fit after requested offset in buffer");
+        }
+
+        int totalBytesRead = 0;
+        int retriesRemaining = 1;
+        while (retriesRemaining >= 0)
+        {
+            byte[] junkbuffer = new byte[16*1024];
+            RequestOptions opts = new RequestOptions();
+            opts.retryPolicy = speculative ? new NoRetryPolicy() : new ExponentialBackoffPolicy();
+            // 1 second grace per MB to be downloaded
+            opts.timeout = client.timeout + (1000 * (length / 1000 / 1000));
+            OperationResponse resp = new OperationResponse();
+            InputStream inStream = Core.open(filename, position, length, sessionId, speculative, client, opts, resp);
+            if (speculative && !resp.successful && resp.httpResponseCode == 400 
+                && resp.remoteExceptionName.equals("Sepeculative Read Not Supported"))
+            {
+                client.disableReadAheads = true;
+                return 0;
+            }
+            if (!resp.successful) throw client.getExceptionFromResponse(resp, "Error reading from file" + filename);
+            if (resp.responseContentLength == 0 && !resp.responseChucked) return 0;
+            int bytesRead;
+            long start = System.nanoTime();
+            try {
+                do {
+                    bytesRead = inStream.read(b, offset + totalBytesRead, length - totalBytesRead);
+                    // If not EOF of the Core open's stream
+                    if (bytesRead > 0)
+                    {
+                        totalBytesRead += bytesRead;
+                    }
+                } while (bytesRead >= 0 && totalBytesRead < length);
+                // read to EOF on the stream, so connection can be reused 
+                if (bytesRead >= 0)
+                {
+                    // read and consume rest of stream
+                    while (inStream.read(junkbuffer, 0, junkbuffer.length) >= 0);
+                }
+            } catch (IOException ex) {
+                inStream.close();
+                if (totalBytesRead > 0)
+                {
+                    return totalBytesRead;
+                }
+                else
+                {
+                    if (retriesRemaining == 0)
+                    {
+                        throw new ADLException("Error reading data from response stream in positioned read() for file"
+                                                    + filename, ex);
+                    }
+                    else 
+                    {
+                        retriesRemaining--;
+                    }
+                    continue;
+                }
+            } finally {
+                if (inStream != null) inStream.close();
+                long timeTaken = (System.nanoTime() - start)/1000000;
+                if (log.isDebugEnabled())
+                {
+                    String logline = "HTTPRequestRead," + (resp.successful ? "Succeeded":"Failed") + 
+                                ", cReqId:" + opts.requestid + 
+                                ", lat:" + Long.toString(resp.lastCallLatency + timeTaken) + 
+                                ", Reqlen:" + totalBytesRead + 
+                                ", ReqId:" + resp.requestId + 
+                                ", path:" + filename + 
+                                ", offset:" + position;
+                    log.debug(logline); 
+                }
+            }
+            return totalBytesRead;
+        }
+        return totalBytesRead;
+    }
+
+    public void seek(long n) throws IOException, EOFException
+    {
+        if (log.isTraceEnabled())
+        {
+            log.trace("ADLFileInputStream.seek({}) using client{} for file {}", n, client.getClientId(), filename);
+        }
+
+        if (streamClosed) throw new IOException("attempting to seek into a closed stream");
+        if (n<0) throw new EOFException("Cannot seek to before the beginning of file");
+        if (n>directoryEntry.length) throw new EOFException("Cannot seek past end of file");
+
+        if (n>=fCursor-limit && n<=fCursor)
+        {
+            bCursor = (int) (n-(fCursor-limit));
+            return;
+        }
+        
+        fCursor = n;
+        limit = 0;
+        bCursor = 0;
+    }
 }
