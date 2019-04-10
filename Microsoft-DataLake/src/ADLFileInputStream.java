@@ -337,4 +337,24 @@ public class ADLFileInputStream extends InputStream
         limit = 0;
         bCursor = 0;
     }
+    
+    @Override
+    public long skip(long n) throws IOException {
+        if (log.isTraceEnabled()) {
+            log.trace("ADLFileInputStream.skip({}) using client {} for file {}", n, client.getClientId(), filename);
+        }
+        if (streamClosed) throw new IOException("attempting to skip() on a closed stream");
+        long currentPos = getPos();
+        long newPos = currentPos + n;
+        if (newPos < 0) {
+            newPos = 0;
+            n = newPos - currentPos;
+        }
+        if (newPos > directoryEntry.length) {
+            newPos = directoryEntry.length;
+            n = newPos - currentPos;
+        }
+        seek(newPos);
+        return n;
+    }
 }
