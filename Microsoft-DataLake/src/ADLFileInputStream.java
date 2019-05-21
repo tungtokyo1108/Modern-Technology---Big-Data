@@ -337,24 +337,49 @@ public class ADLFileInputStream extends InputStream
         limit = 0;
         bCursor = 0;
     }
-    
-    @Override
-    public long skip(long n) throws IOException {
-        if (log.isTraceEnabled()) {
-            log.trace("ADLFileInputStream.skip({}) using client {} for file {}", n, client.getClientId(), filename);
+
+    @Override 
+    public long skip(long n) throws IOException
+    {
+        if (log.isTraceEnabled())
+        {
+            log.trace("ADLFileInputStream.seek({}) using client{} for file {}", n, client.getClientId(), filename);
         }
+
         if (streamClosed) throw new IOException("attempting to skip() on a closed stream");
         long currentPos = getPos();
         long newPos = currentPos + n;
-        if (newPos < 0) {
+        if (newPos < 0)
+        {
             newPos = 0;
             n = newPos - currentPos;
         }
-        if (newPos > directoryEntry.length) {
+        if (newPos > directoryEntry.length)
+        {
             newPos = directoryEntry.length;
             n = newPos - currentPos;
         }
         seek(newPos);
         return n;
+    }
+
+    public void setBufferSize(int newSize) throws IOException 
+    {
+        if (log.isTraceEnabled())
+        {
+            log.trace("ADLFileInputStream.setBufferSize({}) using client {} for file {}", newSize, client.getClientId(), filename);
+        }
+        if (newSize <= 0) throw new IllegalAccessException("Buffer size cannot be zero or less: " + newSize);
+        if (newSize == blocksize) return;
+
+        unbuffer();
+        blocksize = newSize;
+        buffer = null;
+    }
+
+    public void setReadAheadQueueDepth(int queueDepth)
+    {
+        if (queueDepth < 0) throw new IllegalAccessException("Queue depth has to be 0 or more");
+        this.readAheadQueueDepth = queueDepth;
     }
 }
