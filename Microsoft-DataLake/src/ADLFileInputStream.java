@@ -382,4 +382,64 @@ public class ADLFileInputStream extends InputStream
         if (queueDepth < 0) throw new IllegalAccessException("Queue depth has to be 0 or more");
         this.readAheadQueueDepth = queueDepth;
     }
+
+    public int available() throws IOException 
+    {
+        if (streamClosed) throw new IOException("attempting to call available() on a closed stream");
+        return limit - bCursor;
+    }
+
+    public long length() throws IOException
+    {
+        if (streamClosed) throw new IOException("attempting to call length() on a closed stream");
+        return directoryEntry.length;
+    }
+
+    public long getPos() throws IOException
+    {
+        if (streamClosed) throw new IOException("attempting to call getPos() on a closed stream");
+        return fCursor - limit + bCursor;
+    }
+
+    public void unbuffer() throws IOException
+    {
+        if (log.isTraceEnabled())
+        {
+            log.trace("ADFileInputStream.unbuffer() for client{} for file{}", client.getClientId(), filename);
+        }
+        fCursor = getPos();
+        limit = 0;
+        bCursor = 0;
+    }
+
+    public void close() throws IOException
+    {
+        if (log.isTraceEnabled())
+        {
+            log.trace("ADFileInputStream.close() for client{} for file{}", client.getClientId(), filename);
+        }
+        streamClosed = true;
+        buffer = null;
+    }
+
+    public String getFilename()
+    {
+        return this.filename;
+    }
+
+    public synchronized void mark(int readlimit)
+    {
+        throw new UnsupportedOperationException("mark()/reset() not supported on this stream");
+    }
+
+    public synchronized void reset() throws IOException 
+    {
+        throw new UnsupportedOperationException("mark()/reset() not supported on this stream");
+    }
+
+    public boolean markSupported()
+    {
+        return false;
+    }
+
 }
