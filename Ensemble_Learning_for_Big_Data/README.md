@@ -6,4 +6,6 @@
 - [2016 - Causal Tree](https://www.pnas.org/content/113/27/7353.abstract)
 - [2018 - Causal Random Forest](https://www.pnas.org/content/113/27/7353.abstract)
 - [2018 - Iterative Random Forests](https://www.pnas.org/content/115/8/1943)
+- [2018 - Generalized linear mixed-effects model trees](https://link.springer.com/article/10.3758%2Fs13428-017-0971-x)
 - [2019 - Generalized Random Forests](https://projecteuclid.org/euclid.aos/1547197251)
+- [2019 - Spatial Lag Model Trees](https://onlinelibrary.wiley.com/doi/full/10.1111/geer.12146)
