@@ -1,11 +1,14 @@
-# New members of "Random Forest" family 
+# New members of "Ensemble learning" family 
 - [2006 - Conditional Tree/Random Forest](https://www.tandfonline.com/doi/abs/10.1198/106186006X133933)
 - [2008 - Model-Based Recursive Partitioning](https://www.tandfonline.com/doi/abs/10.1198/106186008X319331)
 - [2010 - Bayesian Trees](https://projecteuclid.org/euclid.aoas/1273584455)
+- [2014 - A Very Simple Safe-Bayesian Random Forest](https://ieeexplore.ieee.org/abstract/document/6920043)
 - [2015 - partykit: A Modular Toolkit for Recursive Partytioning in R](http://www.jmlr.org/papers/v16/hothorn15a.html)
 - [2016 - Causal Tree](https://www.pnas.org/content/113/27/7353.abstract)
+- [2016 - Reinforcement Learning Trees](https://www.tandfonline.com/doi/full/10.1080/01621459.2015.1036994)
 - [2018 - Causal Random Forest](https://www.pnas.org/content/113/27/7353.abstract)
 - [2018 - Iterative Random Forests](https://www.pnas.org/content/115/8/1943)
 - [2018 - Generalized linear mixed-effects model trees](https://link.springer.com/article/10.3758%2Fs13428-017-0971-x)
 - [2019 - Generalized Random Forests](https://projecteuclid.org/euclid.aos/1547197251)
 - [2019 - Spatial Lag Model Trees](https://onlinelibrary.wiley.com/doi/full/10.1111/geer.12146)
+- [2019 - Reinforced quasi-random forest](https://www.sciencedirect.com/science/article/abs/pii/S0031320319301888)
