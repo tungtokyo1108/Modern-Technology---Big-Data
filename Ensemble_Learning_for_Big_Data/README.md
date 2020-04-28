@@ -7,7 +7,7 @@
 - [2015 - partykit: A Modular Toolkit for Recursive Partytioning in R](http://www.jmlr.org/papers/v16/hothorn15a.html)
 - [2016 - Causal Tree](https://www.pnas.org/content/113/27/7353.abstract)
 - [2016 - Reinforcement Learning Trees](https://www.tandfonline.com/doi/full/10.1080/01621459.2015.1036994)
-- [2018 - Causal Random Forest](https://www.pnas.org/content/113/27/7353.abstract)
+- [2018 - Causal Random Forest](https://www.tandfonline.com/doi/full/10.1080/01621459.2017.1319839)
 - [2018 - Iterative Random Forests](https://www.pnas.org/content/115/8/1943)
 - [2018 - Generalized linear mixed-effects model trees](https://link.springer.com/article/10.3758%2Fs13428-017-0971-x)
 - [2019 - Generalized Random Forests](https://projecteuclid.org/euclid.aos/1547197251)
