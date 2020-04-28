@@ -3,6 +3,7 @@
 - [2008 - Model-Based Recursive Partitioning](https://www.tandfonline.com/doi/abs/10.1198/106186008X319331)
 - [2010 - Bayesian Trees](https://projecteuclid.org/euclid.aoas/1273584455)
 - [2014 - A Very Simple Safe-Bayesian Random Forest](https://ieeexplore.ieee.org/abstract/document/6920043)
+- [2014 - Random Intersection Trees](http://www.jmlr.org/papers/v15/shah14a.html)
 - [2015 - partykit: A Modular Toolkit for Recursive Partytioning in R](http://www.jmlr.org/papers/v16/hothorn15a.html)
 - [2016 - Causal Tree](https://www.pnas.org/content/113/27/7353.abstract)
 - [2016 - Reinforcement Learning Trees](https://www.tandfonline.com/doi/full/10.1080/01621459.2015.1036994)
