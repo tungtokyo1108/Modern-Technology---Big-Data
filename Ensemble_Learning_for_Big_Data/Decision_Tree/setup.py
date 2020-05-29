@@ -24,6 +24,9 @@ setup(
                    include_dirs=[numpy.get_include()]),
                    Extension("_criterion",
                    sources=["_criterion.pyx"],
+                   include_dirs=[numpy.get_include()]),
+                   Extension("_splitter",
+                   sources=["_splitter.pyx"],
                    include_dirs=[numpy.get_include()])],
       )
 
