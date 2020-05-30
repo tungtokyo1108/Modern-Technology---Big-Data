@@ -30,7 +30,7 @@ cdef class Splitter:
 
     cdef tr.SIZE_t* samples 
     cdef tr.SIZE_t n_samples 
-    cdef double weight_n_samples 
+    cdef double weighted_n_samples 
     cdef tr.SIZE_t* features 
     cdef tr.SIZE_t* constant_features
     cdef tr.SIZE_t n_features
@@ -48,4 +48,14 @@ cdef class Splitter:
                   tr.DOUBLE_t* sample_weight, 
                   np.ndarray X_idx_sorted=*) except -1
 
-    
+    cdef int node_reset(self, tr.SIZE_t start, tr.SIZE_t end, 
+                        double* weight_n_samples) nogil except -1
+
+    cdef int node_split(self,
+                        double impurity,
+                        SplitRecord* split, 
+                        tr.SIZE_t* n_constant_features) nogil except -1 
+
+    cdef void node_value(self, double* dest) nogil
+
+    cdef double node_impurity(self) nogil
