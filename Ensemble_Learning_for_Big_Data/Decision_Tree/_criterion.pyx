@@ -24,9 +24,9 @@ cdef class Criterion:
     def __setstate__(self, d):
         pass 
 
-    cdef int init(self, const tr.DOUBLE_t[:, ::1] y, tr.DOUBLE_t* sample_weight,
-                  double weighted_n_samples, tr.SIZE_t* samples, tr.SIZE_t start,
-                  tr.SIZE_t end) nogil except -1:
+    cdef int init(self, const ut.DOUBLE_t[:, ::1] y, ut.DOUBLE_t* sample_weight,
+                  double weighted_n_samples, ut.SIZE_t* samples, ut.SIZE_t start,
+                  ut.SIZE_t end) nogil except -1:
         pass
     
     cdef int reset(self) nogil except -1:
@@ -35,7 +35,7 @@ cdef class Criterion:
     cdef int reverse_reset(self) nogil except -1:
         pass 
 
-    cdef int update(self, tr.SIZE_t new_pos) nogil except -1:
+    cdef int update(self, ut.SIZE_t new_pos) nogil except -1:
         pass 
 
     cdef double node_impurity(self) nogil:
@@ -72,8 +72,8 @@ cdef class Criterion:
 
 cdef class ClassificationCriterion(Criterion):
 
-    def __cinit__(self, tr.SIZE_t n_outputs,
-                  np.ndarray[tr.SIZE_t, ndim=1] n_classes):
+    def __cinit__(self, ut.SIZE_t n_outputs,
+                  np.ndarray[ut.SIZE_t, ndim=1] n_classes):
         
         self.sample_weight = NULL
 
@@ -96,8 +96,8 @@ cdef class ClassificationCriterion(Criterion):
 
         ut.safe_realloc(&self.n_classes, n_outputs)
 
-        cdef tr.SIZE_t k = 0
-        cdef tr.SIZE_t sum_stride = 0
+        cdef ut.SIZE_t k = 0
+        cdef ut.SIZE_t sum_stride = 0
 
         for k in range(n_outputs):
             self.n_classes[k] = n_classes[k]
@@ -106,7 +106,7 @@ cdef class ClassificationCriterion(Criterion):
 
         self.sum_stride = sum_stride
 
-        cdef tr.SIZE_t n_elements = n_outputs * sum_stride
+        cdef ut.SIZE_t n_elements = n_outputs * sum_stride
         self.sum_total = <double*> calloc(n_elements, sizeof(double))
         self.sum_left = <double*> calloc(n_elements, sizeof(double))
         self.sum_right = <double*> calloc(n_elements, sizeof(double))
@@ -125,9 +125,9 @@ cdef class ClassificationCriterion(Criterion):
                  ut.sizet_ptr_to_ndarray(self.n_classes, self.n_outputs)),
                  self.__getstate__())
 
-    cdef int init(self, const tr.DOUBLE_t[:, ::1] y, tr.DOUBLE_t* sample_weight,
-                  double weighted_n_samples, tr.SIZE_t* samples, tr.SIZE_t start,
-                  tr.SIZE_t end) nogil except -1:
+    cdef int init(self, const ut.DOUBLE_t[:, ::1] y, ut.DOUBLE_t* sample_weight,
+                  double weighted_n_samples, ut.SIZE_t* samples, ut.SIZE_t start,
+                  ut.SIZE_t end) nogil except -1:
         
         self.y = y 
         self.sample_weight = sample_weight
@@ -138,15 +138,15 @@ cdef class ClassificationCriterion(Criterion):
         self.weighted_n_samples = weighted_n_samples
         self.weighted_n_node_samples = 0.0
 
-        cdef tr.SIZE_t* n_classes = self.n_classes
+        cdef ut.SIZE_t* n_classes = self.n_classes
         cdef double* sum_total = self.sum_total
 
-        cdef tr.SIZE_t i 
-        cdef tr.SIZE_t p 
-        cdef tr.SIZE_t k 
-        cdef tr.SIZE_t c 
-        cdef tr.DOUBLE_t w = 1.0
-        cdef tr.SIZE_t offset = 0
+        cdef ut.SIZE_t i 
+        cdef ut.SIZE_t p 
+        cdef ut.SIZE_t k 
+        cdef ut.SIZE_t c 
+        cdef ut.DOUBLE_t w = 1.0
+        cdef ut.SIZE_t offset = 0
 
         for k in range(self.n_outputs):
             memset(sum_total + offset, 0, n_classes[k] * sizeof(double))
@@ -159,7 +159,7 @@ cdef class ClassificationCriterion(Criterion):
                 w = sample_weight[i]
 
             for k in range(self.n_outputs):
-                c = <tr.SIZE_t> self.y[i, k]
+                c = <ut.SIZE_t> self.y[i, k]
                 sum_total[k * self.sum_stride + c] += w 
             
             self.weighted_n_node_samples += w 
@@ -178,8 +178,8 @@ cdef class ClassificationCriterion(Criterion):
         cdef double* sum_left = self.sum_left
         cdef double* sum_right = self.sum_right
 
-        cdef tr.SIZE_t* n_classes = self.n_classes
-        cdef tr.SIZE_t k 
+        cdef ut.SIZE_t* n_classes = self.n_classes
+        cdef ut.SIZE_t k 
 
         for k in range(self.n_outputs):
             memset(sum_left, 0, n_classes[k] * sizeof(double))
@@ -205,8 +205,8 @@ cdef class ClassificationCriterion(Criterion):
         cdef double* sum_left = self.sum_left
         cdef double* sum_right = self.sum_right
 
-        cdef tr.SIZE_t* n_classes = self.n_classes
-        cdef tr.SIZE_t k
+        cdef ut.SIZE_t* n_classes = self.n_classes
+        cdef ut.SIZE_t k
 
         for k in range(self.n_outputs):
             memset(sum_right, 0, n_classes[k] * sizeof(double))
@@ -217,25 +217,25 @@ cdef class ClassificationCriterion(Criterion):
             sum_right += self.sum_stride
         return 0
 
-    cdef int update(self, tr.SIZE_t new_pos) nogil except -1:
+    cdef int update(self, ut.SIZE_t new_pos) nogil except -1:
         
-        cdef tr.SIZE_t pos = self.pos
-        cdef tr.SIZE_t end = self.end 
+        cdef ut.SIZE_t pos = self.pos
+        cdef ut.SIZE_t end = self.end 
 
         cdef double* sum_left = self.sum_left
         cdef double* sum_right = self.sum_right
         cdef double* sum_total = self.sum_total
 
-        cdef tr.SIZE_t* n_classes = self.n_classes
-        cdef tr.SIZE_t* samples = self.samples 
-        cdef tr.DOUBLE_t* sample_weight = self.sample_weight
+        cdef ut.SIZE_t* n_classes = self.n_classes
+        cdef ut.SIZE_t* samples = self.samples 
+        cdef ut.DOUBLE_t* sample_weight = self.sample_weight
 
-        cdef tr.SIZE_t i 
-        cdef tr.SIZE_t p 
-        cdef tr.SIZE_t k 
-        cdef tr.SIZE_t c
-        cdef tr.SIZE_t label_index 
-        cdef tr.DOUBLE_t w = 1.0
+        cdef ut.SIZE_t i 
+        cdef ut.SIZE_t p 
+        cdef ut.SIZE_t k 
+        cdef ut.SIZE_t c
+        cdef ut.SIZE_t label_index 
+        cdef ut.DOUBLE_t w = 1.0
 
         if (new_pos - pos) <= (end - new_pos):
             for p in range(pos, new_pos):
@@ -245,7 +245,7 @@ cdef class ClassificationCriterion(Criterion):
                     w = sample_weight[i]
 
                 for k in range(self.n_outputs):
-                    label_index = k * self.sum_stride + <tr.SIZE_t> self.y[i, k]
+                    label_index = k * self.sum_stride + <ut.SIZE_t> self.y[i, k]
                     sum_left[label_index] += w
 
                 self.weighted_n_left += w
@@ -260,7 +260,7 @@ cdef class ClassificationCriterion(Criterion):
                     w = sample_weight[i]
 
                 for k in range(self.n_outputs):
-                    label_index = k * self.sum_stride + <tr.SIZE_t> self.y[i, k]
+                    label_index = k * self.sum_stride + <ut.SIZE_t> self.y[i, k]
                     sum_left[label_index] -= w
 
                 self.weighted_n_left -= w
@@ -288,8 +288,8 @@ cdef class ClassificationCriterion(Criterion):
     cdef void node_value(self, double* dest) nogil:
 
         cdef double* sum_total = self.sum_total
-        cdef tr.SIZE_t* n_classes = self.n_classes
-        cdef tr.SIZE_t k 
+        cdef ut.SIZE_t* n_classes = self.n_classes
+        cdef ut.SIZE_t k 
 
         for k in range(self.n_outputs):
             memcpy(dest, sum_total, n_classes[k] * sizeof(double))
@@ -300,12 +300,12 @@ cdef class Entropy(ClassificationCriterion):
 
     cdef double node_impurity(self) nogil:
 
-        cdef tr.SIZE_t* n_classes = self.n_classes
+        cdef ut.SIZE_t* n_classes = self.n_classes
         cdef double* sum_total = self.sum_total
         cdef double entropy = 0.0
         cdef double count_k 
-        cdef tr.SIZE_t k 
-        cdef tr.SIZE_t c 
+        cdef ut.SIZE_t k 
+        cdef ut.SIZE_t c 
 
         for k in range(self.n_outputs):
             for c in range(n_classes[k]):
@@ -321,14 +321,14 @@ cdef class Entropy(ClassificationCriterion):
     cdef void children_impurity(self, double* impurity_left, 
                                 double* impurity_right) nogil:
 
-        cdef tr.SIZE_t* n_classes = self.n_classes
+        cdef ut.SIZE_t* n_classes = self.n_classes
         cdef double* sum_left = self.sum_left
         cdef double* sum_right = self.sum_right
         cdef double entropy_left = 0.0
         cdef double entropy_right = 0.0
         cdef double count_k 
-        cdef tr.SIZE_t k 
-        cdef tr.SIZE_t c 
+        cdef ut.SIZE_t k 
+        cdef ut.SIZE_t c 
 
         for k in range(self.n_outputs):
             for c in range(n_classes[k]):
@@ -352,13 +352,13 @@ cdef class Gini(ClassificationCriterion):
 
     cdef double node_impurity(self) nogil:
 
-        cdef tr.SIZE_t* n_classes = self.n_classes
+        cdef ut.SIZE_t* n_classes = self.n_classes
         cdef double* sum_total = self.sum_total
         cdef double gini = 0.0
         cdef double sq_count 
         cdef double count_k 
-        cdef tr.SIZE_t k 
-        cdef tr.SIZE_t c 
+        cdef ut.SIZE_t k 
+        cdef ut.SIZE_t c 
 
         for k in range(self.n_outputs):
             sq_count = 0.0
@@ -377,7 +377,7 @@ cdef class Gini(ClassificationCriterion):
     cdef void children_impurity(self, double* impurity_left, 
                                 double* impurity_right) nogil:
         
-        cdef tr.SIZE_t* n_classes = self.n_classes
+        cdef ut.SIZE_t* n_classes = self.n_classes
         cdef double* sum_left = self.sum_left
         cdef double* sum_right = self.sum_right
         cdef double gini_left = 0.0
@@ -385,8 +385,8 @@ cdef class Gini(ClassificationCriterion):
         cdef double sq_count_left 
         cdef double sq_count_right
         cdef double count_k 
-        cdef tr.SIZE_t k 
-        cdef tr.SIZE_t c 
+        cdef ut.SIZE_t k 
+        cdef ut.SIZE_t c 
 
         for k in range(self.n_outputs):
             sq_count_left = 0.0

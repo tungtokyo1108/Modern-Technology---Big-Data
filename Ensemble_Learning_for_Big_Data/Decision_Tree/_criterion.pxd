@@ -1,20 +1,21 @@
 import numpy as np 
 cimport numpy as np 
 
-cimport _tree as tr
+#cimport _tree as tr
+cimport _utils as ut 
 
 cdef class Criterion:
 
-    cdef const tr.DOUBLE_t[:, ::1] y
-    cdef tr.DOUBLE_t* sample_weight
-    cdef tr.SIZE_t* samples
-    cdef tr.SIZE_t start
-    cdef tr.SIZE_t pos
-    cdef tr.SIZE_t end 
+    cdef const ut.DOUBLE_t[:, ::1] y
+    cdef ut.DOUBLE_t* sample_weight
+    cdef ut.SIZE_t* samples
+    cdef ut.SIZE_t start
+    cdef ut.SIZE_t pos
+    cdef ut.SIZE_t end 
 
-    cdef tr.SIZE_t n_outputs 
-    cdef tr.SIZE_t n_samples 
-    cdef tr.SIZE_t n_node_samples
+    cdef ut.SIZE_t n_outputs 
+    cdef ut.SIZE_t n_samples 
+    cdef ut.SIZE_t n_node_samples
     cdef double weighted_n_samples
     cdef double weighted_n_node_samples
     cdef double weighted_n_left
@@ -25,12 +26,12 @@ cdef class Criterion:
     cdef double* sum_right
 
     # Methods 
-    cdef int init(self, const tr.DOUBLE_t[:, ::1] y, tr.DOUBLE_t* sample_weight,
-                  double weighted_n_samples, tr.SIZE_t* samples, tr.SIZE_t start,
-                  tr.SIZE_t end) nogil except -1 
+    cdef int init(self, const ut.DOUBLE_t[:, ::1] y, ut.DOUBLE_t* sample_weight,
+                  double weighted_n_samples, ut.SIZE_t* samples, ut.SIZE_t start,
+                  ut.SIZE_t end) nogil except -1 
     cdef int reset(self) nogil except -1
     cdef int reverse_reset(self) nogil except -1
-    cdef int update(self, tr.SIZE_t new_pos) nogil except -1 
+    cdef int update(self, ut.SIZE_t new_pos) nogil except -1 
     cdef double node_impurity(self) nogil 
     cdef void children_impurity(self, double* impurity_left,
                                 double* impurity_right) nogil
@@ -40,8 +41,8 @@ cdef class Criterion:
     
 cdef class ClassificationCriterion(Criterion):
     
-    cdef tr.SIZE_t* n_classes
-    cdef tr.SIZE_t sum_stride 
+    cdef ut.SIZE_t* n_classes
+    cdef ut.SIZE_t sum_stride 
     
 cdef class RegressionCriterion(Criterion):
     

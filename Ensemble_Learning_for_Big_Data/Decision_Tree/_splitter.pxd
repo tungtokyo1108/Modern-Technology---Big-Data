@@ -3,12 +3,13 @@ import numpy as np
 cimport numpy as np 
 
 cimport _criterion as cr
-cimport _tree as tr
+#cimport _tree as tr
+cimport _utils as ut 
 
 cdef struct SplitRecord:
 
-    tr.SIZE_t feature
-    tr.SIZE_t pos          # Split samples array at the given position
+    ut.SIZE_t feature
+    ut.SIZE_t pos          # Split samples array at the given position
 
     double threshold
     double improvement
@@ -21,40 +22,40 @@ cdef class Splitter:
     # to split the samples 
 
     cdef public cr.Criterion criterion 
-    cdef public tr.SIZE_t max_features
-    cdef public tr.SIZE_t min_samples_leaf
+    cdef public ut.SIZE_t max_features
+    cdef public ut.SIZE_t min_samples_leaf
     cdef public double min_weight_leaf
 
     cdef object random_state
-    cdef tr.UINT32_t rand_r_state
+    cdef ut.UINT32_t rand_r_state
 
-    cdef tr.SIZE_t* samples 
-    cdef tr.SIZE_t n_samples 
+    cdef ut.SIZE_t* samples 
+    cdef ut.SIZE_t n_samples 
     cdef double weighted_n_samples 
-    cdef tr.SIZE_t* features 
-    cdef tr.SIZE_t* constant_features
-    cdef tr.SIZE_t n_features
-    cdef tr.DTYPE_t* feature_values 
+    cdef ut.SIZE_t* features 
+    cdef ut.SIZE_t* constant_features
+    cdef ut.SIZE_t n_features
+    cdef ut.DTYPE_t* feature_values 
 
-    cdef tr.SIZE_t start
-    cdef tr.SIZE_t end 
+    cdef ut.SIZE_t start
+    cdef ut.SIZE_t end 
 
-    cdef const tr.DOUBLE_t[:, ::1]y 
-    cdef tr.DOUBLE_t* sample_weight
+    cdef const ut.DOUBLE_t[:, ::1]y 
+    cdef ut.DOUBLE_t* sample_weight
 
     cdef int init(self, 
                   object X, 
-                  const tr.DOUBLE_t[:, ::1] y,
-                  tr.DOUBLE_t* sample_weight, 
+                  const ut.DOUBLE_t[:, ::1] y,
+                  ut.DOUBLE_t* sample_weight, 
                   np.ndarray X_idx_sorted=*) except -1
 
-    cdef int node_reset(self, tr.SIZE_t start, tr.SIZE_t end, 
+    cdef int node_reset(self, ut.SIZE_t start, ut.SIZE_t end, 
                         double* weight_n_samples) nogil except -1
 
     cdef int node_split(self,
                         double impurity,
                         SplitRecord* split, 
-                        tr.SIZE_t* n_constant_features) nogil except -1 
+                        ut.SIZE_t* n_constant_features) nogil except -1 
 
     cdef void node_value(self, double* dest) nogil
 
