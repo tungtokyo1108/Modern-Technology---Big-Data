@@ -1319,6 +1319,7 @@ struct __pyx_opt_args_7sklearn_5utils_7_random_sample_without_replacement {
   PyObject *method;
   PyObject *random_state;
 };
+struct __pyx_t_6_utils_Node;
 struct __pyx_t_6_utils_StackRecord;
 struct __pyx_t_6_utils_PriorityHeapRecord;
 struct __pyx_t_6_utils_WeightedPQueueRecord;
@@ -1334,7 +1335,24 @@ enum  {
   __pyx_e_6_utils_RAND_R_MAX = 0x7FFFFFFF
 };
 
-/* "_utils.pxd":60
+/* "_utils.pxd":24
+ *     RAND_R_MAX = 0x7FFFFFFF
+ * 
+ * cdef struct Node:             # <<<<<<<<<<<<<<
+ * 
+ *     SIZE_t left_child
+ */
+struct __pyx_t_6_utils_Node {
+  __pyx_t_6_utils_SIZE_t left_child;
+  __pyx_t_6_utils_SIZE_t right_child;
+  __pyx_t_6_utils_SIZE_t feature;
+  __pyx_t_6_utils_DOUBLE_t threshold;
+  __pyx_t_6_utils_DOUBLE_t impurity;
+  __pyx_t_6_utils_SIZE_t n_node_samples;
+  __pyx_t_6_utils_DOUBLE_t weighted_n_node_samples;
+};
+
+/* "_utils.pxd":70
  * # =============================================================================
  * 
  * cdef struct StackRecord:             # <<<<<<<<<<<<<<
@@ -1351,7 +1369,7 @@ struct __pyx_t_6_utils_StackRecord {
   __pyx_t_6_utils_SIZE_t n_constant_features;
 };
 
-/* "_utils.pxd":85
+/* "_utils.pxd":95
  * 
  * # A record on the frontier for best-first tree growing
  * cdef struct PriorityHeapRecord:             # <<<<<<<<<<<<<<
@@ -1371,7 +1389,7 @@ struct __pyx_t_6_utils_PriorityHeapRecord {
   double improvement;
 };
 
-/* "_utils.pxd":115
+/* "_utils.pxd":125
  * # =============================================================================
  * 
  * cdef struct WeightedPQueueRecord:             # <<<<<<<<<<<<<<
@@ -1404,7 +1422,7 @@ struct __pyx_obj_7sklearn_9neighbors_10_quad_tree__QuadTree {
 };
 
 
-/* "_utils.pxd":69
+/* "_utils.pxd":79
  *     SIZE_t n_constant_features
  * 
  * cdef class Stack:             # <<<<<<<<<<<<<<
@@ -1420,7 +1438,7 @@ struct __pyx_obj_6_utils_Stack {
 };
 
 
-/* "_utils.pxd":97
+/* "_utils.pxd":107
  *     double improvement
  * 
  * cdef class PriorityHeap:             # <<<<<<<<<<<<<<
@@ -1436,7 +1454,7 @@ struct __pyx_obj_6_utils_PriorityHeap {
 };
 
 
-/* "_utils.pxd":119
+/* "_utils.pxd":129
  *     DOUBLE_t weight
  * 
  * cdef class WeightedPQueue:             # <<<<<<<<<<<<<<
@@ -1452,7 +1470,7 @@ struct __pyx_obj_6_utils_WeightedPQueue {
 };
 
 
-/* "_utils.pxd":138
+/* "_utils.pxd":148
  * # =============================================================================
  * 
  * cdef class WeightedMedianCalculator:             # <<<<<<<<<<<<<<
@@ -2129,9 +2147,11 @@ static unsigned char *__pyx_fuse_2__pyx_f_6_utils_safe_realloc(unsigned char **,
 static struct __pyx_t_6_utils_WeightedPQueueRecord *__pyx_fuse_3__pyx_f_6_utils_safe_realloc(struct __pyx_t_6_utils_WeightedPQueueRecord **, size_t); /*proto*/
 static __pyx_t_6_utils_DOUBLE_t *__pyx_fuse_4__pyx_f_6_utils_safe_realloc(__pyx_t_6_utils_DOUBLE_t **, size_t); /*proto*/
 static __pyx_t_6_utils_DOUBLE_t **__pyx_fuse_5__pyx_f_6_utils_safe_realloc(__pyx_t_6_utils_DOUBLE_t ***, size_t); /*proto*/
-static struct __pyx_t_7sklearn_9neighbors_10_quad_tree_Cell **__pyx_fuse_6__pyx_f_6_utils_safe_realloc(struct __pyx_t_7sklearn_9neighbors_10_quad_tree_Cell ***, size_t); /*proto*/
-static struct __pyx_t_6_utils_StackRecord *__pyx_fuse_7__pyx_f_6_utils_safe_realloc(struct __pyx_t_6_utils_StackRecord **, size_t); /*proto*/
-static struct __pyx_t_6_utils_PriorityHeapRecord *__pyx_fuse_8__pyx_f_6_utils_safe_realloc(struct __pyx_t_6_utils_PriorityHeapRecord **, size_t); /*proto*/
+static struct __pyx_t_6_utils_Node *__pyx_fuse_6__pyx_f_6_utils_safe_realloc(struct __pyx_t_6_utils_Node **, size_t); /*proto*/
+static struct __pyx_t_7sklearn_9neighbors_10_quad_tree_Cell **__pyx_fuse_7__pyx_f_6_utils_safe_realloc(struct __pyx_t_7sklearn_9neighbors_10_quad_tree_Cell ***, size_t); /*proto*/
+static struct __pyx_t_6_utils_Node **__pyx_fuse_8__pyx_f_6_utils_safe_realloc(struct __pyx_t_6_utils_Node ***, size_t); /*proto*/
+static struct __pyx_t_6_utils_StackRecord *__pyx_fuse_9__pyx_f_6_utils_safe_realloc(struct __pyx_t_6_utils_StackRecord **, size_t); /*proto*/
+static struct __pyx_t_6_utils_PriorityHeapRecord *__pyx_fuse_10__pyx_f_6_utils_safe_realloc(struct __pyx_t_6_utils_PriorityHeapRecord **, size_t); /*proto*/
 #define __Pyx_MODULE_NAME "_utils"
 extern int __pyx_module_is_main__utils;
 int __pyx_module_is_main__utils = 0;
@@ -3878,7 +3898,274 @@ static __pyx_t_6_utils_DOUBLE_t **__pyx_fuse_5__pyx_f_6_utils_safe_realloc(__pyx
   return __pyx_r;
 }
 
-static struct __pyx_t_7sklearn_9neighbors_10_quad_tree_Cell **__pyx_fuse_6__pyx_f_6_utils_safe_realloc(struct __pyx_t_7sklearn_9neighbors_10_quad_tree_Cell ***__pyx_v_p, size_t __pyx_v_nelems) {
+static struct __pyx_t_6_utils_Node *__pyx_fuse_6__pyx_f_6_utils_safe_realloc(struct __pyx_t_6_utils_Node **__pyx_v_p, size_t __pyx_v_nelems) {
+  size_t __pyx_v_nbytes;
+  struct __pyx_t_6_utils_Node *__pyx_v_tmp;
+  struct __pyx_t_6_utils_Node *__pyx_r;
+  __Pyx_RefNannyDeclarations
+  size_t __pyx_t_1;
+  int __pyx_t_2;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  PyObject *__pyx_t_5 = NULL;
+  #ifdef WITH_THREAD
+  PyGILState_STATE __pyx_gilstate_save;
+  #endif
+  __Pyx_RefNannySetupContext("__pyx_fuse_6safe_realloc", 1);
+
+  /* "_utils.pyx":20
+ *     # sizeof(realloc_ptr[0]) would be more like idiomatic C, but causes Cython
+ *     # 0.20.1 to crash.
+ *     cdef size_t nbytes = nelems * sizeof(p[0][0])             # <<<<<<<<<<<<<<
+ *     if nbytes / sizeof(p[0][0]) != nelems:
+ *         # Overflow in the multiplication
+ */
+  /*try:*/ {
+    __pyx_v_nbytes = (__pyx_v_nelems * (sizeof(((__pyx_v_p[0])[0]))));
+
+    /* "_utils.pyx":21
+ *     # 0.20.1 to crash.
+ *     cdef size_t nbytes = nelems * sizeof(p[0][0])
+ *     if nbytes / sizeof(p[0][0]) != nelems:             # <<<<<<<<<<<<<<
+ *         # Overflow in the multiplication
+ *         with gil:
+ */
+    __pyx_t_1 = (sizeof(((__pyx_v_p[0])[0])));
+    if (unlikely(__pyx_t_1 == 0)) {
+      #ifdef WITH_THREAD
+      PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+      #endif
+      PyErr_SetString(PyExc_ZeroDivisionError, "integer division or modulo by zero");
+      #ifdef WITH_THREAD
+      __Pyx_PyGILState_Release(__pyx_gilstate_save);
+      #endif
+      __PYX_ERR(0, 21, __pyx_L4_error)
+    }
+    __pyx_t_2 = (((__pyx_v_nbytes / __pyx_t_1) != __pyx_v_nelems) != 0);
+    if (__pyx_t_2) {
+
+      /* "_utils.pyx":23
+ *     if nbytes / sizeof(p[0][0]) != nelems:
+ *         # Overflow in the multiplication
+ *         with gil:             # <<<<<<<<<<<<<<
+ *             raise MemoryError("could not allocate (%d * %d) bytes"
+ *                               % (nelems, sizeof(p[0][0])))
+ */
+      {
+          #ifdef WITH_THREAD
+          PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+          #endif
+          /*try:*/ {
+
+            /* "_utils.pyx":25
+ *         with gil:
+ *             raise MemoryError("could not allocate (%d * %d) bytes"
+ *                               % (nelems, sizeof(p[0][0])))             # <<<<<<<<<<<<<<
+ *     cdef realloc_ptr tmp = <realloc_ptr>realloc(p[0], nbytes)
+ *     if tmp == NULL:
+ */
+            __pyx_t_3 = __Pyx_PyInt_FromSize_t(__pyx_v_nelems); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 25, __pyx_L8_error)
+            __Pyx_GOTREF(__pyx_t_3);
+            __pyx_t_4 = __Pyx_PyInt_FromSize_t((sizeof(((__pyx_v_p[0])[0])))); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 25, __pyx_L8_error)
+            __Pyx_GOTREF(__pyx_t_4);
+            __pyx_t_5 = PyTuple_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 25, __pyx_L8_error)
+            __Pyx_GOTREF(__pyx_t_5);
+            __Pyx_GIVEREF(__pyx_t_3);
+            PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_3);
+            __Pyx_GIVEREF(__pyx_t_4);
+            PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_t_4);
+            __pyx_t_3 = 0;
+            __pyx_t_4 = 0;
+            __pyx_t_4 = __Pyx_PyString_Format(__pyx_kp_s_could_not_allocate_d_d_bytes, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 25, __pyx_L8_error)
+            __Pyx_GOTREF(__pyx_t_4);
+            __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+
+            /* "_utils.pyx":24
+ *         # Overflow in the multiplication
+ *         with gil:
+ *             raise MemoryError("could not allocate (%d * %d) bytes"             # <<<<<<<<<<<<<<
+ *                               % (nelems, sizeof(p[0][0])))
+ *     cdef realloc_ptr tmp = <realloc_ptr>realloc(p[0], nbytes)
+ */
+            __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_builtin_MemoryError, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 24, __pyx_L8_error)
+            __Pyx_GOTREF(__pyx_t_5);
+            __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+            __Pyx_Raise(__pyx_t_5, 0, 0, 0);
+            __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+            __PYX_ERR(0, 24, __pyx_L8_error)
+          }
+
+          /* "_utils.pyx":23
+ *     if nbytes / sizeof(p[0][0]) != nelems:
+ *         # Overflow in the multiplication
+ *         with gil:             # <<<<<<<<<<<<<<
+ *             raise MemoryError("could not allocate (%d * %d) bytes"
+ *                               % (nelems, sizeof(p[0][0])))
+ */
+          /*finally:*/ {
+            __pyx_L8_error: {
+              #ifdef WITH_THREAD
+              __Pyx_PyGILState_Release(__pyx_gilstate_save);
+              #endif
+              goto __pyx_L4_error;
+            }
+          }
+      }
+
+      /* "_utils.pyx":21
+ *     # 0.20.1 to crash.
+ *     cdef size_t nbytes = nelems * sizeof(p[0][0])
+ *     if nbytes / sizeof(p[0][0]) != nelems:             # <<<<<<<<<<<<<<
+ *         # Overflow in the multiplication
+ *         with gil:
+ */
+    }
+
+    /* "_utils.pyx":26
+ *             raise MemoryError("could not allocate (%d * %d) bytes"
+ *                               % (nelems, sizeof(p[0][0])))
+ *     cdef realloc_ptr tmp = <realloc_ptr>realloc(p[0], nbytes)             # <<<<<<<<<<<<<<
+ *     if tmp == NULL:
+ *         with gil:
+ */
+    __pyx_v_tmp = ((struct __pyx_t_6_utils_Node *)realloc((__pyx_v_p[0]), __pyx_v_nbytes));
+
+    /* "_utils.pyx":27
+ *                               % (nelems, sizeof(p[0][0])))
+ *     cdef realloc_ptr tmp = <realloc_ptr>realloc(p[0], nbytes)
+ *     if tmp == NULL:             # <<<<<<<<<<<<<<
+ *         with gil:
+ *             raise MemoryError("could not allocate %d bytes" % nbytes)
+ */
+    __pyx_t_2 = ((__pyx_v_tmp == NULL) != 0);
+    if (__pyx_t_2) {
+
+      /* "_utils.pyx":28
+ *     cdef realloc_ptr tmp = <realloc_ptr>realloc(p[0], nbytes)
+ *     if tmp == NULL:
+ *         with gil:             # <<<<<<<<<<<<<<
+ *             raise MemoryError("could not allocate %d bytes" % nbytes)
+ * 
+ */
+      {
+          #ifdef WITH_THREAD
+          PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+          #endif
+          /*try:*/ {
+
+            /* "_utils.pyx":29
+ *     if tmp == NULL:
+ *         with gil:
+ *             raise MemoryError("could not allocate %d bytes" % nbytes)             # <<<<<<<<<<<<<<
+ * 
+ *     p[0] = tmp
+ */
+            __pyx_t_5 = __Pyx_PyInt_FromSize_t(__pyx_v_nbytes); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 29, __pyx_L12_error)
+            __Pyx_GOTREF(__pyx_t_5);
+            __pyx_t_4 = __Pyx_PyString_Format(__pyx_kp_s_could_not_allocate_d_bytes, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 29, __pyx_L12_error)
+            __Pyx_GOTREF(__pyx_t_4);
+            __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+            __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_builtin_MemoryError, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 29, __pyx_L12_error)
+            __Pyx_GOTREF(__pyx_t_5);
+            __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+            __Pyx_Raise(__pyx_t_5, 0, 0, 0);
+            __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+            __PYX_ERR(0, 29, __pyx_L12_error)
+          }
+
+          /* "_utils.pyx":28
+ *     cdef realloc_ptr tmp = <realloc_ptr>realloc(p[0], nbytes)
+ *     if tmp == NULL:
+ *         with gil:             # <<<<<<<<<<<<<<
+ *             raise MemoryError("could not allocate %d bytes" % nbytes)
+ * 
+ */
+          /*finally:*/ {
+            __pyx_L12_error: {
+              #ifdef WITH_THREAD
+              __Pyx_PyGILState_Release(__pyx_gilstate_save);
+              #endif
+              goto __pyx_L4_error;
+            }
+          }
+      }
+
+      /* "_utils.pyx":27
+ *                               % (nelems, sizeof(p[0][0])))
+ *     cdef realloc_ptr tmp = <realloc_ptr>realloc(p[0], nbytes)
+ *     if tmp == NULL:             # <<<<<<<<<<<<<<
+ *         with gil:
+ *             raise MemoryError("could not allocate %d bytes" % nbytes)
+ */
+    }
+
+    /* "_utils.pyx":31
+ *             raise MemoryError("could not allocate %d bytes" % nbytes)
+ * 
+ *     p[0] = tmp             # <<<<<<<<<<<<<<
+ *     return tmp  # for convenience
+ * 
+ */
+    (__pyx_v_p[0]) = __pyx_v_tmp;
+
+    /* "_utils.pyx":32
+ * 
+ *     p[0] = tmp
+ *     return tmp  # for convenience             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+    __pyx_r = __pyx_v_tmp;
+    goto __pyx_L3_return;
+  }
+
+  /* "_utils.pyx":20
+ *     # sizeof(realloc_ptr[0]) would be more like idiomatic C, but causes Cython
+ *     # 0.20.1 to crash.
+ *     cdef size_t nbytes = nelems * sizeof(p[0][0])             # <<<<<<<<<<<<<<
+ *     if nbytes / sizeof(p[0][0]) != nelems:
+ *         # Overflow in the multiplication
+ */
+  /*finally:*/ {
+    __pyx_L3_return: {
+      #ifdef WITH_THREAD
+      __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+      #endif
+      goto __pyx_L0;
+    }
+    __pyx_L4_error: {
+      #ifdef WITH_THREAD
+      __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+      #endif
+      goto __pyx_L1_error;
+    }
+  }
+
+  /* "_utils.pyx":17
+ * # =============================================================================
+ * 
+ * cdef realloc_ptr safe_realloc(realloc_ptr* p, size_t nelems) nogil except *:             # <<<<<<<<<<<<<<
+ *     # sizeof(realloc_ptr[0]) would be more like idiomatic C, but causes Cython
+ *     # 0.20.1 to crash.
+ */
+
+  /* function exit code */
+  __pyx_r = 0;
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_AddTraceback("_utils.safe_realloc", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = 0;
+  __pyx_L0:;
+  #ifdef WITH_THREAD
+  __Pyx_PyGILState_Release(__pyx_gilstate_save);
+  #endif
+  return __pyx_r;
+}
+
+static struct __pyx_t_7sklearn_9neighbors_10_quad_tree_Cell **__pyx_fuse_7__pyx_f_6_utils_safe_realloc(struct __pyx_t_7sklearn_9neighbors_10_quad_tree_Cell ***__pyx_v_p, size_t __pyx_v_nelems) {
   size_t __pyx_v_nbytes;
   struct __pyx_t_7sklearn_9neighbors_10_quad_tree_Cell **__pyx_v_tmp;
   struct __pyx_t_7sklearn_9neighbors_10_quad_tree_Cell **__pyx_r;
@@ -3891,7 +4178,7 @@ static struct __pyx_t_7sklearn_9neighbors_10_quad_tree_Cell **__pyx_fuse_6__pyx_
   #ifdef WITH_THREAD
   PyGILState_STATE __pyx_gilstate_save;
   #endif
-  __Pyx_RefNannySetupContext("__pyx_fuse_6safe_realloc", 1);
+  __Pyx_RefNannySetupContext("__pyx_fuse_7safe_realloc", 1);
 
   /* "_utils.pyx":20
  *     # sizeof(realloc_ptr[0]) would be more like idiomatic C, but causes Cython
@@ -4145,7 +4432,274 @@ static struct __pyx_t_7sklearn_9neighbors_10_quad_tree_Cell **__pyx_fuse_6__pyx_
   return __pyx_r;
 }
 
-static struct __pyx_t_6_utils_StackRecord *__pyx_fuse_7__pyx_f_6_utils_safe_realloc(struct __pyx_t_6_utils_StackRecord **__pyx_v_p, size_t __pyx_v_nelems) {
+static struct __pyx_t_6_utils_Node **__pyx_fuse_8__pyx_f_6_utils_safe_realloc(struct __pyx_t_6_utils_Node ***__pyx_v_p, size_t __pyx_v_nelems) {
+  size_t __pyx_v_nbytes;
+  struct __pyx_t_6_utils_Node **__pyx_v_tmp;
+  struct __pyx_t_6_utils_Node **__pyx_r;
+  __Pyx_RefNannyDeclarations
+  size_t __pyx_t_1;
+  int __pyx_t_2;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  PyObject *__pyx_t_5 = NULL;
+  #ifdef WITH_THREAD
+  PyGILState_STATE __pyx_gilstate_save;
+  #endif
+  __Pyx_RefNannySetupContext("__pyx_fuse_8safe_realloc", 1);
+
+  /* "_utils.pyx":20
+ *     # sizeof(realloc_ptr[0]) would be more like idiomatic C, but causes Cython
+ *     # 0.20.1 to crash.
+ *     cdef size_t nbytes = nelems * sizeof(p[0][0])             # <<<<<<<<<<<<<<
+ *     if nbytes / sizeof(p[0][0]) != nelems:
+ *         # Overflow in the multiplication
+ */
+  /*try:*/ {
+    __pyx_v_nbytes = (__pyx_v_nelems * (sizeof(((__pyx_v_p[0])[0]))));
+
+    /* "_utils.pyx":21
+ *     # 0.20.1 to crash.
+ *     cdef size_t nbytes = nelems * sizeof(p[0][0])
+ *     if nbytes / sizeof(p[0][0]) != nelems:             # <<<<<<<<<<<<<<
+ *         # Overflow in the multiplication
+ *         with gil:
+ */
+    __pyx_t_1 = (sizeof(((__pyx_v_p[0])[0])));
+    if (unlikely(__pyx_t_1 == 0)) {
+      #ifdef WITH_THREAD
+      PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+      #endif
+      PyErr_SetString(PyExc_ZeroDivisionError, "integer division or modulo by zero");
+      #ifdef WITH_THREAD
+      __Pyx_PyGILState_Release(__pyx_gilstate_save);
+      #endif
+      __PYX_ERR(0, 21, __pyx_L4_error)
+    }
+    __pyx_t_2 = (((__pyx_v_nbytes / __pyx_t_1) != __pyx_v_nelems) != 0);
+    if (__pyx_t_2) {
+
+      /* "_utils.pyx":23
+ *     if nbytes / sizeof(p[0][0]) != nelems:
+ *         # Overflow in the multiplication
+ *         with gil:             # <<<<<<<<<<<<<<
+ *             raise MemoryError("could not allocate (%d * %d) bytes"
+ *                               % (nelems, sizeof(p[0][0])))
+ */
+      {
+          #ifdef WITH_THREAD
+          PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+          #endif
+          /*try:*/ {
+
+            /* "_utils.pyx":25
+ *         with gil:
+ *             raise MemoryError("could not allocate (%d * %d) bytes"
+ *                               % (nelems, sizeof(p[0][0])))             # <<<<<<<<<<<<<<
+ *     cdef realloc_ptr tmp = <realloc_ptr>realloc(p[0], nbytes)
+ *     if tmp == NULL:
+ */
+            __pyx_t_3 = __Pyx_PyInt_FromSize_t(__pyx_v_nelems); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 25, __pyx_L8_error)
+            __Pyx_GOTREF(__pyx_t_3);
+            __pyx_t_4 = __Pyx_PyInt_FromSize_t((sizeof(((__pyx_v_p[0])[0])))); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 25, __pyx_L8_error)
+            __Pyx_GOTREF(__pyx_t_4);
+            __pyx_t_5 = PyTuple_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 25, __pyx_L8_error)
+            __Pyx_GOTREF(__pyx_t_5);
+            __Pyx_GIVEREF(__pyx_t_3);
+            PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_3);
+            __Pyx_GIVEREF(__pyx_t_4);
+            PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_t_4);
+            __pyx_t_3 = 0;
+            __pyx_t_4 = 0;
+            __pyx_t_4 = __Pyx_PyString_Format(__pyx_kp_s_could_not_allocate_d_d_bytes, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 25, __pyx_L8_error)
+            __Pyx_GOTREF(__pyx_t_4);
+            __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+
+            /* "_utils.pyx":24
+ *         # Overflow in the multiplication
+ *         with gil:
+ *             raise MemoryError("could not allocate (%d * %d) bytes"             # <<<<<<<<<<<<<<
+ *                               % (nelems, sizeof(p[0][0])))
+ *     cdef realloc_ptr tmp = <realloc_ptr>realloc(p[0], nbytes)
+ */
+            __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_builtin_MemoryError, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 24, __pyx_L8_error)
+            __Pyx_GOTREF(__pyx_t_5);
+            __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+            __Pyx_Raise(__pyx_t_5, 0, 0, 0);
+            __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+            __PYX_ERR(0, 24, __pyx_L8_error)
+          }
+
+          /* "_utils.pyx":23
+ *     if nbytes / sizeof(p[0][0]) != nelems:
+ *         # Overflow in the multiplication
+ *         with gil:             # <<<<<<<<<<<<<<
+ *             raise MemoryError("could not allocate (%d * %d) bytes"
+ *                               % (nelems, sizeof(p[0][0])))
+ */
+          /*finally:*/ {
+            __pyx_L8_error: {
+              #ifdef WITH_THREAD
+              __Pyx_PyGILState_Release(__pyx_gilstate_save);
+              #endif
+              goto __pyx_L4_error;
+            }
+          }
+      }
+
+      /* "_utils.pyx":21
+ *     # 0.20.1 to crash.
+ *     cdef size_t nbytes = nelems * sizeof(p[0][0])
+ *     if nbytes / sizeof(p[0][0]) != nelems:             # <<<<<<<<<<<<<<
+ *         # Overflow in the multiplication
+ *         with gil:
+ */
+    }
+
+    /* "_utils.pyx":26
+ *             raise MemoryError("could not allocate (%d * %d) bytes"
+ *                               % (nelems, sizeof(p[0][0])))
+ *     cdef realloc_ptr tmp = <realloc_ptr>realloc(p[0], nbytes)             # <<<<<<<<<<<<<<
+ *     if tmp == NULL:
+ *         with gil:
+ */
+    __pyx_v_tmp = ((struct __pyx_t_6_utils_Node **)realloc((__pyx_v_p[0]), __pyx_v_nbytes));
+
+    /* "_utils.pyx":27
+ *                               % (nelems, sizeof(p[0][0])))
+ *     cdef realloc_ptr tmp = <realloc_ptr>realloc(p[0], nbytes)
+ *     if tmp == NULL:             # <<<<<<<<<<<<<<
+ *         with gil:
+ *             raise MemoryError("could not allocate %d bytes" % nbytes)
+ */
+    __pyx_t_2 = ((__pyx_v_tmp == NULL) != 0);
+    if (__pyx_t_2) {
+
+      /* "_utils.pyx":28
+ *     cdef realloc_ptr tmp = <realloc_ptr>realloc(p[0], nbytes)
+ *     if tmp == NULL:
+ *         with gil:             # <<<<<<<<<<<<<<
+ *             raise MemoryError("could not allocate %d bytes" % nbytes)
+ * 
+ */
+      {
+          #ifdef WITH_THREAD
+          PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+          #endif
+          /*try:*/ {
+
+            /* "_utils.pyx":29
+ *     if tmp == NULL:
+ *         with gil:
+ *             raise MemoryError("could not allocate %d bytes" % nbytes)             # <<<<<<<<<<<<<<
+ * 
+ *     p[0] = tmp
+ */
+            __pyx_t_5 = __Pyx_PyInt_FromSize_t(__pyx_v_nbytes); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 29, __pyx_L12_error)
+            __Pyx_GOTREF(__pyx_t_5);
+            __pyx_t_4 = __Pyx_PyString_Format(__pyx_kp_s_could_not_allocate_d_bytes, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 29, __pyx_L12_error)
+            __Pyx_GOTREF(__pyx_t_4);
+            __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+            __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_builtin_MemoryError, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 29, __pyx_L12_error)
+            __Pyx_GOTREF(__pyx_t_5);
+            __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+            __Pyx_Raise(__pyx_t_5, 0, 0, 0);
+            __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+            __PYX_ERR(0, 29, __pyx_L12_error)
+          }
+
+          /* "_utils.pyx":28
+ *     cdef realloc_ptr tmp = <realloc_ptr>realloc(p[0], nbytes)
+ *     if tmp == NULL:
+ *         with gil:             # <<<<<<<<<<<<<<
+ *             raise MemoryError("could not allocate %d bytes" % nbytes)
+ * 
+ */
+          /*finally:*/ {
+            __pyx_L12_error: {
+              #ifdef WITH_THREAD
+              __Pyx_PyGILState_Release(__pyx_gilstate_save);
+              #endif
+              goto __pyx_L4_error;
+            }
+          }
+      }
+
+      /* "_utils.pyx":27
+ *                               % (nelems, sizeof(p[0][0])))
+ *     cdef realloc_ptr tmp = <realloc_ptr>realloc(p[0], nbytes)
+ *     if tmp == NULL:             # <<<<<<<<<<<<<<
+ *         with gil:
+ *             raise MemoryError("could not allocate %d bytes" % nbytes)
+ */
+    }
+
+    /* "_utils.pyx":31
+ *             raise MemoryError("could not allocate %d bytes" % nbytes)
+ * 
+ *     p[0] = tmp             # <<<<<<<<<<<<<<
+ *     return tmp  # for convenience
+ * 
+ */
+    (__pyx_v_p[0]) = __pyx_v_tmp;
+
+    /* "_utils.pyx":32
+ * 
+ *     p[0] = tmp
+ *     return tmp  # for convenience             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+    __pyx_r = __pyx_v_tmp;
+    goto __pyx_L3_return;
+  }
+
+  /* "_utils.pyx":20
+ *     # sizeof(realloc_ptr[0]) would be more like idiomatic C, but causes Cython
+ *     # 0.20.1 to crash.
+ *     cdef size_t nbytes = nelems * sizeof(p[0][0])             # <<<<<<<<<<<<<<
+ *     if nbytes / sizeof(p[0][0]) != nelems:
+ *         # Overflow in the multiplication
+ */
+  /*finally:*/ {
+    __pyx_L3_return: {
+      #ifdef WITH_THREAD
+      __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+      #endif
+      goto __pyx_L0;
+    }
+    __pyx_L4_error: {
+      #ifdef WITH_THREAD
+      __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+      #endif
+      goto __pyx_L1_error;
+    }
+  }
+
+  /* "_utils.pyx":17
+ * # =============================================================================
+ * 
+ * cdef realloc_ptr safe_realloc(realloc_ptr* p, size_t nelems) nogil except *:             # <<<<<<<<<<<<<<
+ *     # sizeof(realloc_ptr[0]) would be more like idiomatic C, but causes Cython
+ *     # 0.20.1 to crash.
+ */
+
+  /* function exit code */
+  __pyx_r = 0;
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_AddTraceback("_utils.safe_realloc", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = 0;
+  __pyx_L0:;
+  #ifdef WITH_THREAD
+  __Pyx_PyGILState_Release(__pyx_gilstate_save);
+  #endif
+  return __pyx_r;
+}
+
+static struct __pyx_t_6_utils_StackRecord *__pyx_fuse_9__pyx_f_6_utils_safe_realloc(struct __pyx_t_6_utils_StackRecord **__pyx_v_p, size_t __pyx_v_nelems) {
   size_t __pyx_v_nbytes;
   struct __pyx_t_6_utils_StackRecord *__pyx_v_tmp;
   struct __pyx_t_6_utils_StackRecord *__pyx_r;
@@ -4158,7 +4712,7 @@ static struct __pyx_t_6_utils_StackRecord *__pyx_fuse_7__pyx_f_6_utils_safe_real
   #ifdef WITH_THREAD
   PyGILState_STATE __pyx_gilstate_save;
   #endif
-  __Pyx_RefNannySetupContext("__pyx_fuse_7safe_realloc", 1);
+  __Pyx_RefNannySetupContext("__pyx_fuse_9safe_realloc", 1);
 
   /* "_utils.pyx":20
  *     # sizeof(realloc_ptr[0]) would be more like idiomatic C, but causes Cython
@@ -4412,7 +4966,7 @@ static struct __pyx_t_6_utils_StackRecord *__pyx_fuse_7__pyx_f_6_utils_safe_real
   return __pyx_r;
 }
 
-static struct __pyx_t_6_utils_PriorityHeapRecord *__pyx_fuse_8__pyx_f_6_utils_safe_realloc(struct __pyx_t_6_utils_PriorityHeapRecord **__pyx_v_p, size_t __pyx_v_nelems) {
+static struct __pyx_t_6_utils_PriorityHeapRecord *__pyx_fuse_10__pyx_f_6_utils_safe_realloc(struct __pyx_t_6_utils_PriorityHeapRecord **__pyx_v_p, size_t __pyx_v_nelems) {
   size_t __pyx_v_nbytes;
   struct __pyx_t_6_utils_PriorityHeapRecord *__pyx_v_tmp;
   struct __pyx_t_6_utils_PriorityHeapRecord *__pyx_r;
@@ -4425,7 +4979,7 @@ static struct __pyx_t_6_utils_PriorityHeapRecord *__pyx_fuse_8__pyx_f_6_utils_sa
   #ifdef WITH_THREAD
   PyGILState_STATE __pyx_gilstate_save;
   #endif
-  __Pyx_RefNannySetupContext("__pyx_fuse_8safe_realloc", 1);
+  __Pyx_RefNannySetupContext("__pyx_fuse_10safe_realloc", 1);
 
   /* "_utils.pyx":20
  *     # sizeof(realloc_ptr[0]) would be more like idiomatic C, but causes Cython
@@ -5272,7 +5826,7 @@ static int __pyx_f_6_utils_5Stack_push(struct __pyx_obj_6_utils_Stack *__pyx_v_s
  * 
  *         stack = self.stack_
  */
-    __pyx_fuse_7__pyx_f_6_utils_safe_realloc((&__pyx_v_self->stack_), __pyx_v_self->capacity); if (unlikely(__Pyx_ErrOccurredWithGIL())) __PYX_ERR(0, 111, __pyx_L1_error)
+    __pyx_fuse_9__pyx_f_6_utils_safe_realloc((&__pyx_v_self->stack_), __pyx_v_self->capacity); if (unlikely(__Pyx_ErrOccurredWithGIL())) __PYX_ERR(0, 111, __pyx_L1_error)
 
     /* "_utils.pyx":108
  * 
@@ -5700,7 +6254,7 @@ static int __pyx_pf_6_utils_12PriorityHeap___cinit__(struct __pyx_obj_6_utils_Pr
  * 
  *     def __dealloc__(self):
  */
-  __pyx_fuse_8__pyx_f_6_utils_safe_realloc((&__pyx_v_self->heap_), __pyx_v_capacity); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 165, __pyx_L1_error)
+  __pyx_fuse_10__pyx_f_6_utils_safe_realloc((&__pyx_v_self->heap_), __pyx_v_capacity); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 165, __pyx_L1_error)
 
   /* "_utils.pyx":162
  *     """
@@ -6162,7 +6716,7 @@ static int __pyx_f_6_utils_12PriorityHeap_push(struct __pyx_obj_6_utils_Priority
  * 
  *         # Put element as last element of heap
  */
-    __pyx_fuse_8__pyx_f_6_utils_safe_realloc((&__pyx_v_self->heap_), __pyx_v_self->capacity); if (unlikely(__Pyx_ErrOccurredWithGIL())) __PYX_ERR(0, 220, __pyx_L1_error)
+    __pyx_fuse_10__pyx_f_6_utils_safe_realloc((&__pyx_v_self->heap_), __pyx_v_self->capacity); if (unlikely(__Pyx_ErrOccurredWithGIL())) __PYX_ERR(0, 220, __pyx_L1_error)
 
     /* "_utils.pyx":217
  * 
@@ -12357,9 +12911,11 @@ static int __Pyx_modinit_function_export_code(void) {
   if (__Pyx_ExportFunction("__pyx_fuse_3safe_realloc", (void (*)(void))__pyx_fuse_3__pyx_f_6_utils_safe_realloc, "struct __pyx_t_6_utils_WeightedPQueueRecord *(struct __pyx_t_6_utils_WeightedPQueueRecord **, size_t)") < 0) __PYX_ERR(0, 2, __pyx_L1_error)
   if (__Pyx_ExportFunction("__pyx_fuse_4safe_realloc", (void (*)(void))__pyx_fuse_4__pyx_f_6_utils_safe_realloc, "__pyx_t_6_utils_DOUBLE_t *(__pyx_t_6_utils_DOUBLE_t **, size_t)") < 0) __PYX_ERR(0, 2, __pyx_L1_error)
   if (__Pyx_ExportFunction("__pyx_fuse_5safe_realloc", (void (*)(void))__pyx_fuse_5__pyx_f_6_utils_safe_realloc, "__pyx_t_6_utils_DOUBLE_t **(__pyx_t_6_utils_DOUBLE_t ***, size_t)") < 0) __PYX_ERR(0, 2, __pyx_L1_error)
-  if (__Pyx_ExportFunction("__pyx_fuse_6safe_realloc", (void (*)(void))__pyx_fuse_6__pyx_f_6_utils_safe_realloc, "struct __pyx_t_7sklearn_9neighbors_10_quad_tree_Cell **(struct __pyx_t_7sklearn_9neighbors_10_quad_tree_Cell ***, size_t)") < 0) __PYX_ERR(0, 2, __pyx_L1_error)
-  if (__Pyx_ExportFunction("__pyx_fuse_7safe_realloc", (void (*)(void))__pyx_fuse_7__pyx_f_6_utils_safe_realloc, "struct __pyx_t_6_utils_StackRecord *(struct __pyx_t_6_utils_StackRecord **, size_t)") < 0) __PYX_ERR(0, 2, __pyx_L1_error)
-  if (__Pyx_ExportFunction("__pyx_fuse_8safe_realloc", (void (*)(void))__pyx_fuse_8__pyx_f_6_utils_safe_realloc, "struct __pyx_t_6_utils_PriorityHeapRecord *(struct __pyx_t_6_utils_PriorityHeapRecord **, size_t)") < 0) __PYX_ERR(0, 2, __pyx_L1_error)
+  if (__Pyx_ExportFunction("__pyx_fuse_6safe_realloc", (void (*)(void))__pyx_fuse_6__pyx_f_6_utils_safe_realloc, "struct __pyx_t_6_utils_Node *(struct __pyx_t_6_utils_Node **, size_t)") < 0) __PYX_ERR(0, 2, __pyx_L1_error)
+  if (__Pyx_ExportFunction("__pyx_fuse_7safe_realloc", (void (*)(void))__pyx_fuse_7__pyx_f_6_utils_safe_realloc, "struct __pyx_t_7sklearn_9neighbors_10_quad_tree_Cell **(struct __pyx_t_7sklearn_9neighbors_10_quad_tree_Cell ***, size_t)") < 0) __PYX_ERR(0, 2, __pyx_L1_error)
+  if (__Pyx_ExportFunction("__pyx_fuse_8safe_realloc", (void (*)(void))__pyx_fuse_8__pyx_f_6_utils_safe_realloc, "struct __pyx_t_6_utils_Node **(struct __pyx_t_6_utils_Node ***, size_t)") < 0) __PYX_ERR(0, 2, __pyx_L1_error)
+  if (__Pyx_ExportFunction("__pyx_fuse_9safe_realloc", (void (*)(void))__pyx_fuse_9__pyx_f_6_utils_safe_realloc, "struct __pyx_t_6_utils_StackRecord *(struct __pyx_t_6_utils_StackRecord **, size_t)") < 0) __PYX_ERR(0, 2, __pyx_L1_error)
+  if (__Pyx_ExportFunction("__pyx_fuse_10safe_realloc", (void (*)(void))__pyx_fuse_10__pyx_f_6_utils_safe_realloc, "struct __pyx_t_6_utils_PriorityHeapRecord *(struct __pyx_t_6_utils_PriorityHeapRecord **, size_t)") < 0) __PYX_ERR(0, 2, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;

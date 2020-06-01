@@ -20,7 +20,17 @@ ctypedef np.npy_uint32 UINT32_t          # Unsigned 32 bit integer
 cdef enum:
     
     RAND_R_MAX = 0x7FFFFFFF
-    
+
+cdef struct Node:
+
+    SIZE_t left_child
+    SIZE_t right_child
+    SIZE_t feature
+    DOUBLE_t threshold
+    DOUBLE_t impurity
+    SIZE_t n_node_samples
+    DOUBLE_t weighted_n_node_samples
+
 # safe_realloc(&p, n) resizes the allocation of p to n * sizeof(*p) bytes
 
 ctypedef fused realloc_ptr:
@@ -31,9 +41,9 @@ ctypedef fused realloc_ptr:
     (WeightedPQueueRecord*)
     (DOUBLE_t*)
     (DOUBLE_t**)
-    #(Node*)
+    (Node*)
     (Cell**)
-    #(Node**)
+    (Node**)
     (StackRecord*)
     (PriorityHeapRecord*)
     
