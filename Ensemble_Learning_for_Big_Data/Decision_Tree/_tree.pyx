@@ -420,3 +420,69 @@ cdef class Tree:
         self.node_count += 1
 
         return node_id
+
+    cpdef np.ndarray predict(self, object X):
+
+        out = self._get_value_ndarray().take(self.apply(X), axis=0,
+                                                mode='clip')
+        if self.n_outputs == 1:
+            out = out.reshape(X.shape[0], self.max_n_classes)
+        
+        return out
+
+    cpdef np.ndarray apply(self, object X):
+
+        return self._apply_dense(X)
+
+    cdef inline np.ndarray _apply_dense(self, object X):
+
+        cdef const DTYPE_t[:, :] X_ndarray = X
+        cdef SIZE_t n_samples = X.shape[0]
+
+        cdef np.ndarray[SIZE_t] out = np.zeros((n_samples,), dtype=np.intp)
+        cdef SIZE_t* out_ptr = <SIZE_t*>out.data
+
+        cdef Node* node = NULL
+        cdef SIZE_t i = 0
+
+        with nogil:
+            for i in range(n_samples):
+                node = self.nodes
+                while node.left_child != _TREE_LEAF:
+                    if X_ndarray[i, node.feature] <= node.threshold:
+                        node = &self.nodes[node.left_child]
+                    else:
+                        node = &self.nodes[node.right_child]
+
+                out_ptr[i] = <SIZE_t>(node - self.nodes)
+
+        return out
+
+    cdef np.ndarray _get_value_ndarray(self):
+        
+        cdef np.npy_intp shape[3]
+        shape[0] = <np.npy_intp> self.node_count
+        shape[1] = <np.npy_intp> self.n_outputs
+        shape[2] = <np.npy_intp> self.max_n_classes
+        cdef np.ndarray arr 
+        arr = np.PyArray_SimpleNewFromData(3, shape, np.NPY_DOUBLE, self.value)
+        Py_INCREF(self)
+        arr.base = <PyObject*> self
+        return arr 
+
+    cdef np.ndarray _get_node_ndarray(self):
+
+        cdef np.npy_intp shape[1]
+        shape[0] = <np.npy_intp> self.node_count
+        cdef np.npy_intp strides[1]
+        strides[0] = sizeof(Node)
+        cdef np.ndarray arr
+        Py_INCREF(NODE_DTYPE)
+        arr = PyArray_NewFromDescr(<PyTypeObject *> np.ndarray,
+                                   <np.dtype> NODE_DTYPE, 1, shape, 
+                                   strides, <void*> self.nodes,
+                                   np.NPY_DEFAULT, None)
+        Py_INCREF(self)
+        arr.base = <PyObject*> self
+
+        return arr 
