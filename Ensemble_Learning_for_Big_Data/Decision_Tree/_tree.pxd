@@ -47,3 +47,24 @@ cdef class Tree:
     cpdef np.ndarray apply(self, object X)
     cdef np.ndarray _apply_dense(self, object X)
     #cdef np.ndarray _apply_sparse_csr(self, object X)
+
+    cpdef object decision_path(self, object X)
+    cdef object _decision_path_dense(self, object X)
+
+    cpdef compute_feature_importances(self, normalize=*)
+
+cdef class TreeBuilder:
+
+    cdef sp.Splitter splitter 
+
+    cdef SIZE_t min_samples_split
+    cdef SIZE_t min_samples_leaf
+    cdef double min_weight_leaf
+    cdef SIZE_t max_depth 
+    cdef double min_impurity_split
+    cdef double min_impurity_decrease
+
+    cpdef build(self, Tree tree, object X, np.ndarray y, 
+                np.ndarray sample_weight=*, 
+                np.ndarray X_idx_sorted=*)
+    cdef _check_input(self, object X, np.ndarray y, np.ndarray sample_weight)

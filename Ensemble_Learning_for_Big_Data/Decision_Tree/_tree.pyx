@@ -486,3 +486,140 @@ cdef class Tree:
         arr.base = <PyObject*> self
 
         return arr 
+
+    cpdef object decision_path(self, object X):
+
+        return self._decision_path_dense(X)
+
+    cdef inline object _decision_path_dense(self, object X):
+
+        cdef const DTYPE_t[:, :] X_ndarray = X
+        cdef SIZE_t n_samples = X.shape[0]
+
+        cdef np.ndarray[SIZE_t] indptr = np.zeros(n_samples + 1, dtype = np.intp)
+        cdef SIZE_t* indptr_ptr = <SIZE_t*> indptr.data
+        
+        cdef np.ndarray[SIZE_t] indices = np.zeros(n_samples*(1+self.max_depth), dtype = np.intp)
+        cdef SIZE_t* indices_ptr = <SIZE_t*> indices.data
+
+        cdef Node* node = NULL
+        cdef SIZE_t i = 0
+
+        with nogil:
+
+            for i in range(n_samples):
+                node = self.nodes
+                indptr_ptr[i + 1] = indptr_ptr[i]
+
+                while node.left_child != _TREE_LEAF:
+                    indices_ptr[indptr_ptr[i+1]] = <SIZE_t>(node - self.nodes)
+                    indptr_ptr[i + 1] += 1
+
+                    if X_ndarray[i, node.feature] <= node.threshold:
+                        node = &self.nodes[node.left_child]
+                    else:
+                        node = &self.nodes[node.right_child]
+                
+                indices_ptr[indptr_ptr[i + 1]] = <SIZE_t>(node - self.nodes)
+                indptr_ptr[i + 1] += 1
+
+        indices = indices[:indptr[n_samples]]
+        cdef np.ndarray[SIZE_t] data = np.ones(shape=len(indices), dtype=np.intp)
+
+        out = csr_matrix((data, indices, indptr), shape=(n_samples, self.node_count))
+    
+    cpdef compute_feature_importances(self, normalize=True):
+
+        cdef Node* left 
+        cdef Node* right 
+        cdef Node* nodes = self.nodes 
+        cdef Node* node = nodes 
+        cdef Node* end_node = node + self.node_count 
+
+        cdef double normalizer = 0
+
+        cdef np.ndarray[np.float64_t, ndim=1] importances 
+        importances = np.zeros((self.n_features, ))
+        cdef DOUBLE_t* importance_data = <DOUBLE_t*>importances.data
+
+        with nogil:
+            while node != end_node:
+                if node.left_child != _TREE_LEAF:
+                    left = &nodes[node.left_child]
+                    right = &nodes[node.right_child]
+
+                    importance_data[node.feature] += (
+                        node.weighted_n_node_samples * node.impurity - 
+                        left.weighted_n_node_samples * left.impurity - 
+                        right.weighted_n_node_samples * right.impurity
+                    )
+                node += 1
+
+        importances /= nodes[0].weighted_n_node_samples
+
+        if normalize:
+            normalizer = np.sum(importances)
+            if normalizer > 0.0:
+                importances /= normalizer 
+
+        return importances
+
+    def compute_partial_dependence(self, DTYPE_t[:, ::1] X,
+                                    int[::1] target_features, double[::1] out):
+
+        cdef double[::1] weight_stack = np.zeros(self.node_count, dtype=np.float64)
+        cdef SIZE_t[::1] node_idx_stack = np.zeros(self.node_count, dtype=np.intp)
+        cdef SIZE_t sample_idx
+        cdef SIZE_t feature_idx
+        cdef int stack_size 
+        cdef double left_sample_frac
+        cdef double current_weight 
+        cdef double total_weight
+        cdef Node* current_node
+        cdef SIZE_t current_node_idx
+        cdef bint is_target_feature
+        cdef SIZE_t _TREE_LEAF = TREE_LEAF
+
+        for sample_idx in range(X.shape[0]):
+            stack_size = 1
+            node_idx_stack[0] = 0
+            weight_stack[0] = 1
+            total_weight = 0
+
+            while stack_size > 0:
+                stack_size -= 1
+                current_node_idx = node_idx_stack[stack_size]
+                current_node = &self.nodes[current_node_idx]
+
+                if current_node.left_child == _TREE_LEAF:
+                    out[sample_idx] += (weight_stack[stack_size] * 
+                                        self.value[current_node_idx])
+                    total_weight += weight_stack[stack_size]
+                else:
+
+                    is_target_feature = False
+                    for feature_idx in range(target_features.shape[0]):
+                        if target_features[feature_idx] == current_node.feature:
+                            is_target_feature = True
+                            break
+                    
+                    if is_target_feature:
+                        if X[sample_idx, feature_idx] <= current_node.threshold:
+                            node_idx_stack[stack_size] = current_node.left_child
+                        else:
+                            node_idx_stack[stack_size] = current_node.right_child
+                    else:
+                        node_idx_stack[stack_size] = current_node.left_child
+                        left_sample_frac = (
+                            self.nodes[current_node.left_child].weighted_n_node_samples / 
+                            current_node.weighted_n_node_samples)
+                        current_weight = weight_stack[stack_size]
+                        weight_stack[stack_size] = current_weight * left_sample_frac
+
+                        node_idx_stack[stack_size] = current_node.right_child
+                        weight_stack[stack_size] = (
+                            current_weight * (1 - left_sample_frac)
+                        )    
+                        stack_size += 1
+                 
+
