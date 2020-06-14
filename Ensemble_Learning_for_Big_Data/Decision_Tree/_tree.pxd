@@ -2,6 +2,8 @@ import numpy as np
 cimport numpy as np 
 
 cimport _splitter as sp
+from _splitter cimport Splitter
+from _splitter cimport SplitRecord 
 
 ctypedef np.npy_float32 DTYPE_t 
 ctypedef np.npy_float64 DOUBLE_t
@@ -55,7 +57,7 @@ cdef class Tree:
 
 cdef class TreeBuilder:
 
-    cdef sp.Splitter splitter 
+    cdef Splitter splitter 
 
     cdef SIZE_t min_samples_split
     cdef SIZE_t min_samples_leaf

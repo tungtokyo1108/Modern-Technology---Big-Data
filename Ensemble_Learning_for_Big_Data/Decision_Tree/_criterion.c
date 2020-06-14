@@ -1393,6 +1393,7 @@ struct __pyx_opt_args_7sklearn_9neighbors_10_quad_tree_9_QuadTree__get_cell {
   int __pyx_n;
   __pyx_t_7sklearn_9neighbors_10_quad_tree_SIZE_t cell_id;
 };
+struct __pyx_t_6_utils_Node;
 struct __pyx_t_6_utils_StackRecord;
 struct __pyx_t_6_utils_PriorityHeapRecord;
 struct __pyx_t_6_utils_WeightedPQueueRecord;
@@ -1408,7 +1409,24 @@ enum  {
   __pyx_e_6_utils_RAND_R_MAX = 0x7FFFFFFF
 };
 
-/* "_utils.pxd":60
+/* "_utils.pxd":24
+ *     RAND_R_MAX = 0x7FFFFFFF
+ * 
+ * cdef struct Node:             # <<<<<<<<<<<<<<
+ * 
+ *     SIZE_t left_child
+ */
+struct __pyx_t_6_utils_Node {
+  __pyx_t_6_utils_SIZE_t left_child;
+  __pyx_t_6_utils_SIZE_t right_child;
+  __pyx_t_6_utils_SIZE_t feature;
+  __pyx_t_6_utils_DOUBLE_t threshold;
+  __pyx_t_6_utils_DOUBLE_t impurity;
+  __pyx_t_6_utils_SIZE_t n_node_samples;
+  __pyx_t_6_utils_DOUBLE_t weighted_n_node_samples;
+};
+
+/* "_utils.pxd":70
  * # =============================================================================
  * 
  * cdef struct StackRecord:             # <<<<<<<<<<<<<<
@@ -1425,7 +1443,7 @@ struct __pyx_t_6_utils_StackRecord {
   __pyx_t_6_utils_SIZE_t n_constant_features;
 };
 
-/* "_utils.pxd":85
+/* "_utils.pxd":95
  * 
  * # A record on the frontier for best-first tree growing
  * cdef struct PriorityHeapRecord:             # <<<<<<<<<<<<<<
@@ -1445,7 +1463,7 @@ struct __pyx_t_6_utils_PriorityHeapRecord {
   double improvement;
 };
 
-/* "_utils.pxd":115
+/* "_utils.pxd":125
  * # =============================================================================
  * 
  * cdef struct WeightedPQueueRecord:             # <<<<<<<<<<<<<<
@@ -1478,7 +1496,7 @@ struct __pyx_obj_7sklearn_9neighbors_10_quad_tree__QuadTree {
 };
 
 
-/* "_utils.pxd":69
+/* "_utils.pxd":79
  *     SIZE_t n_constant_features
  * 
  * cdef class Stack:             # <<<<<<<<<<<<<<
@@ -1494,7 +1512,7 @@ struct __pyx_obj_6_utils_Stack {
 };
 
 
-/* "_utils.pxd":97
+/* "_utils.pxd":107
  *     double improvement
  * 
  * cdef class PriorityHeap:             # <<<<<<<<<<<<<<
@@ -1510,7 +1528,7 @@ struct __pyx_obj_6_utils_PriorityHeap {
 };
 
 
-/* "_utils.pxd":119
+/* "_utils.pxd":129
  *     DOUBLE_t weight
  * 
  * cdef class WeightedPQueue:             # <<<<<<<<<<<<<<
@@ -1526,7 +1544,7 @@ struct __pyx_obj_6_utils_WeightedPQueue {
 };
 
 
-/* "_utils.pxd":138
+/* "_utils.pxd":148
  * # =============================================================================
  * 
  * cdef class WeightedMedianCalculator:             # <<<<<<<<<<<<<<
@@ -1544,12 +1562,12 @@ struct __pyx_obj_6_utils_WeightedMedianCalculator {
 };
 
 
-/* "_criterion.pxd":7
- * cimport _utils as ut
+/* "_criterion.pxd":12
+ * from _utils cimport UINT32_t
  * 
  * cdef class Criterion:             # <<<<<<<<<<<<<<
  * 
- *     cdef const ut.DOUBLE_t[:, ::1] y
+ *     cdef const DOUBLE_t[:, ::1] y
  */
 struct __pyx_obj_10_criterion_Criterion {
   PyObject_HEAD
@@ -1573,12 +1591,12 @@ struct __pyx_obj_10_criterion_Criterion {
 };
 
 
-/* "_criterion.pxd":42
+/* "_criterion.pxd":47
  *     cdef double proxy_impurity_improvement(self) nogil
  * 
  * cdef class ClassificationCriterion(Criterion):             # <<<<<<<<<<<<<<
  * 
- *     cdef ut.SIZE_t* n_classes
+ *     cdef SIZE_t* n_classes
  */
 struct __pyx_obj_10_criterion_ClassificationCriterion {
   struct __pyx_obj_10_criterion_Criterion __pyx_base;
@@ -1587,8 +1605,8 @@ struct __pyx_obj_10_criterion_ClassificationCriterion {
 };
 
 
-/* "_criterion.pxd":47
- *     cdef ut.SIZE_t sum_stride
+/* "_criterion.pxd":52
+ *     cdef SIZE_t sum_stride
  * 
  * cdef class RegressionCriterion(Criterion):             # <<<<<<<<<<<<<<
  * 
@@ -1600,7 +1618,7 @@ struct __pyx_obj_10_criterion_RegressionCriterion {
 };
 
 
-/* "_criterion.pyx":299
+/* "_criterion.pyx":303
  *             sum_total += self.sum_stride
  * 
  * cdef class Entropy(ClassificationCriterion):             # <<<<<<<<<<<<<<
@@ -1612,7 +1630,7 @@ struct __pyx_obj_10_criterion_Entropy {
 };
 
 
-/* "_criterion.pyx":351
+/* "_criterion.pyx":355
  *         impurity_right[0] = entropy_right / self.n_outputs
  * 
  * cdef class Gini(ClassificationCriterion):             # <<<<<<<<<<<<<<
@@ -1727,7 +1745,7 @@ struct __pyx_vtabstruct_7sklearn_9neighbors_10_quad_tree__QuadTree {
 static struct __pyx_vtabstruct_7sklearn_9neighbors_10_quad_tree__QuadTree *__pyx_vtabptr_7sklearn_9neighbors_10_quad_tree__QuadTree;
 
 
-/* "_utils.pxd":69
+/* "_utils.pxd":79
  *     SIZE_t n_constant_features
  * 
  * cdef class Stack:             # <<<<<<<<<<<<<<
@@ -1743,7 +1761,7 @@ struct __pyx_vtabstruct_6_utils_Stack {
 static struct __pyx_vtabstruct_6_utils_Stack *__pyx_vtabptr_6_utils_Stack;
 
 
-/* "_utils.pxd":97
+/* "_utils.pxd":107
  *     double improvement
  * 
  * cdef class PriorityHeap:             # <<<<<<<<<<<<<<
@@ -1761,7 +1779,7 @@ struct __pyx_vtabstruct_6_utils_PriorityHeap {
 static struct __pyx_vtabstruct_6_utils_PriorityHeap *__pyx_vtabptr_6_utils_PriorityHeap;
 
 
-/* "_utils.pxd":119
+/* "_utils.pxd":129
  *     DOUBLE_t weight
  * 
  * cdef class WeightedPQueue:             # <<<<<<<<<<<<<<
@@ -1783,7 +1801,7 @@ struct __pyx_vtabstruct_6_utils_WeightedPQueue {
 static struct __pyx_vtabstruct_6_utils_WeightedPQueue *__pyx_vtabptr_6_utils_WeightedPQueue;
 
 
-/* "_utils.pxd":138
+/* "_utils.pxd":148
  * # =============================================================================
  * 
  * cdef class WeightedMedianCalculator:             # <<<<<<<<<<<<<<
@@ -1804,8 +1822,8 @@ struct __pyx_vtabstruct_6_utils_WeightedMedianCalculator {
 static struct __pyx_vtabstruct_6_utils_WeightedMedianCalculator *__pyx_vtabptr_6_utils_WeightedMedianCalculator;
 
 
-/* "_criterion.pyx":13
- * cimport _utils as ut
+/* "_criterion.pyx":17
+ * #from _utils cimport WeightMedianCalculator
  * 
  * cdef class Criterion:             # <<<<<<<<<<<<<<
  * 
@@ -1826,12 +1844,12 @@ struct __pyx_vtabstruct_10_criterion_Criterion {
 static struct __pyx_vtabstruct_10_criterion_Criterion *__pyx_vtabptr_10_criterion_Criterion;
 
 
-/* "_criterion.pyx":73
+/* "_criterion.pyx":77
  *                              self.weighted_n_node_samples * impurity_left)))
  * 
  * cdef class ClassificationCriterion(Criterion):             # <<<<<<<<<<<<<<
  * 
- *     def __cinit__(self, ut.SIZE_t n_outputs,
+ *     def __cinit__(self, SIZE_t n_outputs,
  */
 
 struct __pyx_vtabstruct_10_criterion_ClassificationCriterion {
@@ -1840,8 +1858,8 @@ struct __pyx_vtabstruct_10_criterion_ClassificationCriterion {
 static struct __pyx_vtabstruct_10_criterion_ClassificationCriterion *__pyx_vtabptr_10_criterion_ClassificationCriterion;
 
 
-/* "_criterion.pxd":47
- *     cdef ut.SIZE_t sum_stride
+/* "_criterion.pxd":52
+ *     cdef SIZE_t sum_stride
  * 
  * cdef class RegressionCriterion(Criterion):             # <<<<<<<<<<<<<<
  * 
@@ -1854,7 +1872,7 @@ struct __pyx_vtabstruct_10_criterion_RegressionCriterion {
 static struct __pyx_vtabstruct_10_criterion_RegressionCriterion *__pyx_vtabptr_10_criterion_RegressionCriterion;
 
 
-/* "_criterion.pyx":299
+/* "_criterion.pyx":303
  *             sum_total += self.sum_stride
  * 
  * cdef class Entropy(ClassificationCriterion):             # <<<<<<<<<<<<<<
@@ -1868,7 +1886,7 @@ struct __pyx_vtabstruct_10_criterion_Entropy {
 static struct __pyx_vtabstruct_10_criterion_Entropy *__pyx_vtabptr_10_criterion_Entropy;
 
 
-/* "_criterion.pyx":351
+/* "_criterion.pyx":355
  *         impurity_right[0] = entropy_right / self.n_outputs
  * 
  * cdef class Gini(ClassificationCriterion):             # <<<<<<<<<<<<<<
@@ -2762,9 +2780,11 @@ static unsigned char *(*__pyx_fuse_2__pyx_f_6_utils_safe_realloc)(unsigned char 
 static struct __pyx_t_6_utils_WeightedPQueueRecord *(*__pyx_fuse_3__pyx_f_6_utils_safe_realloc)(struct __pyx_t_6_utils_WeightedPQueueRecord **, size_t); /*proto*/
 static __pyx_t_6_utils_DOUBLE_t *(*__pyx_fuse_4__pyx_f_6_utils_safe_realloc)(__pyx_t_6_utils_DOUBLE_t **, size_t); /*proto*/
 static __pyx_t_6_utils_DOUBLE_t **(*__pyx_fuse_5__pyx_f_6_utils_safe_realloc)(__pyx_t_6_utils_DOUBLE_t ***, size_t); /*proto*/
-static struct __pyx_t_7sklearn_9neighbors_10_quad_tree_Cell **(*__pyx_fuse_6__pyx_f_6_utils_safe_realloc)(struct __pyx_t_7sklearn_9neighbors_10_quad_tree_Cell ***, size_t); /*proto*/
-static struct __pyx_t_6_utils_StackRecord *(*__pyx_fuse_7__pyx_f_6_utils_safe_realloc)(struct __pyx_t_6_utils_StackRecord **, size_t); /*proto*/
-static struct __pyx_t_6_utils_PriorityHeapRecord *(*__pyx_fuse_8__pyx_f_6_utils_safe_realloc)(struct __pyx_t_6_utils_PriorityHeapRecord **, size_t); /*proto*/
+static struct __pyx_t_6_utils_Node *(*__pyx_fuse_6__pyx_f_6_utils_safe_realloc)(struct __pyx_t_6_utils_Node **, size_t); /*proto*/
+static struct __pyx_t_7sklearn_9neighbors_10_quad_tree_Cell **(*__pyx_fuse_7__pyx_f_6_utils_safe_realloc)(struct __pyx_t_7sklearn_9neighbors_10_quad_tree_Cell ***, size_t); /*proto*/
+static struct __pyx_t_6_utils_Node **(*__pyx_fuse_8__pyx_f_6_utils_safe_realloc)(struct __pyx_t_6_utils_Node ***, size_t); /*proto*/
+static struct __pyx_t_6_utils_StackRecord *(*__pyx_fuse_9__pyx_f_6_utils_safe_realloc)(struct __pyx_t_6_utils_StackRecord **, size_t); /*proto*/
+static struct __pyx_t_6_utils_PriorityHeapRecord *(*__pyx_fuse_10__pyx_f_6_utils_safe_realloc)(struct __pyx_t_6_utils_PriorityHeapRecord **, size_t); /*proto*/
 
 /* Module declarations from 'libc.stdlib' */
 
@@ -3147,7 +3167,7 @@ static PyObject *__pyx_tuple__33;
 static PyObject *__pyx_codeobj__34;
 /* Late includes */
 
-/* "_criterion.pyx":15
+/* "_criterion.pyx":19
  * cdef class Criterion:
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -3170,7 +3190,7 @@ static void __pyx_pf_10_criterion_9Criterion___dealloc__(struct __pyx_obj_10_cri
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__dealloc__", 0);
 
-  /* "_criterion.pyx":17
+  /* "_criterion.pyx":21
  *     def __dealloc__(self):
  * 
  *         free(self.sum_total)             # <<<<<<<<<<<<<<
@@ -3179,7 +3199,7 @@ static void __pyx_pf_10_criterion_9Criterion___dealloc__(struct __pyx_obj_10_cri
  */
   free(__pyx_v_self->sum_total);
 
-  /* "_criterion.pyx":18
+  /* "_criterion.pyx":22
  * 
  *         free(self.sum_total)
  *         free(self.sum_left)             # <<<<<<<<<<<<<<
@@ -3188,7 +3208,7 @@ static void __pyx_pf_10_criterion_9Criterion___dealloc__(struct __pyx_obj_10_cri
  */
   free(__pyx_v_self->sum_left);
 
-  /* "_criterion.pyx":19
+  /* "_criterion.pyx":23
  *         free(self.sum_total)
  *         free(self.sum_left)
  *         free(self.sum_right)             # <<<<<<<<<<<<<<
@@ -3197,7 +3217,7 @@ static void __pyx_pf_10_criterion_9Criterion___dealloc__(struct __pyx_obj_10_cri
  */
   free(__pyx_v_self->sum_right);
 
-  /* "_criterion.pyx":15
+  /* "_criterion.pyx":19
  * cdef class Criterion:
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -3209,7 +3229,7 @@ static void __pyx_pf_10_criterion_9Criterion___dealloc__(struct __pyx_obj_10_cri
   __Pyx_RefNannyFinishContext();
 }
 
-/* "_criterion.pyx":21
+/* "_criterion.pyx":25
  *         free(self.sum_right)
  * 
  *     def __getstate__(self):             # <<<<<<<<<<<<<<
@@ -3235,7 +3255,7 @@ static PyObject *__pyx_pf_10_criterion_9Criterion_2__getstate__(CYTHON_UNUSED st
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__getstate__", 0);
 
-  /* "_criterion.pyx":22
+  /* "_criterion.pyx":26
  * 
  *     def __getstate__(self):
  *         return()             # <<<<<<<<<<<<<<
@@ -3247,7 +3267,7 @@ static PyObject *__pyx_pf_10_criterion_9Criterion_2__getstate__(CYTHON_UNUSED st
   __pyx_r = __pyx_empty_tuple;
   goto __pyx_L0;
 
-  /* "_criterion.pyx":21
+  /* "_criterion.pyx":25
  *         free(self.sum_right)
  * 
  *     def __getstate__(self):             # <<<<<<<<<<<<<<
@@ -3262,7 +3282,7 @@ static PyObject *__pyx_pf_10_criterion_9Criterion_2__getstate__(CYTHON_UNUSED st
   return __pyx_r;
 }
 
-/* "_criterion.pyx":24
+/* "_criterion.pyx":28
  *         return()
  * 
  *     def __setstate__(self, d):             # <<<<<<<<<<<<<<
@@ -3295,12 +3315,12 @@ static PyObject *__pyx_pf_10_criterion_9Criterion_4__setstate__(CYTHON_UNUSED st
   return __pyx_r;
 }
 
-/* "_criterion.pyx":27
+/* "_criterion.pyx":31
  *         pass
  * 
- *     cdef int init(self, const ut.DOUBLE_t[:, ::1] y, ut.DOUBLE_t* sample_weight,             # <<<<<<<<<<<<<<
- *                   double weighted_n_samples, ut.SIZE_t* samples, ut.SIZE_t start,
- *                   ut.SIZE_t end) nogil except -1:
+ *     cdef int init(self, const DOUBLE_t[:, ::1] y, DOUBLE_t* sample_weight,             # <<<<<<<<<<<<<<
+ *                   double weighted_n_samples, SIZE_t* samples, SIZE_t start,
+ *                   SIZE_t end) nogil except -1:
  */
 
 static int __pyx_f_10_criterion_9Criterion_init(CYTHON_UNUSED struct __pyx_obj_10_criterion_Criterion *__pyx_v_self, CYTHON_UNUSED __Pyx_memviewslice __pyx_v_y, CYTHON_UNUSED __pyx_t_6_utils_DOUBLE_t *__pyx_v_sample_weight, CYTHON_UNUSED double __pyx_v_weighted_n_samples, CYTHON_UNUSED __pyx_t_6_utils_SIZE_t *__pyx_v_samples, CYTHON_UNUSED __pyx_t_6_utils_SIZE_t __pyx_v_start, CYTHON_UNUSED __pyx_t_6_utils_SIZE_t __pyx_v_end) {
@@ -3311,7 +3331,7 @@ static int __pyx_f_10_criterion_9Criterion_init(CYTHON_UNUSED struct __pyx_obj_1
   return __pyx_r;
 }
 
-/* "_criterion.pyx":32
+/* "_criterion.pyx":36
  *         pass
  * 
  *     cdef int reset(self) nogil except -1:             # <<<<<<<<<<<<<<
@@ -3327,7 +3347,7 @@ static int __pyx_f_10_criterion_9Criterion_reset(CYTHON_UNUSED struct __pyx_obj_
   return __pyx_r;
 }
 
-/* "_criterion.pyx":35
+/* "_criterion.pyx":39
  *         pass
  * 
  *     cdef int reverse_reset(self) nogil except -1:             # <<<<<<<<<<<<<<
@@ -3343,10 +3363,10 @@ static int __pyx_f_10_criterion_9Criterion_reverse_reset(CYTHON_UNUSED struct __
   return __pyx_r;
 }
 
-/* "_criterion.pyx":38
+/* "_criterion.pyx":42
  *         pass
  * 
- *     cdef int update(self, ut.SIZE_t new_pos) nogil except -1:             # <<<<<<<<<<<<<<
+ *     cdef int update(self, SIZE_t new_pos) nogil except -1:             # <<<<<<<<<<<<<<
  *         pass
  * 
  */
@@ -3359,7 +3379,7 @@ static int __pyx_f_10_criterion_9Criterion_update(CYTHON_UNUSED struct __pyx_obj
   return __pyx_r;
 }
 
-/* "_criterion.pyx":41
+/* "_criterion.pyx":45
  *         pass
  * 
  *     cdef double node_impurity(self) nogil:             # <<<<<<<<<<<<<<
@@ -3375,7 +3395,7 @@ static double __pyx_f_10_criterion_9Criterion_node_impurity(CYTHON_UNUSED struct
   return __pyx_r;
 }
 
-/* "_criterion.pyx":44
+/* "_criterion.pyx":48
  *         pass
  * 
  *     cdef void children_impurity(self, double* impurity_left,             # <<<<<<<<<<<<<<
@@ -3388,7 +3408,7 @@ static void __pyx_f_10_criterion_9Criterion_children_impurity(CYTHON_UNUSED stru
   /* function exit code */
 }
 
-/* "_criterion.pyx":48
+/* "_criterion.pyx":52
  *         pass
  * 
  *     cdef void node_value(self, double* dest) nogil:             # <<<<<<<<<<<<<<
@@ -3401,7 +3421,7 @@ static void __pyx_f_10_criterion_9Criterion_node_value(CYTHON_UNUSED struct __py
   /* function exit code */
 }
 
-/* "_criterion.pyx":51
+/* "_criterion.pyx":55
  *         pass
  * 
  *     cdef double proxy_impurity_improvement(self) nogil:             # <<<<<<<<<<<<<<
@@ -3414,7 +3434,7 @@ static double __pyx_f_10_criterion_9Criterion_proxy_impurity_improvement(struct 
   double __pyx_v_impurity_right;
   double __pyx_r;
 
-  /* "_criterion.pyx":55
+  /* "_criterion.pyx":59
  *         cdef double impurity_left
  *         cdef double impurity_right
  *         self.children_impurity(&impurity_left, &impurity_right)             # <<<<<<<<<<<<<<
@@ -3423,7 +3443,7 @@ static double __pyx_f_10_criterion_9Criterion_proxy_impurity_improvement(struct 
  */
   ((struct __pyx_vtabstruct_10_criterion_Criterion *)__pyx_v_self->__pyx_vtab)->children_impurity(__pyx_v_self, (&__pyx_v_impurity_left), (&__pyx_v_impurity_right));
 
-  /* "_criterion.pyx":58
+  /* "_criterion.pyx":62
  * 
  *         return (- self.weighted_n_right * impurity_right
  *                 - self.weighted_n_left * impurity_left)             # <<<<<<<<<<<<<<
@@ -3433,7 +3453,7 @@ static double __pyx_f_10_criterion_9Criterion_proxy_impurity_improvement(struct 
   __pyx_r = (((-__pyx_v_self->weighted_n_right) * __pyx_v_impurity_right) - (__pyx_v_self->weighted_n_left * __pyx_v_impurity_left));
   goto __pyx_L0;
 
-  /* "_criterion.pyx":51
+  /* "_criterion.pyx":55
  *         pass
  * 
  *     cdef double proxy_impurity_improvement(self) nogil:             # <<<<<<<<<<<<<<
@@ -3446,7 +3466,7 @@ static double __pyx_f_10_criterion_9Criterion_proxy_impurity_improvement(struct 
   return __pyx_r;
 }
 
-/* "_criterion.pyx":60
+/* "_criterion.pyx":64
  *                 - self.weighted_n_left * impurity_left)
  * 
  *     cdef double impurity_improvement(self, double impurity) nogil:             # <<<<<<<<<<<<<<
@@ -3459,7 +3479,7 @@ static double __pyx_f_10_criterion_9Criterion_impurity_improvement(struct __pyx_
   double __pyx_v_impurity_right;
   double __pyx_r;
 
-  /* "_criterion.pyx":65
+  /* "_criterion.pyx":69
  *         cdef double impurity_right
  * 
  *         self.children_impurity(&impurity_left, &impurity_right)             # <<<<<<<<<<<<<<
@@ -3468,7 +3488,7 @@ static double __pyx_f_10_criterion_9Criterion_impurity_improvement(struct __pyx_
  */
   ((struct __pyx_vtabstruct_10_criterion_Criterion *)__pyx_v_self->__pyx_vtab)->children_impurity(__pyx_v_self, (&__pyx_v_impurity_left), (&__pyx_v_impurity_right));
 
-  /* "_criterion.pyx":67
+  /* "_criterion.pyx":71
  *         self.children_impurity(&impurity_left, &impurity_right)
  * 
  *         return ((self.weighted_n_node_samples / self.weighted_n_samples) *             # <<<<<<<<<<<<<<
@@ -3483,10 +3503,10 @@ static double __pyx_f_10_criterion_9Criterion_impurity_improvement(struct __pyx_
     #ifdef WITH_THREAD
     __Pyx_PyGILState_Release(__pyx_gilstate_save);
     #endif
-    __PYX_ERR(1, 67, __pyx_L1_error)
+    __PYX_ERR(1, 71, __pyx_L1_error)
   }
 
-  /* "_criterion.pyx":68
+  /* "_criterion.pyx":72
  * 
  *         return ((self.weighted_n_node_samples / self.weighted_n_samples) *
  *                 (impurity - (self.weighted_n_right /             # <<<<<<<<<<<<<<
@@ -3501,10 +3521,10 @@ static double __pyx_f_10_criterion_9Criterion_impurity_improvement(struct __pyx_
     #ifdef WITH_THREAD
     __Pyx_PyGILState_Release(__pyx_gilstate_save);
     #endif
-    __PYX_ERR(1, 68, __pyx_L1_error)
+    __PYX_ERR(1, 72, __pyx_L1_error)
   }
 
-  /* "_criterion.pyx":70
+  /* "_criterion.pyx":74
  *                 (impurity - (self.weighted_n_right /
  *                              self.weighted_n_node_samples * impurity_right)
  *                           - (self.weighted_n_left /             # <<<<<<<<<<<<<<
@@ -3519,10 +3539,10 @@ static double __pyx_f_10_criterion_9Criterion_impurity_improvement(struct __pyx_
     #ifdef WITH_THREAD
     __Pyx_PyGILState_Release(__pyx_gilstate_save);
     #endif
-    __PYX_ERR(1, 70, __pyx_L1_error)
+    __PYX_ERR(1, 74, __pyx_L1_error)
   }
 
-  /* "_criterion.pyx":67
+  /* "_criterion.pyx":71
  *         self.children_impurity(&impurity_left, &impurity_right)
  * 
  *         return ((self.weighted_n_node_samples / self.weighted_n_samples) *             # <<<<<<<<<<<<<<
@@ -3532,7 +3552,7 @@ static double __pyx_f_10_criterion_9Criterion_impurity_improvement(struct __pyx_
   __pyx_r = ((__pyx_v_self->weighted_n_node_samples / __pyx_v_self->weighted_n_samples) * ((__pyx_v_impurity - ((__pyx_v_self->weighted_n_right / __pyx_v_self->weighted_n_node_samples) * __pyx_v_impurity_right)) - ((__pyx_v_self->weighted_n_left / __pyx_v_self->weighted_n_node_samples) * __pyx_v_impurity_left)));
   goto __pyx_L0;
 
-  /* "_criterion.pyx":60
+  /* "_criterion.pyx":64
  *                 - self.weighted_n_left * impurity_left)
  * 
  *     cdef double impurity_improvement(self, double impurity) nogil:             # <<<<<<<<<<<<<<
@@ -3655,11 +3675,11 @@ static PyObject *__pyx_pf_10_criterion_9Criterion_8__setstate_cython__(CYTHON_UN
   return __pyx_r;
 }
 
-/* "_criterion.pyx":75
+/* "_criterion.pyx":79
  * cdef class ClassificationCriterion(Criterion):
  * 
- *     def __cinit__(self, ut.SIZE_t n_outputs,             # <<<<<<<<<<<<<<
- *                   np.ndarray[ut.SIZE_t, ndim=1] n_classes):
+ *     def __cinit__(self, SIZE_t n_outputs,             # <<<<<<<<<<<<<<
+ *                   np.ndarray[SIZE_t, ndim=1] n_classes):
  * 
  */
 
@@ -3694,11 +3714,11 @@ static int __pyx_pw_10_criterion_23ClassificationCriterion_1__cinit__(PyObject *
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_n_classes)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 2, 2, 1); __PYX_ERR(1, 75, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 2, 2, 1); __PYX_ERR(1, 79, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__cinit__") < 0)) __PYX_ERR(1, 75, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__cinit__") < 0)) __PYX_ERR(1, 79, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -3706,18 +3726,18 @@ static int __pyx_pw_10_criterion_23ClassificationCriterion_1__cinit__(PyObject *
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
       values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
     }
-    __pyx_v_n_outputs = __Pyx_PyInt_As_Py_intptr_t(values[0]); if (unlikely((__pyx_v_n_outputs == ((npy_intp)-1)) && PyErr_Occurred())) __PYX_ERR(1, 75, __pyx_L3_error)
+    __pyx_v_n_outputs = __Pyx_PyInt_As_Py_intptr_t(values[0]); if (unlikely((__pyx_v_n_outputs == ((npy_intp)-1)) && PyErr_Occurred())) __PYX_ERR(1, 79, __pyx_L3_error)
     __pyx_v_n_classes = ((PyArrayObject *)values[1]);
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 75, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 79, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("_criterion.ClassificationCriterion.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return -1;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_n_classes), __pyx_ptype_5numpy_ndarray, 1, "n_classes", 0))) __PYX_ERR(1, 76, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_n_classes), __pyx_ptype_5numpy_ndarray, 1, "n_classes", 0))) __PYX_ERR(1, 80, __pyx_L1_error)
   __pyx_r = __pyx_pf_10_criterion_23ClassificationCriterion___cinit__(((struct __pyx_obj_10_criterion_ClassificationCriterion *)__pyx_v_self), __pyx_v_n_outputs, __pyx_v_n_classes);
 
   /* function exit code */
@@ -3753,12 +3773,12 @@ static int __pyx_pf_10_criterion_23ClassificationCriterion___cinit__(struct __py
   __pyx_pybuffernd_n_classes.rcbuffer = &__pyx_pybuffer_n_classes;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_n_classes.rcbuffer->pybuffer, (PyObject*)__pyx_v_n_classes, &__Pyx_TypeInfo_nn___pyx_t_6_utils_SIZE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(1, 75, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_n_classes.rcbuffer->pybuffer, (PyObject*)__pyx_v_n_classes, &__Pyx_TypeInfo_nn___pyx_t_6_utils_SIZE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(1, 79, __pyx_L1_error)
   }
   __pyx_pybuffernd_n_classes.diminfo[0].strides = __pyx_pybuffernd_n_classes.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_n_classes.diminfo[0].shape = __pyx_pybuffernd_n_classes.rcbuffer->pybuffer.shape[0];
 
-  /* "_criterion.pyx":78
- *                   np.ndarray[ut.SIZE_t, ndim=1] n_classes):
+  /* "_criterion.pyx":82
+ *                   np.ndarray[SIZE_t, ndim=1] n_classes):
  * 
  *         self.sample_weight = NULL             # <<<<<<<<<<<<<<
  * 
@@ -3766,7 +3786,7 @@ static int __pyx_pf_10_criterion_23ClassificationCriterion___cinit__(struct __py
  */
   __pyx_v_self->__pyx_base.sample_weight = NULL;
 
-  /* "_criterion.pyx":80
+  /* "_criterion.pyx":84
  *         self.sample_weight = NULL
  * 
  *         self.samples = NULL             # <<<<<<<<<<<<<<
@@ -3775,7 +3795,7 @@ static int __pyx_pf_10_criterion_23ClassificationCriterion___cinit__(struct __py
  */
   __pyx_v_self->__pyx_base.samples = NULL;
 
-  /* "_criterion.pyx":81
+  /* "_criterion.pyx":85
  * 
  *         self.samples = NULL
  *         self.start = 0             # <<<<<<<<<<<<<<
@@ -3784,7 +3804,7 @@ static int __pyx_pf_10_criterion_23ClassificationCriterion___cinit__(struct __py
  */
   __pyx_v_self->__pyx_base.start = 0;
 
-  /* "_criterion.pyx":82
+  /* "_criterion.pyx":86
  *         self.samples = NULL
  *         self.start = 0
  *         self.pos = 0             # <<<<<<<<<<<<<<
@@ -3793,7 +3813,7 @@ static int __pyx_pf_10_criterion_23ClassificationCriterion___cinit__(struct __py
  */
   __pyx_v_self->__pyx_base.pos = 0;
 
-  /* "_criterion.pyx":83
+  /* "_criterion.pyx":87
  *         self.start = 0
  *         self.pos = 0
  *         self.end = 0             # <<<<<<<<<<<<<<
@@ -3802,7 +3822,7 @@ static int __pyx_pf_10_criterion_23ClassificationCriterion___cinit__(struct __py
  */
   __pyx_v_self->__pyx_base.end = 0;
 
-  /* "_criterion.pyx":85
+  /* "_criterion.pyx":89
  *         self.end = 0
  * 
  *         self.n_outputs = n_outputs             # <<<<<<<<<<<<<<
@@ -3811,7 +3831,7 @@ static int __pyx_pf_10_criterion_23ClassificationCriterion___cinit__(struct __py
  */
   __pyx_v_self->__pyx_base.n_outputs = __pyx_v_n_outputs;
 
-  /* "_criterion.pyx":86
+  /* "_criterion.pyx":90
  * 
  *         self.n_outputs = n_outputs
  *         self.n_samples = 0             # <<<<<<<<<<<<<<
@@ -3820,7 +3840,7 @@ static int __pyx_pf_10_criterion_23ClassificationCriterion___cinit__(struct __py
  */
   __pyx_v_self->__pyx_base.n_samples = 0;
 
-  /* "_criterion.pyx":87
+  /* "_criterion.pyx":91
  *         self.n_outputs = n_outputs
  *         self.n_samples = 0
  *         self.n_node_samples = 0             # <<<<<<<<<<<<<<
@@ -3829,7 +3849,7 @@ static int __pyx_pf_10_criterion_23ClassificationCriterion___cinit__(struct __py
  */
   __pyx_v_self->__pyx_base.n_node_samples = 0;
 
-  /* "_criterion.pyx":88
+  /* "_criterion.pyx":92
  *         self.n_samples = 0
  *         self.n_node_samples = 0
  *         self.weighted_n_node_samples = 0.0             # <<<<<<<<<<<<<<
@@ -3838,7 +3858,7 @@ static int __pyx_pf_10_criterion_23ClassificationCriterion___cinit__(struct __py
  */
   __pyx_v_self->__pyx_base.weighted_n_node_samples = 0.0;
 
-  /* "_criterion.pyx":89
+  /* "_criterion.pyx":93
  *         self.n_node_samples = 0
  *         self.weighted_n_node_samples = 0.0
  *         self.weighted_n_left = 0.0             # <<<<<<<<<<<<<<
@@ -3847,7 +3867,7 @@ static int __pyx_pf_10_criterion_23ClassificationCriterion___cinit__(struct __py
  */
   __pyx_v_self->__pyx_base.weighted_n_left = 0.0;
 
-  /* "_criterion.pyx":90
+  /* "_criterion.pyx":94
  *         self.weighted_n_node_samples = 0.0
  *         self.weighted_n_left = 0.0
  *         self.weighted_n_right = 0.0             # <<<<<<<<<<<<<<
@@ -3856,7 +3876,7 @@ static int __pyx_pf_10_criterion_23ClassificationCriterion___cinit__(struct __py
  */
   __pyx_v_self->__pyx_base.weighted_n_right = 0.0;
 
-  /* "_criterion.pyx":92
+  /* "_criterion.pyx":96
  *         self.weighted_n_right = 0.0
  * 
  *         self.sum_total = NULL             # <<<<<<<<<<<<<<
@@ -3865,7 +3885,7 @@ static int __pyx_pf_10_criterion_23ClassificationCriterion___cinit__(struct __py
  */
   __pyx_v_self->__pyx_base.sum_total = NULL;
 
-  /* "_criterion.pyx":93
+  /* "_criterion.pyx":97
  * 
  *         self.sum_total = NULL
  *         self.sum_left = NULL             # <<<<<<<<<<<<<<
@@ -3874,7 +3894,7 @@ static int __pyx_pf_10_criterion_23ClassificationCriterion___cinit__(struct __py
  */
   __pyx_v_self->__pyx_base.sum_left = NULL;
 
-  /* "_criterion.pyx":94
+  /* "_criterion.pyx":98
  *         self.sum_total = NULL
  *         self.sum_left = NULL
  *         self.sum_right = NULL             # <<<<<<<<<<<<<<
@@ -3883,44 +3903,44 @@ static int __pyx_pf_10_criterion_23ClassificationCriterion___cinit__(struct __py
  */
   __pyx_v_self->__pyx_base.sum_right = NULL;
 
-  /* "_criterion.pyx":95
+  /* "_criterion.pyx":99
  *         self.sum_left = NULL
  *         self.sum_right = NULL
  *         self.n_classes = NULL             # <<<<<<<<<<<<<<
  * 
- *         ut.safe_realloc(&self.n_classes, n_outputs)
+ *         safe_realloc(&self.n_classes, n_outputs)
  */
   __pyx_v_self->n_classes = NULL;
 
-  /* "_criterion.pyx":97
+  /* "_criterion.pyx":101
  *         self.n_classes = NULL
  * 
- *         ut.safe_realloc(&self.n_classes, n_outputs)             # <<<<<<<<<<<<<<
+ *         safe_realloc(&self.n_classes, n_outputs)             # <<<<<<<<<<<<<<
  * 
- *         cdef ut.SIZE_t k = 0
+ *         cdef SIZE_t k = 0
  */
-  __pyx_fuse_1__pyx_f_6_utils_safe_realloc((&__pyx_v_self->n_classes), __pyx_v_n_outputs); if (unlikely(PyErr_Occurred())) __PYX_ERR(1, 97, __pyx_L1_error)
+  __pyx_fuse_1__pyx_f_6_utils_safe_realloc((&__pyx_v_self->n_classes), __pyx_v_n_outputs); if (unlikely(PyErr_Occurred())) __PYX_ERR(1, 101, __pyx_L1_error)
 
-  /* "_criterion.pyx":99
- *         ut.safe_realloc(&self.n_classes, n_outputs)
+  /* "_criterion.pyx":103
+ *         safe_realloc(&self.n_classes, n_outputs)
  * 
- *         cdef ut.SIZE_t k = 0             # <<<<<<<<<<<<<<
- *         cdef ut.SIZE_t sum_stride = 0
+ *         cdef SIZE_t k = 0             # <<<<<<<<<<<<<<
+ *         cdef SIZE_t sum_stride = 0
  * 
  */
   __pyx_v_k = 0;
 
-  /* "_criterion.pyx":100
+  /* "_criterion.pyx":104
  * 
- *         cdef ut.SIZE_t k = 0
- *         cdef ut.SIZE_t sum_stride = 0             # <<<<<<<<<<<<<<
+ *         cdef SIZE_t k = 0
+ *         cdef SIZE_t sum_stride = 0             # <<<<<<<<<<<<<<
  * 
  *         for k in range(n_outputs):
  */
   __pyx_v_sum_stride = 0;
 
-  /* "_criterion.pyx":102
- *         cdef ut.SIZE_t sum_stride = 0
+  /* "_criterion.pyx":106
+ *         cdef SIZE_t sum_stride = 0
  * 
  *         for k in range(n_outputs):             # <<<<<<<<<<<<<<
  *             self.n_classes[k] = n_classes[k]
@@ -3931,7 +3951,7 @@ static int __pyx_pf_10_criterion_23ClassificationCriterion___cinit__(struct __py
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_k = __pyx_t_3;
 
-    /* "_criterion.pyx":103
+    /* "_criterion.pyx":107
  * 
  *         for k in range(n_outputs):
  *             self.n_classes[k] = n_classes[k]             # <<<<<<<<<<<<<<
@@ -3946,11 +3966,11 @@ static int __pyx_pf_10_criterion_23ClassificationCriterion___cinit__(struct __py
     } else if (unlikely(__pyx_t_4 >= __pyx_pybuffernd_n_classes.diminfo[0].shape)) __pyx_t_5 = 0;
     if (unlikely(__pyx_t_5 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_5);
-      __PYX_ERR(1, 103, __pyx_L1_error)
+      __PYX_ERR(1, 107, __pyx_L1_error)
     }
     (__pyx_v_self->n_classes[__pyx_v_k]) = (*__Pyx_BufPtrStrided1d(__pyx_t_6_utils_SIZE_t *, __pyx_pybuffernd_n_classes.rcbuffer->pybuffer.buf, __pyx_t_4, __pyx_pybuffernd_n_classes.diminfo[0].strides));
 
-    /* "_criterion.pyx":104
+    /* "_criterion.pyx":108
  *         for k in range(n_outputs):
  *             self.n_classes[k] = n_classes[k]
  *             if n_classes[k] > sum_stride:             # <<<<<<<<<<<<<<
@@ -3965,12 +3985,12 @@ static int __pyx_pf_10_criterion_23ClassificationCriterion___cinit__(struct __py
     } else if (unlikely(__pyx_t_6 >= __pyx_pybuffernd_n_classes.diminfo[0].shape)) __pyx_t_5 = 0;
     if (unlikely(__pyx_t_5 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_5);
-      __PYX_ERR(1, 104, __pyx_L1_error)
+      __PYX_ERR(1, 108, __pyx_L1_error)
     }
     __pyx_t_7 = (((*__Pyx_BufPtrStrided1d(__pyx_t_6_utils_SIZE_t *, __pyx_pybuffernd_n_classes.rcbuffer->pybuffer.buf, __pyx_t_6, __pyx_pybuffernd_n_classes.diminfo[0].strides)) > __pyx_v_sum_stride) != 0);
     if (__pyx_t_7) {
 
-      /* "_criterion.pyx":105
+      /* "_criterion.pyx":109
  *             self.n_classes[k] = n_classes[k]
  *             if n_classes[k] > sum_stride:
  *                 sum_stride = n_classes[k]             # <<<<<<<<<<<<<<
@@ -3985,11 +4005,11 @@ static int __pyx_pf_10_criterion_23ClassificationCriterion___cinit__(struct __py
       } else if (unlikely(__pyx_t_8 >= __pyx_pybuffernd_n_classes.diminfo[0].shape)) __pyx_t_5 = 0;
       if (unlikely(__pyx_t_5 != -1)) {
         __Pyx_RaiseBufferIndexError(__pyx_t_5);
-        __PYX_ERR(1, 105, __pyx_L1_error)
+        __PYX_ERR(1, 109, __pyx_L1_error)
       }
       __pyx_v_sum_stride = (*__Pyx_BufPtrStrided1d(__pyx_t_6_utils_SIZE_t *, __pyx_pybuffernd_n_classes.rcbuffer->pybuffer.buf, __pyx_t_8, __pyx_pybuffernd_n_classes.diminfo[0].strides));
 
-      /* "_criterion.pyx":104
+      /* "_criterion.pyx":108
  *         for k in range(n_outputs):
  *             self.n_classes[k] = n_classes[k]
  *             if n_classes[k] > sum_stride:             # <<<<<<<<<<<<<<
@@ -3999,35 +4019,35 @@ static int __pyx_pf_10_criterion_23ClassificationCriterion___cinit__(struct __py
     }
   }
 
-  /* "_criterion.pyx":107
+  /* "_criterion.pyx":111
  *                 sum_stride = n_classes[k]
  * 
  *         self.sum_stride = sum_stride             # <<<<<<<<<<<<<<
  * 
- *         cdef ut.SIZE_t n_elements = n_outputs * sum_stride
+ *         cdef SIZE_t n_elements = n_outputs * sum_stride
  */
   __pyx_v_self->sum_stride = __pyx_v_sum_stride;
 
-  /* "_criterion.pyx":109
+  /* "_criterion.pyx":113
  *         self.sum_stride = sum_stride
  * 
- *         cdef ut.SIZE_t n_elements = n_outputs * sum_stride             # <<<<<<<<<<<<<<
+ *         cdef SIZE_t n_elements = n_outputs * sum_stride             # <<<<<<<<<<<<<<
  *         self.sum_total = <double*> calloc(n_elements, sizeof(double))
  *         self.sum_left = <double*> calloc(n_elements, sizeof(double))
  */
   __pyx_v_n_elements = (__pyx_v_n_outputs * __pyx_v_sum_stride);
 
-  /* "_criterion.pyx":110
+  /* "_criterion.pyx":114
  * 
- *         cdef ut.SIZE_t n_elements = n_outputs * sum_stride
+ *         cdef SIZE_t n_elements = n_outputs * sum_stride
  *         self.sum_total = <double*> calloc(n_elements, sizeof(double))             # <<<<<<<<<<<<<<
  *         self.sum_left = <double*> calloc(n_elements, sizeof(double))
  *         self.sum_right = <double*> calloc(n_elements, sizeof(double))
  */
   __pyx_v_self->__pyx_base.sum_total = ((double *)calloc(__pyx_v_n_elements, (sizeof(double))));
 
-  /* "_criterion.pyx":111
- *         cdef ut.SIZE_t n_elements = n_outputs * sum_stride
+  /* "_criterion.pyx":115
+ *         cdef SIZE_t n_elements = n_outputs * sum_stride
  *         self.sum_total = <double*> calloc(n_elements, sizeof(double))
  *         self.sum_left = <double*> calloc(n_elements, sizeof(double))             # <<<<<<<<<<<<<<
  *         self.sum_right = <double*> calloc(n_elements, sizeof(double))
@@ -4035,7 +4055,7 @@ static int __pyx_pf_10_criterion_23ClassificationCriterion___cinit__(struct __py
  */
   __pyx_v_self->__pyx_base.sum_left = ((double *)calloc(__pyx_v_n_elements, (sizeof(double))));
 
-  /* "_criterion.pyx":112
+  /* "_criterion.pyx":116
  *         self.sum_total = <double*> calloc(n_elements, sizeof(double))
  *         self.sum_left = <double*> calloc(n_elements, sizeof(double))
  *         self.sum_right = <double*> calloc(n_elements, sizeof(double))             # <<<<<<<<<<<<<<
@@ -4044,7 +4064,7 @@ static int __pyx_pf_10_criterion_23ClassificationCriterion___cinit__(struct __py
  */
   __pyx_v_self->__pyx_base.sum_right = ((double *)calloc(__pyx_v_n_elements, (sizeof(double))));
 
-  /* "_criterion.pyx":114
+  /* "_criterion.pyx":118
  *         self.sum_right = <double*> calloc(n_elements, sizeof(double))
  * 
  *         if (self.sum_total == NULL or             # <<<<<<<<<<<<<<
@@ -4058,7 +4078,7 @@ static int __pyx_pf_10_criterion_23ClassificationCriterion___cinit__(struct __py
     goto __pyx_L7_bool_binop_done;
   }
 
-  /* "_criterion.pyx":115
+  /* "_criterion.pyx":119
  * 
  *         if (self.sum_total == NULL or
  *             self.sum_left == NULL or             # <<<<<<<<<<<<<<
@@ -4072,7 +4092,7 @@ static int __pyx_pf_10_criterion_23ClassificationCriterion___cinit__(struct __py
     goto __pyx_L7_bool_binop_done;
   }
 
-  /* "_criterion.pyx":116
+  /* "_criterion.pyx":120
  *         if (self.sum_total == NULL or
  *             self.sum_left == NULL or
  *             self.sum_right == NULL):             # <<<<<<<<<<<<<<
@@ -4083,7 +4103,7 @@ static int __pyx_pf_10_criterion_23ClassificationCriterion___cinit__(struct __py
   __pyx_t_7 = __pyx_t_9;
   __pyx_L7_bool_binop_done:;
 
-  /* "_criterion.pyx":114
+  /* "_criterion.pyx":118
  *         self.sum_right = <double*> calloc(n_elements, sizeof(double))
  * 
  *         if (self.sum_total == NULL or             # <<<<<<<<<<<<<<
@@ -4092,16 +4112,16 @@ static int __pyx_pf_10_criterion_23ClassificationCriterion___cinit__(struct __py
  */
   if (unlikely(__pyx_t_7)) {
 
-    /* "_criterion.pyx":117
+    /* "_criterion.pyx":121
  *             self.sum_left == NULL or
  *             self.sum_right == NULL):
  *             raise MemoryError()             # <<<<<<<<<<<<<<
  * 
  *     def __dealloc__(self):
  */
-    PyErr_NoMemory(); __PYX_ERR(1, 117, __pyx_L1_error)
+    PyErr_NoMemory(); __PYX_ERR(1, 121, __pyx_L1_error)
 
-    /* "_criterion.pyx":114
+    /* "_criterion.pyx":118
  *         self.sum_right = <double*> calloc(n_elements, sizeof(double))
  * 
  *         if (self.sum_total == NULL or             # <<<<<<<<<<<<<<
@@ -4110,11 +4130,11 @@ static int __pyx_pf_10_criterion_23ClassificationCriterion___cinit__(struct __py
  */
   }
 
-  /* "_criterion.pyx":75
+  /* "_criterion.pyx":79
  * cdef class ClassificationCriterion(Criterion):
  * 
- *     def __cinit__(self, ut.SIZE_t n_outputs,             # <<<<<<<<<<<<<<
- *                   np.ndarray[ut.SIZE_t, ndim=1] n_classes):
+ *     def __cinit__(self, SIZE_t n_outputs,             # <<<<<<<<<<<<<<
+ *                   np.ndarray[SIZE_t, ndim=1] n_classes):
  * 
  */
 
@@ -4138,7 +4158,7 @@ static int __pyx_pf_10_criterion_23ClassificationCriterion___cinit__(struct __py
   return __pyx_r;
 }
 
-/* "_criterion.pyx":119
+/* "_criterion.pyx":123
  *             raise MemoryError()
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -4161,7 +4181,7 @@ static void __pyx_pf_10_criterion_23ClassificationCriterion_2__dealloc__(struct 
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__dealloc__", 0);
 
-  /* "_criterion.pyx":120
+  /* "_criterion.pyx":124
  * 
  *     def __dealloc__(self):
  *         free(self.n_classes)             # <<<<<<<<<<<<<<
@@ -4170,7 +4190,7 @@ static void __pyx_pf_10_criterion_23ClassificationCriterion_2__dealloc__(struct 
  */
   free(__pyx_v_self->n_classes);
 
-  /* "_criterion.pyx":119
+  /* "_criterion.pyx":123
  *             raise MemoryError()
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -4182,7 +4202,7 @@ static void __pyx_pf_10_criterion_23ClassificationCriterion_2__dealloc__(struct 
   __Pyx_RefNannyFinishContext();
 }
 
-/* "_criterion.pyx":122
+/* "_criterion.pyx":126
  *         free(self.n_classes)
  * 
  *     def __reduce__(self):             # <<<<<<<<<<<<<<
@@ -4212,43 +4232,43 @@ static PyObject *__pyx_pf_10_criterion_23ClassificationCriterion_4__reduce__(str
   PyObject *__pyx_t_4 = NULL;
   __Pyx_RefNannySetupContext("__reduce__", 0);
 
-  /* "_criterion.pyx":123
+  /* "_criterion.pyx":127
  * 
  *     def __reduce__(self):
  *         return (type(self),             # <<<<<<<<<<<<<<
  *                 (self.n_outputs,
- *                  ut.sizet_ptr_to_ndarray(self.n_classes, self.n_outputs)),
+ *                  sizet_ptr_to_ndarray(self.n_classes, self.n_outputs)),
  */
   __Pyx_XDECREF(__pyx_r);
 
-  /* "_criterion.pyx":124
+  /* "_criterion.pyx":128
  *     def __reduce__(self):
  *         return (type(self),
  *                 (self.n_outputs,             # <<<<<<<<<<<<<<
- *                  ut.sizet_ptr_to_ndarray(self.n_classes, self.n_outputs)),
+ *                  sizet_ptr_to_ndarray(self.n_classes, self.n_outputs)),
  *                  self.__getstate__())
  */
-  __pyx_t_1 = __Pyx_PyInt_From_Py_intptr_t(__pyx_v_self->__pyx_base.n_outputs); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 124, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_Py_intptr_t(__pyx_v_self->__pyx_base.n_outputs); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 128, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
 
-  /* "_criterion.pyx":125
+  /* "_criterion.pyx":129
  *         return (type(self),
  *                 (self.n_outputs,
- *                  ut.sizet_ptr_to_ndarray(self.n_classes, self.n_outputs)),             # <<<<<<<<<<<<<<
+ *                  sizet_ptr_to_ndarray(self.n_classes, self.n_outputs)),             # <<<<<<<<<<<<<<
  *                  self.__getstate__())
  * 
  */
-  __pyx_t_2 = ((PyObject *)__pyx_f_6_utils_sizet_ptr_to_ndarray(__pyx_v_self->n_classes, __pyx_v_self->__pyx_base.n_outputs)); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 125, __pyx_L1_error)
+  __pyx_t_2 = ((PyObject *)__pyx_f_6_utils_sizet_ptr_to_ndarray(__pyx_v_self->n_classes, __pyx_v_self->__pyx_base.n_outputs)); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 129, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
 
-  /* "_criterion.pyx":124
+  /* "_criterion.pyx":128
  *     def __reduce__(self):
  *         return (type(self),
  *                 (self.n_outputs,             # <<<<<<<<<<<<<<
- *                  ut.sizet_ptr_to_ndarray(self.n_classes, self.n_outputs)),
+ *                  sizet_ptr_to_ndarray(self.n_classes, self.n_outputs)),
  *                  self.__getstate__())
  */
-  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 124, __pyx_L1_error)
+  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 128, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_1);
@@ -4257,14 +4277,14 @@ static PyObject *__pyx_pf_10_criterion_23ClassificationCriterion_4__reduce__(str
   __pyx_t_1 = 0;
   __pyx_t_2 = 0;
 
-  /* "_criterion.pyx":126
+  /* "_criterion.pyx":130
  *                 (self.n_outputs,
- *                  ut.sizet_ptr_to_ndarray(self.n_classes, self.n_outputs)),
+ *                  sizet_ptr_to_ndarray(self.n_classes, self.n_outputs)),
  *                  self.__getstate__())             # <<<<<<<<<<<<<<
  * 
  *     cdef int init(self, const ut.DOUBLE_t[:, ::1] y, ut.DOUBLE_t* sample_weight,
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_getstate); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 126, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_getstate); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 130, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_4 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_1))) {
@@ -4278,18 +4298,18 @@ static PyObject *__pyx_pf_10_criterion_23ClassificationCriterion_4__reduce__(str
   }
   __pyx_t_2 = (__pyx_t_4) ? __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_4) : __Pyx_PyObject_CallNoArg(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 126, __pyx_L1_error)
+  if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 130, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "_criterion.pyx":123
+  /* "_criterion.pyx":127
  * 
  *     def __reduce__(self):
  *         return (type(self),             # <<<<<<<<<<<<<<
  *                 (self.n_outputs,
- *                  ut.sizet_ptr_to_ndarray(self.n_classes, self.n_outputs)),
+ *                  sizet_ptr_to_ndarray(self.n_classes, self.n_outputs)),
  */
-  __pyx_t_1 = PyTuple_New(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 123, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 127, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
   __Pyx_GIVEREF(((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
@@ -4304,7 +4324,7 @@ static PyObject *__pyx_pf_10_criterion_23ClassificationCriterion_4__reduce__(str
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "_criterion.pyx":122
+  /* "_criterion.pyx":126
  *         free(self.n_classes)
  * 
  *     def __reduce__(self):             # <<<<<<<<<<<<<<
@@ -4326,7 +4346,7 @@ static PyObject *__pyx_pf_10_criterion_23ClassificationCriterion_4__reduce__(str
   return __pyx_r;
 }
 
-/* "_criterion.pyx":128
+/* "_criterion.pyx":132
  *                  self.__getstate__())
  * 
  *     cdef int init(self, const ut.DOUBLE_t[:, ::1] y, ut.DOUBLE_t* sample_weight,             # <<<<<<<<<<<<<<
@@ -4358,7 +4378,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_init(struct __pyx_obj_
   int __pyx_t_12;
   __pyx_t_6_utils_SIZE_t __pyx_t_13;
 
-  /* "_criterion.pyx":132
+  /* "_criterion.pyx":136
  *                   ut.SIZE_t end) nogil except -1:
  * 
  *         self.y = y             # <<<<<<<<<<<<<<
@@ -4369,7 +4389,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_init(struct __pyx_obj_
   __PYX_INC_MEMVIEW(&__pyx_v_y, 1);
   __pyx_v_self->__pyx_base.y = __pyx_v_y;
 
-  /* "_criterion.pyx":133
+  /* "_criterion.pyx":137
  * 
  *         self.y = y
  *         self.sample_weight = sample_weight             # <<<<<<<<<<<<<<
@@ -4378,7 +4398,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_init(struct __pyx_obj_
  */
   __pyx_v_self->__pyx_base.sample_weight = __pyx_v_sample_weight;
 
-  /* "_criterion.pyx":134
+  /* "_criterion.pyx":138
  *         self.y = y
  *         self.sample_weight = sample_weight
  *         self.samples = samples             # <<<<<<<<<<<<<<
@@ -4387,7 +4407,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_init(struct __pyx_obj_
  */
   __pyx_v_self->__pyx_base.samples = __pyx_v_samples;
 
-  /* "_criterion.pyx":135
+  /* "_criterion.pyx":139
  *         self.sample_weight = sample_weight
  *         self.samples = samples
  *         self.start = start             # <<<<<<<<<<<<<<
@@ -4396,7 +4416,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_init(struct __pyx_obj_
  */
   __pyx_v_self->__pyx_base.start = __pyx_v_start;
 
-  /* "_criterion.pyx":136
+  /* "_criterion.pyx":140
  *         self.samples = samples
  *         self.start = start
  *         self.end = end             # <<<<<<<<<<<<<<
@@ -4405,7 +4425,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_init(struct __pyx_obj_
  */
   __pyx_v_self->__pyx_base.end = __pyx_v_end;
 
-  /* "_criterion.pyx":137
+  /* "_criterion.pyx":141
  *         self.start = start
  *         self.end = end
  *         self.n_node_samples = end - start             # <<<<<<<<<<<<<<
@@ -4414,7 +4434,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_init(struct __pyx_obj_
  */
   __pyx_v_self->__pyx_base.n_node_samples = (__pyx_v_end - __pyx_v_start);
 
-  /* "_criterion.pyx":138
+  /* "_criterion.pyx":142
  *         self.end = end
  *         self.n_node_samples = end - start
  *         self.weighted_n_samples = weighted_n_samples             # <<<<<<<<<<<<<<
@@ -4423,55 +4443,55 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_init(struct __pyx_obj_
  */
   __pyx_v_self->__pyx_base.weighted_n_samples = __pyx_v_weighted_n_samples;
 
-  /* "_criterion.pyx":139
+  /* "_criterion.pyx":143
  *         self.n_node_samples = end - start
  *         self.weighted_n_samples = weighted_n_samples
  *         self.weighted_n_node_samples = 0.0             # <<<<<<<<<<<<<<
  * 
- *         cdef ut.SIZE_t* n_classes = self.n_classes
+ *         cdef SIZE_t* n_classes = self.n_classes
  */
   __pyx_v_self->__pyx_base.weighted_n_node_samples = 0.0;
 
-  /* "_criterion.pyx":141
+  /* "_criterion.pyx":145
  *         self.weighted_n_node_samples = 0.0
  * 
- *         cdef ut.SIZE_t* n_classes = self.n_classes             # <<<<<<<<<<<<<<
+ *         cdef SIZE_t* n_classes = self.n_classes             # <<<<<<<<<<<<<<
  *         cdef double* sum_total = self.sum_total
  * 
  */
   __pyx_t_1 = __pyx_v_self->n_classes;
   __pyx_v_n_classes = __pyx_t_1;
 
-  /* "_criterion.pyx":142
+  /* "_criterion.pyx":146
  * 
- *         cdef ut.SIZE_t* n_classes = self.n_classes
+ *         cdef SIZE_t* n_classes = self.n_classes
  *         cdef double* sum_total = self.sum_total             # <<<<<<<<<<<<<<
  * 
- *         cdef ut.SIZE_t i
+ *         cdef SIZE_t i
  */
   __pyx_t_2 = __pyx_v_self->__pyx_base.sum_total;
   __pyx_v_sum_total = __pyx_t_2;
 
-  /* "_criterion.pyx":148
- *         cdef ut.SIZE_t k
- *         cdef ut.SIZE_t c
- *         cdef ut.DOUBLE_t w = 1.0             # <<<<<<<<<<<<<<
- *         cdef ut.SIZE_t offset = 0
+  /* "_criterion.pyx":152
+ *         cdef SIZE_t k
+ *         cdef SIZE_t c
+ *         cdef DOUBLE_t w = 1.0             # <<<<<<<<<<<<<<
+ *         cdef SIZE_t offset = 0
  * 
  */
   __pyx_v_w = 1.0;
 
-  /* "_criterion.pyx":149
- *         cdef ut.SIZE_t c
- *         cdef ut.DOUBLE_t w = 1.0
- *         cdef ut.SIZE_t offset = 0             # <<<<<<<<<<<<<<
+  /* "_criterion.pyx":153
+ *         cdef SIZE_t c
+ *         cdef DOUBLE_t w = 1.0
+ *         cdef SIZE_t offset = 0             # <<<<<<<<<<<<<<
  * 
  *         for k in range(self.n_outputs):
  */
   __pyx_v_offset = 0;
 
-  /* "_criterion.pyx":151
- *         cdef ut.SIZE_t offset = 0
+  /* "_criterion.pyx":155
+ *         cdef SIZE_t offset = 0
  * 
  *         for k in range(self.n_outputs):             # <<<<<<<<<<<<<<
  *             memset(sum_total + offset, 0, n_classes[k] * sizeof(double))
@@ -4482,7 +4502,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_init(struct __pyx_obj_
   for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_k = __pyx_t_5;
 
-    /* "_criterion.pyx":152
+    /* "_criterion.pyx":156
  * 
  *         for k in range(self.n_outputs):
  *             memset(sum_total + offset, 0, n_classes[k] * sizeof(double))             # <<<<<<<<<<<<<<
@@ -4491,7 +4511,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_init(struct __pyx_obj_
  */
     (void)(memset((__pyx_v_sum_total + __pyx_v_offset), 0, ((__pyx_v_n_classes[__pyx_v_k]) * (sizeof(double)))));
 
-    /* "_criterion.pyx":153
+    /* "_criterion.pyx":157
  *         for k in range(self.n_outputs):
  *             memset(sum_total + offset, 0, n_classes[k] * sizeof(double))
  *             offset += self.sum_stride             # <<<<<<<<<<<<<<
@@ -4501,7 +4521,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_init(struct __pyx_obj_
     __pyx_v_offset = (__pyx_v_offset + __pyx_v_self->sum_stride);
   }
 
-  /* "_criterion.pyx":155
+  /* "_criterion.pyx":159
  *             offset += self.sum_stride
  * 
  *         for p in range(start, end):             # <<<<<<<<<<<<<<
@@ -4513,7 +4533,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_init(struct __pyx_obj_
   for (__pyx_t_5 = __pyx_v_start; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_p = __pyx_t_5;
 
-    /* "_criterion.pyx":156
+    /* "_criterion.pyx":160
  * 
  *         for p in range(start, end):
  *             i = samples[p]             # <<<<<<<<<<<<<<
@@ -4522,7 +4542,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_init(struct __pyx_obj_
  */
     __pyx_v_i = (__pyx_v_samples[__pyx_v_p]);
 
-    /* "_criterion.pyx":158
+    /* "_criterion.pyx":162
  *             i = samples[p]
  * 
  *             if sample_weight != NULL:             # <<<<<<<<<<<<<<
@@ -4532,7 +4552,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_init(struct __pyx_obj_
     __pyx_t_6 = ((__pyx_v_sample_weight != NULL) != 0);
     if (__pyx_t_6) {
 
-      /* "_criterion.pyx":159
+      /* "_criterion.pyx":163
  * 
  *             if sample_weight != NULL:
  *                 w = sample_weight[i]             # <<<<<<<<<<<<<<
@@ -4541,7 +4561,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_init(struct __pyx_obj_
  */
       __pyx_v_w = (__pyx_v_sample_weight[__pyx_v_i]);
 
-      /* "_criterion.pyx":158
+      /* "_criterion.pyx":162
  *             i = samples[p]
  * 
  *             if sample_weight != NULL:             # <<<<<<<<<<<<<<
@@ -4550,11 +4570,11 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_init(struct __pyx_obj_
  */
     }
 
-    /* "_criterion.pyx":161
+    /* "_criterion.pyx":165
  *                 w = sample_weight[i]
  * 
  *             for k in range(self.n_outputs):             # <<<<<<<<<<<<<<
- *                 c = <ut.SIZE_t> self.y[i, k]
+ *                 c = <SIZE_t> self.y[i, k]
  *                 sum_total[k * self.sum_stride + c] += w
  */
     __pyx_t_7 = __pyx_v_self->__pyx_base.n_outputs;
@@ -4562,14 +4582,14 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_init(struct __pyx_obj_
     for (__pyx_t_9 = 0; __pyx_t_9 < __pyx_t_8; __pyx_t_9+=1) {
       __pyx_v_k = __pyx_t_9;
 
-      /* "_criterion.pyx":162
+      /* "_criterion.pyx":166
  * 
  *             for k in range(self.n_outputs):
- *                 c = <ut.SIZE_t> self.y[i, k]             # <<<<<<<<<<<<<<
+ *                 c = <SIZE_t> self.y[i, k]             # <<<<<<<<<<<<<<
  *                 sum_total[k * self.sum_stride + c] += w
  * 
  */
-      if (unlikely(!__pyx_v_self->__pyx_base.y.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(1, 162, __pyx_L1_error)}
+      if (unlikely(!__pyx_v_self->__pyx_base.y.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(1, 166, __pyx_L1_error)}
       __pyx_t_10 = __pyx_v_i;
       __pyx_t_11 = __pyx_v_k;
       __pyx_t_12 = -1;
@@ -4583,13 +4603,13 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_init(struct __pyx_obj_
       } else if (unlikely(__pyx_t_11 >= __pyx_v_self->__pyx_base.y.shape[1])) __pyx_t_12 = 1;
       if (unlikely(__pyx_t_12 != -1)) {
         __Pyx_RaiseBufferIndexErrorNogil(__pyx_t_12);
-        __PYX_ERR(1, 162, __pyx_L1_error)
+        __PYX_ERR(1, 166, __pyx_L1_error)
       }
       __pyx_v_c = ((__pyx_t_6_utils_SIZE_t)(*((__pyx_t_6_utils_DOUBLE_t const  *) ( /* dim=1 */ ((char *) (((__pyx_t_6_utils_DOUBLE_t const  *) ( /* dim=0 */ (__pyx_v_self->__pyx_base.y.data + __pyx_t_10 * __pyx_v_self->__pyx_base.y.strides[0]) )) + __pyx_t_11)) ))));
 
-      /* "_criterion.pyx":163
+      /* "_criterion.pyx":167
  *             for k in range(self.n_outputs):
- *                 c = <ut.SIZE_t> self.y[i, k]
+ *                 c = <SIZE_t> self.y[i, k]
  *                 sum_total[k * self.sum_stride + c] += w             # <<<<<<<<<<<<<<
  * 
  *             self.weighted_n_node_samples += w
@@ -4598,7 +4618,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_init(struct __pyx_obj_
       (__pyx_v_sum_total[__pyx_t_13]) = ((__pyx_v_sum_total[__pyx_t_13]) + __pyx_v_w);
     }
 
-    /* "_criterion.pyx":165
+    /* "_criterion.pyx":169
  *                 sum_total[k * self.sum_stride + c] += w
  * 
  *             self.weighted_n_node_samples += w             # <<<<<<<<<<<<<<
@@ -4608,16 +4628,16 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_init(struct __pyx_obj_
     __pyx_v_self->__pyx_base.weighted_n_node_samples = (__pyx_v_self->__pyx_base.weighted_n_node_samples + __pyx_v_w);
   }
 
-  /* "_criterion.pyx":167
+  /* "_criterion.pyx":171
  *             self.weighted_n_node_samples += w
  * 
  *         self.reset()             # <<<<<<<<<<<<<<
  * 
  *         return 0
  */
-  __pyx_t_12 = ((struct __pyx_vtabstruct_10_criterion_ClassificationCriterion *)__pyx_v_self->__pyx_base.__pyx_vtab)->__pyx_base.reset(((struct __pyx_obj_10_criterion_Criterion *)__pyx_v_self)); if (unlikely(__pyx_t_12 == ((int)-1))) __PYX_ERR(1, 167, __pyx_L1_error)
+  __pyx_t_12 = ((struct __pyx_vtabstruct_10_criterion_ClassificationCriterion *)__pyx_v_self->__pyx_base.__pyx_vtab)->__pyx_base.reset(((struct __pyx_obj_10_criterion_Criterion *)__pyx_v_self)); if (unlikely(__pyx_t_12 == ((int)-1))) __PYX_ERR(1, 171, __pyx_L1_error)
 
-  /* "_criterion.pyx":169
+  /* "_criterion.pyx":173
  *         self.reset()
  * 
  *         return 0             # <<<<<<<<<<<<<<
@@ -4627,7 +4647,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_init(struct __pyx_obj_
   __pyx_r = 0;
   goto __pyx_L0;
 
-  /* "_criterion.pyx":128
+  /* "_criterion.pyx":132
  *                  self.__getstate__())
  * 
  *     cdef int init(self, const ut.DOUBLE_t[:, ::1] y, ut.DOUBLE_t* sample_weight,             # <<<<<<<<<<<<<<
@@ -4651,7 +4671,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_init(struct __pyx_obj_
   return __pyx_r;
 }
 
-/* "_criterion.pyx":171
+/* "_criterion.pyx":175
  *         return 0
  * 
  *     cdef int reset(self) nogil except -1:             # <<<<<<<<<<<<<<
@@ -4673,7 +4693,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_reset(struct __pyx_obj
   __pyx_t_6_utils_SIZE_t __pyx_t_5;
   __pyx_t_6_utils_SIZE_t __pyx_t_6;
 
-  /* "_criterion.pyx":173
+  /* "_criterion.pyx":177
  *     cdef int reset(self) nogil except -1:
  * 
  *         self.pos = self.start             # <<<<<<<<<<<<<<
@@ -4683,7 +4703,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_reset(struct __pyx_obj
   __pyx_t_1 = __pyx_v_self->__pyx_base.start;
   __pyx_v_self->__pyx_base.pos = __pyx_t_1;
 
-  /* "_criterion.pyx":174
+  /* "_criterion.pyx":178
  * 
  *         self.pos = self.start
  *         self.weighted_n_left = 0.0             # <<<<<<<<<<<<<<
@@ -4692,7 +4712,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_reset(struct __pyx_obj
  */
   __pyx_v_self->__pyx_base.weighted_n_left = 0.0;
 
-  /* "_criterion.pyx":175
+  /* "_criterion.pyx":179
  *         self.pos = self.start
  *         self.weighted_n_left = 0.0
  *         self.weighted_n_right = self.weighted_n_node_samples             # <<<<<<<<<<<<<<
@@ -4702,7 +4722,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_reset(struct __pyx_obj
   __pyx_t_2 = __pyx_v_self->__pyx_base.weighted_n_node_samples;
   __pyx_v_self->__pyx_base.weighted_n_right = __pyx_t_2;
 
-  /* "_criterion.pyx":177
+  /* "_criterion.pyx":181
  *         self.weighted_n_right = self.weighted_n_node_samples
  * 
  *         cdef double* sum_total = self.sum_total             # <<<<<<<<<<<<<<
@@ -4712,7 +4732,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_reset(struct __pyx_obj
   __pyx_t_3 = __pyx_v_self->__pyx_base.sum_total;
   __pyx_v_sum_total = __pyx_t_3;
 
-  /* "_criterion.pyx":178
+  /* "_criterion.pyx":182
  * 
  *         cdef double* sum_total = self.sum_total
  *         cdef double* sum_left = self.sum_left             # <<<<<<<<<<<<<<
@@ -4722,28 +4742,28 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_reset(struct __pyx_obj
   __pyx_t_3 = __pyx_v_self->__pyx_base.sum_left;
   __pyx_v_sum_left = __pyx_t_3;
 
-  /* "_criterion.pyx":179
+  /* "_criterion.pyx":183
  *         cdef double* sum_total = self.sum_total
  *         cdef double* sum_left = self.sum_left
  *         cdef double* sum_right = self.sum_right             # <<<<<<<<<<<<<<
  * 
- *         cdef ut.SIZE_t* n_classes = self.n_classes
+ *         cdef SIZE_t* n_classes = self.n_classes
  */
   __pyx_t_3 = __pyx_v_self->__pyx_base.sum_right;
   __pyx_v_sum_right = __pyx_t_3;
 
-  /* "_criterion.pyx":181
+  /* "_criterion.pyx":185
  *         cdef double* sum_right = self.sum_right
  * 
- *         cdef ut.SIZE_t* n_classes = self.n_classes             # <<<<<<<<<<<<<<
- *         cdef ut.SIZE_t k
+ *         cdef SIZE_t* n_classes = self.n_classes             # <<<<<<<<<<<<<<
+ *         cdef SIZE_t k
  * 
  */
   __pyx_t_4 = __pyx_v_self->n_classes;
   __pyx_v_n_classes = __pyx_t_4;
 
-  /* "_criterion.pyx":184
- *         cdef ut.SIZE_t k
+  /* "_criterion.pyx":188
+ *         cdef SIZE_t k
  * 
  *         for k in range(self.n_outputs):             # <<<<<<<<<<<<<<
  *             memset(sum_left, 0, n_classes[k] * sizeof(double))
@@ -4754,7 +4774,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_reset(struct __pyx_obj
   for (__pyx_t_6 = 0; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
     __pyx_v_k = __pyx_t_6;
 
-    /* "_criterion.pyx":185
+    /* "_criterion.pyx":189
  * 
  *         for k in range(self.n_outputs):
  *             memset(sum_left, 0, n_classes[k] * sizeof(double))             # <<<<<<<<<<<<<<
@@ -4763,7 +4783,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_reset(struct __pyx_obj
  */
     (void)(memset(__pyx_v_sum_left, 0, ((__pyx_v_n_classes[__pyx_v_k]) * (sizeof(double)))));
 
-    /* "_criterion.pyx":186
+    /* "_criterion.pyx":190
  *         for k in range(self.n_outputs):
  *             memset(sum_left, 0, n_classes[k] * sizeof(double))
  *             memcpy(sum_right, sum_total, n_classes[k] * sizeof(double))             # <<<<<<<<<<<<<<
@@ -4772,7 +4792,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_reset(struct __pyx_obj
  */
     (void)(memcpy(__pyx_v_sum_right, __pyx_v_sum_total, ((__pyx_v_n_classes[__pyx_v_k]) * (sizeof(double)))));
 
-    /* "_criterion.pyx":188
+    /* "_criterion.pyx":192
  *             memcpy(sum_right, sum_total, n_classes[k] * sizeof(double))
  * 
  *             sum_total += self.sum_stride             # <<<<<<<<<<<<<<
@@ -4781,7 +4801,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_reset(struct __pyx_obj
  */
     __pyx_v_sum_total = (__pyx_v_sum_total + __pyx_v_self->sum_stride);
 
-    /* "_criterion.pyx":189
+    /* "_criterion.pyx":193
  * 
  *             sum_total += self.sum_stride
  *             sum_left += self.sum_stride             # <<<<<<<<<<<<<<
@@ -4790,7 +4810,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_reset(struct __pyx_obj
  */
     __pyx_v_sum_left = (__pyx_v_sum_left + __pyx_v_self->sum_stride);
 
-    /* "_criterion.pyx":190
+    /* "_criterion.pyx":194
  *             sum_total += self.sum_stride
  *             sum_left += self.sum_stride
  *             sum_right += self.sum_stride             # <<<<<<<<<<<<<<
@@ -4800,7 +4820,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_reset(struct __pyx_obj
     __pyx_v_sum_right = (__pyx_v_sum_right + __pyx_v_self->sum_stride);
   }
 
-  /* "_criterion.pyx":192
+  /* "_criterion.pyx":196
  *             sum_right += self.sum_stride
  * 
  *         return 0             # <<<<<<<<<<<<<<
@@ -4810,7 +4830,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_reset(struct __pyx_obj
   __pyx_r = 0;
   goto __pyx_L0;
 
-  /* "_criterion.pyx":171
+  /* "_criterion.pyx":175
  *         return 0
  * 
  *     cdef int reset(self) nogil except -1:             # <<<<<<<<<<<<<<
@@ -4823,7 +4843,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_reset(struct __pyx_obj
   return __pyx_r;
 }
 
-/* "_criterion.pyx":194
+/* "_criterion.pyx":198
  *         return 0
  * 
  *     cdef int reverse_reset(self) nogil except -1:             # <<<<<<<<<<<<<<
@@ -4845,7 +4865,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_reverse_reset(struct _
   __pyx_t_6_utils_SIZE_t __pyx_t_5;
   __pyx_t_6_utils_SIZE_t __pyx_t_6;
 
-  /* "_criterion.pyx":199
+  /* "_criterion.pyx":203
  *         or 0 otherwise.
  *         """
  *         self.pos = self.end             # <<<<<<<<<<<<<<
@@ -4855,7 +4875,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_reverse_reset(struct _
   __pyx_t_1 = __pyx_v_self->__pyx_base.end;
   __pyx_v_self->__pyx_base.pos = __pyx_t_1;
 
-  /* "_criterion.pyx":201
+  /* "_criterion.pyx":205
  *         self.pos = self.end
  * 
  *         self.weighted_n_left = self.weighted_n_node_samples             # <<<<<<<<<<<<<<
@@ -4865,7 +4885,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_reverse_reset(struct _
   __pyx_t_2 = __pyx_v_self->__pyx_base.weighted_n_node_samples;
   __pyx_v_self->__pyx_base.weighted_n_left = __pyx_t_2;
 
-  /* "_criterion.pyx":202
+  /* "_criterion.pyx":206
  * 
  *         self.weighted_n_left = self.weighted_n_node_samples
  *         self.weighted_n_right = 0.0             # <<<<<<<<<<<<<<
@@ -4874,7 +4894,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_reverse_reset(struct _
  */
   __pyx_v_self->__pyx_base.weighted_n_right = 0.0;
 
-  /* "_criterion.pyx":204
+  /* "_criterion.pyx":208
  *         self.weighted_n_right = 0.0
  * 
  *         cdef double* sum_total = self.sum_total             # <<<<<<<<<<<<<<
@@ -4884,7 +4904,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_reverse_reset(struct _
   __pyx_t_3 = __pyx_v_self->__pyx_base.sum_total;
   __pyx_v_sum_total = __pyx_t_3;
 
-  /* "_criterion.pyx":205
+  /* "_criterion.pyx":209
  * 
  *         cdef double* sum_total = self.sum_total
  *         cdef double* sum_left = self.sum_left             # <<<<<<<<<<<<<<
@@ -4894,28 +4914,28 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_reverse_reset(struct _
   __pyx_t_3 = __pyx_v_self->__pyx_base.sum_left;
   __pyx_v_sum_left = __pyx_t_3;
 
-  /* "_criterion.pyx":206
+  /* "_criterion.pyx":210
  *         cdef double* sum_total = self.sum_total
  *         cdef double* sum_left = self.sum_left
  *         cdef double* sum_right = self.sum_right             # <<<<<<<<<<<<<<
  * 
- *         cdef ut.SIZE_t* n_classes = self.n_classes
+ *         cdef SIZE_t* n_classes = self.n_classes
  */
   __pyx_t_3 = __pyx_v_self->__pyx_base.sum_right;
   __pyx_v_sum_right = __pyx_t_3;
 
-  /* "_criterion.pyx":208
+  /* "_criterion.pyx":212
  *         cdef double* sum_right = self.sum_right
  * 
- *         cdef ut.SIZE_t* n_classes = self.n_classes             # <<<<<<<<<<<<<<
- *         cdef ut.SIZE_t k
+ *         cdef SIZE_t* n_classes = self.n_classes             # <<<<<<<<<<<<<<
+ *         cdef SIZE_t k
  * 
  */
   __pyx_t_4 = __pyx_v_self->n_classes;
   __pyx_v_n_classes = __pyx_t_4;
 
-  /* "_criterion.pyx":211
- *         cdef ut.SIZE_t k
+  /* "_criterion.pyx":215
+ *         cdef SIZE_t k
  * 
  *         for k in range(self.n_outputs):             # <<<<<<<<<<<<<<
  *             memset(sum_right, 0, n_classes[k] * sizeof(double))
@@ -4926,7 +4946,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_reverse_reset(struct _
   for (__pyx_t_6 = 0; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
     __pyx_v_k = __pyx_t_6;
 
-    /* "_criterion.pyx":212
+    /* "_criterion.pyx":216
  * 
  *         for k in range(self.n_outputs):
  *             memset(sum_right, 0, n_classes[k] * sizeof(double))             # <<<<<<<<<<<<<<
@@ -4935,7 +4955,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_reverse_reset(struct _
  */
     (void)(memset(__pyx_v_sum_right, 0, ((__pyx_v_n_classes[__pyx_v_k]) * (sizeof(double)))));
 
-    /* "_criterion.pyx":213
+    /* "_criterion.pyx":217
  *         for k in range(self.n_outputs):
  *             memset(sum_right, 0, n_classes[k] * sizeof(double))
  *             memcpy(sum_left, sum_total, n_classes[k] * sizeof(double))             # <<<<<<<<<<<<<<
@@ -4944,7 +4964,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_reverse_reset(struct _
  */
     (void)(memcpy(__pyx_v_sum_left, __pyx_v_sum_total, ((__pyx_v_n_classes[__pyx_v_k]) * (sizeof(double)))));
 
-    /* "_criterion.pyx":215
+    /* "_criterion.pyx":219
  *             memcpy(sum_left, sum_total, n_classes[k] * sizeof(double))
  * 
  *             sum_total += self.sum_stride             # <<<<<<<<<<<<<<
@@ -4953,7 +4973,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_reverse_reset(struct _
  */
     __pyx_v_sum_total = (__pyx_v_sum_total + __pyx_v_self->sum_stride);
 
-    /* "_criterion.pyx":216
+    /* "_criterion.pyx":220
  * 
  *             sum_total += self.sum_stride
  *             sum_left += self.sum_stride             # <<<<<<<<<<<<<<
@@ -4962,7 +4982,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_reverse_reset(struct _
  */
     __pyx_v_sum_left = (__pyx_v_sum_left + __pyx_v_self->sum_stride);
 
-    /* "_criterion.pyx":217
+    /* "_criterion.pyx":221
  *             sum_total += self.sum_stride
  *             sum_left += self.sum_stride
  *             sum_right += self.sum_stride             # <<<<<<<<<<<<<<
@@ -4972,7 +4992,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_reverse_reset(struct _
     __pyx_v_sum_right = (__pyx_v_sum_right + __pyx_v_self->sum_stride);
   }
 
-  /* "_criterion.pyx":218
+  /* "_criterion.pyx":222
  *             sum_left += self.sum_stride
  *             sum_right += self.sum_stride
  *         return 0             # <<<<<<<<<<<<<<
@@ -4982,7 +5002,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_reverse_reset(struct _
   __pyx_r = 0;
   goto __pyx_L0;
 
-  /* "_criterion.pyx":194
+  /* "_criterion.pyx":198
  *         return 0
  * 
  *     cdef int reverse_reset(self) nogil except -1:             # <<<<<<<<<<<<<<
@@ -4995,12 +5015,12 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_reverse_reset(struct _
   return __pyx_r;
 }
 
-/* "_criterion.pyx":220
+/* "_criterion.pyx":224
  *         return 0
  * 
  *     cdef int update(self, ut.SIZE_t new_pos) nogil except -1:             # <<<<<<<<<<<<<<
  * 
- *         cdef ut.SIZE_t pos = self.pos
+ *         cdef SIZE_t pos = self.pos
  */
 
 static int __pyx_f_10_criterion_23ClassificationCriterion_update(struct __pyx_obj_10_criterion_ClassificationCriterion *__pyx_v_self, __pyx_t_6_utils_SIZE_t __pyx_v_new_pos) {
@@ -5038,28 +5058,28 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_update(struct __pyx_ob
   Py_ssize_t __pyx_t_17;
   Py_ssize_t __pyx_t_18;
 
-  /* "_criterion.pyx":222
+  /* "_criterion.pyx":226
  *     cdef int update(self, ut.SIZE_t new_pos) nogil except -1:
  * 
- *         cdef ut.SIZE_t pos = self.pos             # <<<<<<<<<<<<<<
- *         cdef ut.SIZE_t end = self.end
+ *         cdef SIZE_t pos = self.pos             # <<<<<<<<<<<<<<
+ *         cdef SIZE_t end = self.end
  * 
  */
   __pyx_t_1 = __pyx_v_self->__pyx_base.pos;
   __pyx_v_pos = __pyx_t_1;
 
-  /* "_criterion.pyx":223
+  /* "_criterion.pyx":227
  * 
- *         cdef ut.SIZE_t pos = self.pos
- *         cdef ut.SIZE_t end = self.end             # <<<<<<<<<<<<<<
+ *         cdef SIZE_t pos = self.pos
+ *         cdef SIZE_t end = self.end             # <<<<<<<<<<<<<<
  * 
  *         cdef double* sum_left = self.sum_left
  */
   __pyx_t_1 = __pyx_v_self->__pyx_base.end;
   __pyx_v_end = __pyx_t_1;
 
-  /* "_criterion.pyx":225
- *         cdef ut.SIZE_t end = self.end
+  /* "_criterion.pyx":229
+ *         cdef SIZE_t end = self.end
  * 
  *         cdef double* sum_left = self.sum_left             # <<<<<<<<<<<<<<
  *         cdef double* sum_right = self.sum_right
@@ -5068,7 +5088,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_update(struct __pyx_ob
   __pyx_t_2 = __pyx_v_self->__pyx_base.sum_left;
   __pyx_v_sum_left = __pyx_t_2;
 
-  /* "_criterion.pyx":226
+  /* "_criterion.pyx":230
  * 
  *         cdef double* sum_left = self.sum_left
  *         cdef double* sum_right = self.sum_right             # <<<<<<<<<<<<<<
@@ -5078,57 +5098,57 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_update(struct __pyx_ob
   __pyx_t_2 = __pyx_v_self->__pyx_base.sum_right;
   __pyx_v_sum_right = __pyx_t_2;
 
-  /* "_criterion.pyx":227
+  /* "_criterion.pyx":231
  *         cdef double* sum_left = self.sum_left
  *         cdef double* sum_right = self.sum_right
  *         cdef double* sum_total = self.sum_total             # <<<<<<<<<<<<<<
  * 
- *         cdef ut.SIZE_t* n_classes = self.n_classes
+ *         cdef SIZE_t* n_classes = self.n_classes
  */
   __pyx_t_2 = __pyx_v_self->__pyx_base.sum_total;
   __pyx_v_sum_total = __pyx_t_2;
 
-  /* "_criterion.pyx":229
+  /* "_criterion.pyx":233
  *         cdef double* sum_total = self.sum_total
  * 
- *         cdef ut.SIZE_t* n_classes = self.n_classes             # <<<<<<<<<<<<<<
- *         cdef ut.SIZE_t* samples = self.samples
- *         cdef ut.DOUBLE_t* sample_weight = self.sample_weight
+ *         cdef SIZE_t* n_classes = self.n_classes             # <<<<<<<<<<<<<<
+ *         cdef SIZE_t* samples = self.samples
+ *         cdef DOUBLE_t* sample_weight = self.sample_weight
  */
   __pyx_t_3 = __pyx_v_self->n_classes;
   __pyx_v_n_classes = __pyx_t_3;
 
-  /* "_criterion.pyx":230
+  /* "_criterion.pyx":234
  * 
- *         cdef ut.SIZE_t* n_classes = self.n_classes
- *         cdef ut.SIZE_t* samples = self.samples             # <<<<<<<<<<<<<<
- *         cdef ut.DOUBLE_t* sample_weight = self.sample_weight
+ *         cdef SIZE_t* n_classes = self.n_classes
+ *         cdef SIZE_t* samples = self.samples             # <<<<<<<<<<<<<<
+ *         cdef DOUBLE_t* sample_weight = self.sample_weight
  * 
  */
   __pyx_t_3 = __pyx_v_self->__pyx_base.samples;
   __pyx_v_samples = __pyx_t_3;
 
-  /* "_criterion.pyx":231
- *         cdef ut.SIZE_t* n_classes = self.n_classes
- *         cdef ut.SIZE_t* samples = self.samples
- *         cdef ut.DOUBLE_t* sample_weight = self.sample_weight             # <<<<<<<<<<<<<<
+  /* "_criterion.pyx":235
+ *         cdef SIZE_t* n_classes = self.n_classes
+ *         cdef SIZE_t* samples = self.samples
+ *         cdef DOUBLE_t* sample_weight = self.sample_weight             # <<<<<<<<<<<<<<
  * 
- *         cdef ut.SIZE_t i
+ *         cdef SIZE_t i
  */
   __pyx_t_4 = __pyx_v_self->__pyx_base.sample_weight;
   __pyx_v_sample_weight = __pyx_t_4;
 
-  /* "_criterion.pyx":238
- *         cdef ut.SIZE_t c
- *         cdef ut.SIZE_t label_index
- *         cdef ut.DOUBLE_t w = 1.0             # <<<<<<<<<<<<<<
+  /* "_criterion.pyx":242
+ *         cdef SIZE_t c
+ *         cdef SIZE_t label_index
+ *         cdef DOUBLE_t w = 1.0             # <<<<<<<<<<<<<<
  * 
  *         if (new_pos - pos) <= (end - new_pos):
  */
   __pyx_v_w = 1.0;
 
-  /* "_criterion.pyx":240
- *         cdef ut.DOUBLE_t w = 1.0
+  /* "_criterion.pyx":244
+ *         cdef DOUBLE_t w = 1.0
  * 
  *         if (new_pos - pos) <= (end - new_pos):             # <<<<<<<<<<<<<<
  *             for p in range(pos, new_pos):
@@ -5137,7 +5157,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_update(struct __pyx_ob
   __pyx_t_5 = (((__pyx_v_new_pos - __pyx_v_pos) <= (__pyx_v_end - __pyx_v_new_pos)) != 0);
   if (__pyx_t_5) {
 
-    /* "_criterion.pyx":241
+    /* "_criterion.pyx":245
  * 
  *         if (new_pos - pos) <= (end - new_pos):
  *             for p in range(pos, new_pos):             # <<<<<<<<<<<<<<
@@ -5149,7 +5169,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_update(struct __pyx_ob
     for (__pyx_t_7 = __pyx_v_pos; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
       __pyx_v_p = __pyx_t_7;
 
-      /* "_criterion.pyx":242
+      /* "_criterion.pyx":246
  *         if (new_pos - pos) <= (end - new_pos):
  *             for p in range(pos, new_pos):
  *                 i = samples[p]             # <<<<<<<<<<<<<<
@@ -5158,7 +5178,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_update(struct __pyx_ob
  */
       __pyx_v_i = (__pyx_v_samples[__pyx_v_p]);
 
-      /* "_criterion.pyx":244
+      /* "_criterion.pyx":248
  *                 i = samples[p]
  * 
  *                 if sample_weight != NULL:             # <<<<<<<<<<<<<<
@@ -5168,7 +5188,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_update(struct __pyx_ob
       __pyx_t_5 = ((__pyx_v_sample_weight != NULL) != 0);
       if (__pyx_t_5) {
 
-        /* "_criterion.pyx":245
+        /* "_criterion.pyx":249
  * 
  *                 if sample_weight != NULL:
  *                     w = sample_weight[i]             # <<<<<<<<<<<<<<
@@ -5177,7 +5197,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_update(struct __pyx_ob
  */
         __pyx_v_w = (__pyx_v_sample_weight[__pyx_v_i]);
 
-        /* "_criterion.pyx":244
+        /* "_criterion.pyx":248
  *                 i = samples[p]
  * 
  *                 if sample_weight != NULL:             # <<<<<<<<<<<<<<
@@ -5186,11 +5206,11 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_update(struct __pyx_ob
  */
       }
 
-      /* "_criterion.pyx":247
+      /* "_criterion.pyx":251
  *                     w = sample_weight[i]
  * 
  *                 for k in range(self.n_outputs):             # <<<<<<<<<<<<<<
- *                     label_index = k * self.sum_stride + <ut.SIZE_t> self.y[i, k]
+ *                     label_index = k * self.sum_stride + <SIZE_t> self.y[i, k]
  *                     sum_left[label_index] += w
  */
       __pyx_t_8 = __pyx_v_self->__pyx_base.n_outputs;
@@ -5198,14 +5218,14 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_update(struct __pyx_ob
       for (__pyx_t_10 = 0; __pyx_t_10 < __pyx_t_9; __pyx_t_10+=1) {
         __pyx_v_k = __pyx_t_10;
 
-        /* "_criterion.pyx":248
+        /* "_criterion.pyx":252
  * 
  *                 for k in range(self.n_outputs):
- *                     label_index = k * self.sum_stride + <ut.SIZE_t> self.y[i, k]             # <<<<<<<<<<<<<<
+ *                     label_index = k * self.sum_stride + <SIZE_t> self.y[i, k]             # <<<<<<<<<<<<<<
  *                     sum_left[label_index] += w
  * 
  */
-        if (unlikely(!__pyx_v_self->__pyx_base.y.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(1, 248, __pyx_L1_error)}
+        if (unlikely(!__pyx_v_self->__pyx_base.y.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(1, 252, __pyx_L1_error)}
         __pyx_t_11 = __pyx_v_i;
         __pyx_t_12 = __pyx_v_k;
         __pyx_t_13 = -1;
@@ -5219,13 +5239,13 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_update(struct __pyx_ob
         } else if (unlikely(__pyx_t_12 >= __pyx_v_self->__pyx_base.y.shape[1])) __pyx_t_13 = 1;
         if (unlikely(__pyx_t_13 != -1)) {
           __Pyx_RaiseBufferIndexErrorNogil(__pyx_t_13);
-          __PYX_ERR(1, 248, __pyx_L1_error)
+          __PYX_ERR(1, 252, __pyx_L1_error)
         }
         __pyx_v_label_index = ((__pyx_v_k * __pyx_v_self->sum_stride) + ((__pyx_t_6_utils_SIZE_t)(*((__pyx_t_6_utils_DOUBLE_t const  *) ( /* dim=1 */ ((char *) (((__pyx_t_6_utils_DOUBLE_t const  *) ( /* dim=0 */ (__pyx_v_self->__pyx_base.y.data + __pyx_t_11 * __pyx_v_self->__pyx_base.y.strides[0]) )) + __pyx_t_12)) )))));
 
-        /* "_criterion.pyx":249
+        /* "_criterion.pyx":253
  *                 for k in range(self.n_outputs):
- *                     label_index = k * self.sum_stride + <ut.SIZE_t> self.y[i, k]
+ *                     label_index = k * self.sum_stride + <SIZE_t> self.y[i, k]
  *                     sum_left[label_index] += w             # <<<<<<<<<<<<<<
  * 
  *                 self.weighted_n_left += w
@@ -5234,7 +5254,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_update(struct __pyx_ob
         (__pyx_v_sum_left[__pyx_t_14]) = ((__pyx_v_sum_left[__pyx_t_14]) + __pyx_v_w);
       }
 
-      /* "_criterion.pyx":251
+      /* "_criterion.pyx":255
  *                     sum_left[label_index] += w
  * 
  *                 self.weighted_n_left += w             # <<<<<<<<<<<<<<
@@ -5244,8 +5264,8 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_update(struct __pyx_ob
       __pyx_v_self->__pyx_base.weighted_n_left = (__pyx_v_self->__pyx_base.weighted_n_left + __pyx_v_w);
     }
 
-    /* "_criterion.pyx":240
- *         cdef ut.DOUBLE_t w = 1.0
+    /* "_criterion.pyx":244
+ *         cdef DOUBLE_t w = 1.0
  * 
  *         if (new_pos - pos) <= (end - new_pos):             # <<<<<<<<<<<<<<
  *             for p in range(pos, new_pos):
@@ -5254,7 +5274,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_update(struct __pyx_ob
     goto __pyx_L3;
   }
 
-  /* "_criterion.pyx":254
+  /* "_criterion.pyx":258
  * 
  *         else:
  *             self.reverse_reset()             # <<<<<<<<<<<<<<
@@ -5262,9 +5282,9 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_update(struct __pyx_ob
  *             for p in range(end - 1, new_pos - 1, -1):
  */
   /*else*/ {
-    __pyx_t_13 = ((struct __pyx_vtabstruct_10_criterion_ClassificationCriterion *)__pyx_v_self->__pyx_base.__pyx_vtab)->__pyx_base.reverse_reset(((struct __pyx_obj_10_criterion_Criterion *)__pyx_v_self)); if (unlikely(__pyx_t_13 == ((int)-1))) __PYX_ERR(1, 254, __pyx_L1_error)
+    __pyx_t_13 = ((struct __pyx_vtabstruct_10_criterion_ClassificationCriterion *)__pyx_v_self->__pyx_base.__pyx_vtab)->__pyx_base.reverse_reset(((struct __pyx_obj_10_criterion_Criterion *)__pyx_v_self)); if (unlikely(__pyx_t_13 == ((int)-1))) __PYX_ERR(1, 258, __pyx_L1_error)
 
-    /* "_criterion.pyx":256
+    /* "_criterion.pyx":260
  *             self.reverse_reset()
  * 
  *             for p in range(end - 1, new_pos - 1, -1):             # <<<<<<<<<<<<<<
@@ -5276,7 +5296,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_update(struct __pyx_ob
     for (__pyx_t_1 = (__pyx_v_end - 1); __pyx_t_1 > __pyx_t_16; __pyx_t_1-=1) {
       __pyx_v_p = __pyx_t_1;
 
-      /* "_criterion.pyx":257
+      /* "_criterion.pyx":261
  * 
  *             for p in range(end - 1, new_pos - 1, -1):
  *                 i = samples[p]             # <<<<<<<<<<<<<<
@@ -5285,7 +5305,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_update(struct __pyx_ob
  */
       __pyx_v_i = (__pyx_v_samples[__pyx_v_p]);
 
-      /* "_criterion.pyx":259
+      /* "_criterion.pyx":263
  *                 i = samples[p]
  * 
  *                 if sample_weight != NULL:             # <<<<<<<<<<<<<<
@@ -5295,7 +5315,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_update(struct __pyx_ob
       __pyx_t_5 = ((__pyx_v_sample_weight != NULL) != 0);
       if (__pyx_t_5) {
 
-        /* "_criterion.pyx":260
+        /* "_criterion.pyx":264
  * 
  *                 if sample_weight != NULL:
  *                     w = sample_weight[i]             # <<<<<<<<<<<<<<
@@ -5304,7 +5324,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_update(struct __pyx_ob
  */
         __pyx_v_w = (__pyx_v_sample_weight[__pyx_v_i]);
 
-        /* "_criterion.pyx":259
+        /* "_criterion.pyx":263
  *                 i = samples[p]
  * 
  *                 if sample_weight != NULL:             # <<<<<<<<<<<<<<
@@ -5313,11 +5333,11 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_update(struct __pyx_ob
  */
       }
 
-      /* "_criterion.pyx":262
+      /* "_criterion.pyx":266
  *                     w = sample_weight[i]
  * 
  *                 for k in range(self.n_outputs):             # <<<<<<<<<<<<<<
- *                     label_index = k * self.sum_stride + <ut.SIZE_t> self.y[i, k]
+ *                     label_index = k * self.sum_stride + <SIZE_t> self.y[i, k]
  *                     sum_left[label_index] -= w
  */
       __pyx_t_6 = __pyx_v_self->__pyx_base.n_outputs;
@@ -5325,14 +5345,14 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_update(struct __pyx_ob
       for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
         __pyx_v_k = __pyx_t_8;
 
-        /* "_criterion.pyx":263
+        /* "_criterion.pyx":267
  * 
  *                 for k in range(self.n_outputs):
- *                     label_index = k * self.sum_stride + <ut.SIZE_t> self.y[i, k]             # <<<<<<<<<<<<<<
+ *                     label_index = k * self.sum_stride + <SIZE_t> self.y[i, k]             # <<<<<<<<<<<<<<
  *                     sum_left[label_index] -= w
  * 
  */
-        if (unlikely(!__pyx_v_self->__pyx_base.y.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(1, 263, __pyx_L1_error)}
+        if (unlikely(!__pyx_v_self->__pyx_base.y.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(1, 267, __pyx_L1_error)}
         __pyx_t_17 = __pyx_v_i;
         __pyx_t_18 = __pyx_v_k;
         __pyx_t_13 = -1;
@@ -5346,13 +5366,13 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_update(struct __pyx_ob
         } else if (unlikely(__pyx_t_18 >= __pyx_v_self->__pyx_base.y.shape[1])) __pyx_t_13 = 1;
         if (unlikely(__pyx_t_13 != -1)) {
           __Pyx_RaiseBufferIndexErrorNogil(__pyx_t_13);
-          __PYX_ERR(1, 263, __pyx_L1_error)
+          __PYX_ERR(1, 267, __pyx_L1_error)
         }
         __pyx_v_label_index = ((__pyx_v_k * __pyx_v_self->sum_stride) + ((__pyx_t_6_utils_SIZE_t)(*((__pyx_t_6_utils_DOUBLE_t const  *) ( /* dim=1 */ ((char *) (((__pyx_t_6_utils_DOUBLE_t const  *) ( /* dim=0 */ (__pyx_v_self->__pyx_base.y.data + __pyx_t_17 * __pyx_v_self->__pyx_base.y.strides[0]) )) + __pyx_t_18)) )))));
 
-        /* "_criterion.pyx":264
+        /* "_criterion.pyx":268
  *                 for k in range(self.n_outputs):
- *                     label_index = k * self.sum_stride + <ut.SIZE_t> self.y[i, k]
+ *                     label_index = k * self.sum_stride + <SIZE_t> self.y[i, k]
  *                     sum_left[label_index] -= w             # <<<<<<<<<<<<<<
  * 
  *                 self.weighted_n_left -= w
@@ -5361,7 +5381,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_update(struct __pyx_ob
         (__pyx_v_sum_left[__pyx_t_9]) = ((__pyx_v_sum_left[__pyx_t_9]) - __pyx_v_w);
       }
 
-      /* "_criterion.pyx":266
+      /* "_criterion.pyx":270
  *                     sum_left[label_index] -= w
  * 
  *                 self.weighted_n_left -= w             # <<<<<<<<<<<<<<
@@ -5373,7 +5393,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_update(struct __pyx_ob
   }
   __pyx_L3:;
 
-  /* "_criterion.pyx":269
+  /* "_criterion.pyx":273
  * 
  *         # Update right part statistics
  *         self.weighted_n_right = self.weighted_n_node_samples - self.weighted_n_left             # <<<<<<<<<<<<<<
@@ -5382,7 +5402,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_update(struct __pyx_ob
  */
   __pyx_v_self->__pyx_base.weighted_n_right = (__pyx_v_self->__pyx_base.weighted_n_node_samples - __pyx_v_self->__pyx_base.weighted_n_left);
 
-  /* "_criterion.pyx":270
+  /* "_criterion.pyx":274
  *         # Update right part statistics
  *         self.weighted_n_right = self.weighted_n_node_samples - self.weighted_n_left
  *         for k in range(self.n_outputs):             # <<<<<<<<<<<<<<
@@ -5394,7 +5414,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_update(struct __pyx_ob
   for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
     __pyx_v_k = __pyx_t_7;
 
-    /* "_criterion.pyx":271
+    /* "_criterion.pyx":275
  *         self.weighted_n_right = self.weighted_n_node_samples - self.weighted_n_left
  *         for k in range(self.n_outputs):
  *             for c in range(n_classes[k]):             # <<<<<<<<<<<<<<
@@ -5406,7 +5426,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_update(struct __pyx_ob
     for (__pyx_t_10 = 0; __pyx_t_10 < __pyx_t_9; __pyx_t_10+=1) {
       __pyx_v_c = __pyx_t_10;
 
-      /* "_criterion.pyx":272
+      /* "_criterion.pyx":276
  *         for k in range(self.n_outputs):
  *             for c in range(n_classes[k]):
  *                 sum_right[c] = sum_total[c] - sum_left[c]             # <<<<<<<<<<<<<<
@@ -5416,7 +5436,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_update(struct __pyx_ob
       (__pyx_v_sum_right[__pyx_v_c]) = ((__pyx_v_sum_total[__pyx_v_c]) - (__pyx_v_sum_left[__pyx_v_c]));
     }
 
-    /* "_criterion.pyx":274
+    /* "_criterion.pyx":278
  *                 sum_right[c] = sum_total[c] - sum_left[c]
  * 
  *             sum_right += self.sum_stride             # <<<<<<<<<<<<<<
@@ -5425,7 +5445,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_update(struct __pyx_ob
  */
     __pyx_v_sum_right = (__pyx_v_sum_right + __pyx_v_self->sum_stride);
 
-    /* "_criterion.pyx":275
+    /* "_criterion.pyx":279
  * 
  *             sum_right += self.sum_stride
  *             sum_left += self.sum_stride             # <<<<<<<<<<<<<<
@@ -5434,7 +5454,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_update(struct __pyx_ob
  */
     __pyx_v_sum_left = (__pyx_v_sum_left + __pyx_v_self->sum_stride);
 
-    /* "_criterion.pyx":276
+    /* "_criterion.pyx":280
  *             sum_right += self.sum_stride
  *             sum_left += self.sum_stride
  *             sum_total += self.sum_stride             # <<<<<<<<<<<<<<
@@ -5444,7 +5464,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_update(struct __pyx_ob
     __pyx_v_sum_total = (__pyx_v_sum_total + __pyx_v_self->sum_stride);
   }
 
-  /* "_criterion.pyx":278
+  /* "_criterion.pyx":282
  *             sum_total += self.sum_stride
  * 
  *         self.pos = new_pos             # <<<<<<<<<<<<<<
@@ -5453,7 +5473,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_update(struct __pyx_ob
  */
   __pyx_v_self->__pyx_base.pos = __pyx_v_new_pos;
 
-  /* "_criterion.pyx":279
+  /* "_criterion.pyx":283
  * 
  *         self.pos = new_pos
  *         return 0             # <<<<<<<<<<<<<<
@@ -5463,12 +5483,12 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_update(struct __pyx_ob
   __pyx_r = 0;
   goto __pyx_L0;
 
-  /* "_criterion.pyx":220
+  /* "_criterion.pyx":224
  *         return 0
  * 
  *     cdef int update(self, ut.SIZE_t new_pos) nogil except -1:             # <<<<<<<<<<<<<<
  * 
- *         cdef ut.SIZE_t pos = self.pos
+ *         cdef SIZE_t pos = self.pos
  */
 
   /* function exit code */
@@ -5487,7 +5507,7 @@ static int __pyx_f_10_criterion_23ClassificationCriterion_update(struct __pyx_ob
   return __pyx_r;
 }
 
-/* "_criterion.pyx":281
+/* "_criterion.pyx":285
  *         return 0
  * 
  *     cdef double node_impurity(self) nogil:             # <<<<<<<<<<<<<<
@@ -5503,7 +5523,7 @@ static double __pyx_f_10_criterion_23ClassificationCriterion_node_impurity(CYTHO
   return __pyx_r;
 }
 
-/* "_criterion.pyx":284
+/* "_criterion.pyx":288
  *         pass
  * 
  *     cdef void children_impurity(self, double* impurity_left,             # <<<<<<<<<<<<<<
@@ -5516,7 +5536,7 @@ static void __pyx_f_10_criterion_23ClassificationCriterion_children_impurity(CYT
   /* function exit code */
 }
 
-/* "_criterion.pyx":288
+/* "_criterion.pyx":292
  *         pass
  * 
  *     cdef void node_value(self, double* dest) nogil:             # <<<<<<<<<<<<<<
@@ -5534,28 +5554,28 @@ static void __pyx_f_10_criterion_23ClassificationCriterion_node_value(struct __p
   __pyx_t_6_utils_SIZE_t __pyx_t_4;
   __pyx_t_6_utils_SIZE_t __pyx_t_5;
 
-  /* "_criterion.pyx":290
+  /* "_criterion.pyx":294
  *     cdef void node_value(self, double* dest) nogil:
  * 
  *         cdef double* sum_total = self.sum_total             # <<<<<<<<<<<<<<
- *         cdef ut.SIZE_t* n_classes = self.n_classes
- *         cdef ut.SIZE_t k
+ *         cdef SIZE_t* n_classes = self.n_classes
+ *         cdef SIZE_t k
  */
   __pyx_t_1 = __pyx_v_self->__pyx_base.sum_total;
   __pyx_v_sum_total = __pyx_t_1;
 
-  /* "_criterion.pyx":291
+  /* "_criterion.pyx":295
  * 
  *         cdef double* sum_total = self.sum_total
- *         cdef ut.SIZE_t* n_classes = self.n_classes             # <<<<<<<<<<<<<<
- *         cdef ut.SIZE_t k
+ *         cdef SIZE_t* n_classes = self.n_classes             # <<<<<<<<<<<<<<
+ *         cdef SIZE_t k
  * 
  */
   __pyx_t_2 = __pyx_v_self->n_classes;
   __pyx_v_n_classes = __pyx_t_2;
 
-  /* "_criterion.pyx":294
- *         cdef ut.SIZE_t k
+  /* "_criterion.pyx":298
+ *         cdef SIZE_t k
  * 
  *         for k in range(self.n_outputs):             # <<<<<<<<<<<<<<
  *             memcpy(dest, sum_total, n_classes[k] * sizeof(double))
@@ -5566,7 +5586,7 @@ static void __pyx_f_10_criterion_23ClassificationCriterion_node_value(struct __p
   for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_k = __pyx_t_5;
 
-    /* "_criterion.pyx":295
+    /* "_criterion.pyx":299
  * 
  *         for k in range(self.n_outputs):
  *             memcpy(dest, sum_total, n_classes[k] * sizeof(double))             # <<<<<<<<<<<<<<
@@ -5575,7 +5595,7 @@ static void __pyx_f_10_criterion_23ClassificationCriterion_node_value(struct __p
  */
     (void)(memcpy(__pyx_v_dest, __pyx_v_sum_total, ((__pyx_v_n_classes[__pyx_v_k]) * (sizeof(double)))));
 
-    /* "_criterion.pyx":296
+    /* "_criterion.pyx":300
  *         for k in range(self.n_outputs):
  *             memcpy(dest, sum_total, n_classes[k] * sizeof(double))
  *             dest += self.sum_stride             # <<<<<<<<<<<<<<
@@ -5584,7 +5604,7 @@ static void __pyx_f_10_criterion_23ClassificationCriterion_node_value(struct __p
  */
     __pyx_v_dest = (__pyx_v_dest + __pyx_v_self->sum_stride);
 
-    /* "_criterion.pyx":297
+    /* "_criterion.pyx":301
  *             memcpy(dest, sum_total, n_classes[k] * sizeof(double))
  *             dest += self.sum_stride
  *             sum_total += self.sum_stride             # <<<<<<<<<<<<<<
@@ -5594,7 +5614,7 @@ static void __pyx_f_10_criterion_23ClassificationCriterion_node_value(struct __p
     __pyx_v_sum_total = (__pyx_v_sum_total + __pyx_v_self->sum_stride);
   }
 
-  /* "_criterion.pyx":288
+  /* "_criterion.pyx":292
  *         pass
  * 
  *     cdef void node_value(self, double* dest) nogil:             # <<<<<<<<<<<<<<
@@ -5605,12 +5625,12 @@ static void __pyx_f_10_criterion_23ClassificationCriterion_node_value(struct __p
   /* function exit code */
 }
 
-/* "_criterion.pyx":301
+/* "_criterion.pyx":305
  * cdef class Entropy(ClassificationCriterion):
  * 
  *     cdef double node_impurity(self) nogil:             # <<<<<<<<<<<<<<
  * 
- *         cdef ut.SIZE_t* n_classes = self.n_classes
+ *         cdef SIZE_t* n_classes = self.n_classes
  */
 
 static double __pyx_f_10_criterion_7Entropy_node_impurity(struct __pyx_obj_10_criterion_Entropy *__pyx_v_self) {
@@ -5631,19 +5651,19 @@ static double __pyx_f_10_criterion_7Entropy_node_impurity(struct __pyx_obj_10_cr
   __pyx_t_6_utils_SIZE_t __pyx_t_8;
   int __pyx_t_9;
 
-  /* "_criterion.pyx":303
+  /* "_criterion.pyx":307
  *     cdef double node_impurity(self) nogil:
  * 
- *         cdef ut.SIZE_t* n_classes = self.n_classes             # <<<<<<<<<<<<<<
+ *         cdef SIZE_t* n_classes = self.n_classes             # <<<<<<<<<<<<<<
  *         cdef double* sum_total = self.sum_total
  *         cdef double entropy = 0.0
  */
   __pyx_t_1 = __pyx_v_self->__pyx_base.n_classes;
   __pyx_v_n_classes = __pyx_t_1;
 
-  /* "_criterion.pyx":304
+  /* "_criterion.pyx":308
  * 
- *         cdef ut.SIZE_t* n_classes = self.n_classes
+ *         cdef SIZE_t* n_classes = self.n_classes
  *         cdef double* sum_total = self.sum_total             # <<<<<<<<<<<<<<
  *         cdef double entropy = 0.0
  *         cdef double count_k
@@ -5651,17 +5671,17 @@ static double __pyx_f_10_criterion_7Entropy_node_impurity(struct __pyx_obj_10_cr
   __pyx_t_2 = __pyx_v_self->__pyx_base.__pyx_base.sum_total;
   __pyx_v_sum_total = __pyx_t_2;
 
-  /* "_criterion.pyx":305
- *         cdef ut.SIZE_t* n_classes = self.n_classes
+  /* "_criterion.pyx":309
+ *         cdef SIZE_t* n_classes = self.n_classes
  *         cdef double* sum_total = self.sum_total
  *         cdef double entropy = 0.0             # <<<<<<<<<<<<<<
  *         cdef double count_k
- *         cdef ut.SIZE_t k
+ *         cdef SIZE_t k
  */
   __pyx_v_entropy = 0.0;
 
-  /* "_criterion.pyx":310
- *         cdef ut.SIZE_t c
+  /* "_criterion.pyx":314
+ *         cdef SIZE_t c
  * 
  *         for k in range(self.n_outputs):             # <<<<<<<<<<<<<<
  *             for c in range(n_classes[k]):
@@ -5672,7 +5692,7 @@ static double __pyx_f_10_criterion_7Entropy_node_impurity(struct __pyx_obj_10_cr
   for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_k = __pyx_t_5;
 
-    /* "_criterion.pyx":311
+    /* "_criterion.pyx":315
  * 
  *         for k in range(self.n_outputs):
  *             for c in range(n_classes[k]):             # <<<<<<<<<<<<<<
@@ -5684,7 +5704,7 @@ static double __pyx_f_10_criterion_7Entropy_node_impurity(struct __pyx_obj_10_cr
     for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
       __pyx_v_c = __pyx_t_8;
 
-      /* "_criterion.pyx":312
+      /* "_criterion.pyx":316
  *         for k in range(self.n_outputs):
  *             for c in range(n_classes[k]):
  *                 count_k = sum_total[c]             # <<<<<<<<<<<<<<
@@ -5693,21 +5713,21 @@ static double __pyx_f_10_criterion_7Entropy_node_impurity(struct __pyx_obj_10_cr
  */
       __pyx_v_count_k = (__pyx_v_sum_total[__pyx_v_c]);
 
-      /* "_criterion.pyx":313
+      /* "_criterion.pyx":317
  *             for c in range(n_classes[k]):
  *                 count_k = sum_total[c]
  *                 if count_k > 0.0:             # <<<<<<<<<<<<<<
  *                     count_k /= self.weighted_n_node_samples
- *                     entropy -= count_k * ut.log(count_k)
+ *                     entropy -= count_k * log(count_k)
  */
       __pyx_t_9 = ((__pyx_v_count_k > 0.0) != 0);
       if (__pyx_t_9) {
 
-        /* "_criterion.pyx":314
+        /* "_criterion.pyx":318
  *                 count_k = sum_total[c]
  *                 if count_k > 0.0:
  *                     count_k /= self.weighted_n_node_samples             # <<<<<<<<<<<<<<
- *                     entropy -= count_k * ut.log(count_k)
+ *                     entropy -= count_k * log(count_k)
  * 
  */
         if (unlikely(__pyx_v_self->__pyx_base.__pyx_base.weighted_n_node_samples == 0)) {
@@ -5718,31 +5738,31 @@ static double __pyx_f_10_criterion_7Entropy_node_impurity(struct __pyx_obj_10_cr
           #ifdef WITH_THREAD
           __Pyx_PyGILState_Release(__pyx_gilstate_save);
           #endif
-          __PYX_ERR(1, 314, __pyx_L1_error)
+          __PYX_ERR(1, 318, __pyx_L1_error)
         }
         __pyx_v_count_k = (__pyx_v_count_k / __pyx_v_self->__pyx_base.__pyx_base.weighted_n_node_samples);
 
-        /* "_criterion.pyx":315
+        /* "_criterion.pyx":319
  *                 if count_k > 0.0:
  *                     count_k /= self.weighted_n_node_samples
- *                     entropy -= count_k * ut.log(count_k)             # <<<<<<<<<<<<<<
+ *                     entropy -= count_k * log(count_k)             # <<<<<<<<<<<<<<
  * 
  *             sum_total += self.sum_stride
  */
         __pyx_v_entropy = (__pyx_v_entropy - (__pyx_v_count_k * __pyx_f_6_utils_log(__pyx_v_count_k)));
 
-        /* "_criterion.pyx":313
+        /* "_criterion.pyx":317
  *             for c in range(n_classes[k]):
  *                 count_k = sum_total[c]
  *                 if count_k > 0.0:             # <<<<<<<<<<<<<<
  *                     count_k /= self.weighted_n_node_samples
- *                     entropy -= count_k * ut.log(count_k)
+ *                     entropy -= count_k * log(count_k)
  */
       }
     }
 
-    /* "_criterion.pyx":317
- *                     entropy -= count_k * ut.log(count_k)
+    /* "_criterion.pyx":321
+ *                     entropy -= count_k * log(count_k)
  * 
  *             sum_total += self.sum_stride             # <<<<<<<<<<<<<<
  * 
@@ -5751,7 +5771,7 @@ static double __pyx_f_10_criterion_7Entropy_node_impurity(struct __pyx_obj_10_cr
     __pyx_v_sum_total = (__pyx_v_sum_total + __pyx_v_self->__pyx_base.sum_stride);
   }
 
-  /* "_criterion.pyx":319
+  /* "_criterion.pyx":323
  *             sum_total += self.sum_stride
  * 
  *         return entropy / self.n_outputs             # <<<<<<<<<<<<<<
@@ -5766,17 +5786,17 @@ static double __pyx_f_10_criterion_7Entropy_node_impurity(struct __pyx_obj_10_cr
     #ifdef WITH_THREAD
     __Pyx_PyGILState_Release(__pyx_gilstate_save);
     #endif
-    __PYX_ERR(1, 319, __pyx_L1_error)
+    __PYX_ERR(1, 323, __pyx_L1_error)
   }
   __pyx_r = (__pyx_v_entropy / __pyx_v_self->__pyx_base.__pyx_base.n_outputs);
   goto __pyx_L0;
 
-  /* "_criterion.pyx":301
+  /* "_criterion.pyx":305
  * cdef class Entropy(ClassificationCriterion):
  * 
  *     cdef double node_impurity(self) nogil:             # <<<<<<<<<<<<<<
  * 
- *         cdef ut.SIZE_t* n_classes = self.n_classes
+ *         cdef SIZE_t* n_classes = self.n_classes
  */
 
   /* function exit code */
@@ -5787,7 +5807,7 @@ static double __pyx_f_10_criterion_7Entropy_node_impurity(struct __pyx_obj_10_cr
   return __pyx_r;
 }
 
-/* "_criterion.pyx":321
+/* "_criterion.pyx":325
  *         return entropy / self.n_outputs
  * 
  *     cdef void children_impurity(self, double* impurity_left,             # <<<<<<<<<<<<<<
@@ -5814,19 +5834,19 @@ static void __pyx_f_10_criterion_7Entropy_children_impurity(struct __pyx_obj_10_
   __pyx_t_6_utils_SIZE_t __pyx_t_8;
   int __pyx_t_9;
 
-  /* "_criterion.pyx":324
+  /* "_criterion.pyx":328
  *                                 double* impurity_right) nogil:
  * 
- *         cdef ut.SIZE_t* n_classes = self.n_classes             # <<<<<<<<<<<<<<
+ *         cdef SIZE_t* n_classes = self.n_classes             # <<<<<<<<<<<<<<
  *         cdef double* sum_left = self.sum_left
  *         cdef double* sum_right = self.sum_right
  */
   __pyx_t_1 = __pyx_v_self->__pyx_base.n_classes;
   __pyx_v_n_classes = __pyx_t_1;
 
-  /* "_criterion.pyx":325
+  /* "_criterion.pyx":329
  * 
- *         cdef ut.SIZE_t* n_classes = self.n_classes
+ *         cdef SIZE_t* n_classes = self.n_classes
  *         cdef double* sum_left = self.sum_left             # <<<<<<<<<<<<<<
  *         cdef double* sum_right = self.sum_right
  *         cdef double entropy_left = 0.0
@@ -5834,8 +5854,8 @@ static void __pyx_f_10_criterion_7Entropy_children_impurity(struct __pyx_obj_10_
   __pyx_t_2 = __pyx_v_self->__pyx_base.__pyx_base.sum_left;
   __pyx_v_sum_left = __pyx_t_2;
 
-  /* "_criterion.pyx":326
- *         cdef ut.SIZE_t* n_classes = self.n_classes
+  /* "_criterion.pyx":330
+ *         cdef SIZE_t* n_classes = self.n_classes
  *         cdef double* sum_left = self.sum_left
  *         cdef double* sum_right = self.sum_right             # <<<<<<<<<<<<<<
  *         cdef double entropy_left = 0.0
@@ -5844,7 +5864,7 @@ static void __pyx_f_10_criterion_7Entropy_children_impurity(struct __pyx_obj_10_
   __pyx_t_2 = __pyx_v_self->__pyx_base.__pyx_base.sum_right;
   __pyx_v_sum_right = __pyx_t_2;
 
-  /* "_criterion.pyx":327
+  /* "_criterion.pyx":331
  *         cdef double* sum_left = self.sum_left
  *         cdef double* sum_right = self.sum_right
  *         cdef double entropy_left = 0.0             # <<<<<<<<<<<<<<
@@ -5853,17 +5873,17 @@ static void __pyx_f_10_criterion_7Entropy_children_impurity(struct __pyx_obj_10_
  */
   __pyx_v_entropy_left = 0.0;
 
-  /* "_criterion.pyx":328
+  /* "_criterion.pyx":332
  *         cdef double* sum_right = self.sum_right
  *         cdef double entropy_left = 0.0
  *         cdef double entropy_right = 0.0             # <<<<<<<<<<<<<<
  *         cdef double count_k
- *         cdef ut.SIZE_t k
+ *         cdef SIZE_t k
  */
   __pyx_v_entropy_right = 0.0;
 
-  /* "_criterion.pyx":333
- *         cdef ut.SIZE_t c
+  /* "_criterion.pyx":337
+ *         cdef SIZE_t c
  * 
  *         for k in range(self.n_outputs):             # <<<<<<<<<<<<<<
  *             for c in range(n_classes[k]):
@@ -5874,7 +5894,7 @@ static void __pyx_f_10_criterion_7Entropy_children_impurity(struct __pyx_obj_10_
   for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_k = __pyx_t_5;
 
-    /* "_criterion.pyx":334
+    /* "_criterion.pyx":338
  * 
  *         for k in range(self.n_outputs):
  *             for c in range(n_classes[k]):             # <<<<<<<<<<<<<<
@@ -5886,7 +5906,7 @@ static void __pyx_f_10_criterion_7Entropy_children_impurity(struct __pyx_obj_10_
     for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
       __pyx_v_c = __pyx_t_8;
 
-      /* "_criterion.pyx":335
+      /* "_criterion.pyx":339
  *         for k in range(self.n_outputs):
  *             for c in range(n_classes[k]):
  *                 count_k = sum_left[c]             # <<<<<<<<<<<<<<
@@ -5895,21 +5915,21 @@ static void __pyx_f_10_criterion_7Entropy_children_impurity(struct __pyx_obj_10_
  */
       __pyx_v_count_k = (__pyx_v_sum_left[__pyx_v_c]);
 
-      /* "_criterion.pyx":336
+      /* "_criterion.pyx":340
  *             for c in range(n_classes[k]):
  *                 count_k = sum_left[c]
  *                 if count_k > 0.0:             # <<<<<<<<<<<<<<
  *                     count_k /= self.weighted_n_left
- *                     entropy_left -= count_k * ut.log(count_k)
+ *                     entropy_left -= count_k * log(count_k)
  */
       __pyx_t_9 = ((__pyx_v_count_k > 0.0) != 0);
       if (__pyx_t_9) {
 
-        /* "_criterion.pyx":337
+        /* "_criterion.pyx":341
  *                 count_k = sum_left[c]
  *                 if count_k > 0.0:
  *                     count_k /= self.weighted_n_left             # <<<<<<<<<<<<<<
- *                     entropy_left -= count_k * ut.log(count_k)
+ *                     entropy_left -= count_k * log(count_k)
  * 
  */
         if (unlikely(__pyx_v_self->__pyx_base.__pyx_base.weighted_n_left == 0)) {
@@ -5920,30 +5940,30 @@ static void __pyx_f_10_criterion_7Entropy_children_impurity(struct __pyx_obj_10_
           #ifdef WITH_THREAD
           __Pyx_PyGILState_Release(__pyx_gilstate_save);
           #endif
-          __PYX_ERR(1, 337, __pyx_L1_error)
+          __PYX_ERR(1, 341, __pyx_L1_error)
         }
         __pyx_v_count_k = (__pyx_v_count_k / __pyx_v_self->__pyx_base.__pyx_base.weighted_n_left);
 
-        /* "_criterion.pyx":338
+        /* "_criterion.pyx":342
  *                 if count_k > 0.0:
  *                     count_k /= self.weighted_n_left
- *                     entropy_left -= count_k * ut.log(count_k)             # <<<<<<<<<<<<<<
+ *                     entropy_left -= count_k * log(count_k)             # <<<<<<<<<<<<<<
  * 
  *                 count_k = sum_right[c]
  */
         __pyx_v_entropy_left = (__pyx_v_entropy_left - (__pyx_v_count_k * __pyx_f_6_utils_log(__pyx_v_count_k)));
 
-        /* "_criterion.pyx":336
+        /* "_criterion.pyx":340
  *             for c in range(n_classes[k]):
  *                 count_k = sum_left[c]
  *                 if count_k > 0.0:             # <<<<<<<<<<<<<<
  *                     count_k /= self.weighted_n_left
- *                     entropy_left -= count_k * ut.log(count_k)
+ *                     entropy_left -= count_k * log(count_k)
  */
       }
 
-      /* "_criterion.pyx":340
- *                     entropy_left -= count_k * ut.log(count_k)
+      /* "_criterion.pyx":344
+ *                     entropy_left -= count_k * log(count_k)
  * 
  *                 count_k = sum_right[c]             # <<<<<<<<<<<<<<
  *                 if count_k > 0.0:
@@ -5951,21 +5971,21 @@ static void __pyx_f_10_criterion_7Entropy_children_impurity(struct __pyx_obj_10_
  */
       __pyx_v_count_k = (__pyx_v_sum_right[__pyx_v_c]);
 
-      /* "_criterion.pyx":341
+      /* "_criterion.pyx":345
  * 
  *                 count_k = sum_right[c]
  *                 if count_k > 0.0:             # <<<<<<<<<<<<<<
  *                     count_k /= self.weighted_n_right
- *                     entropy_right -= count_k * ut.log(count_k)
+ *                     entropy_right -= count_k * log(count_k)
  */
       __pyx_t_9 = ((__pyx_v_count_k > 0.0) != 0);
       if (__pyx_t_9) {
 
-        /* "_criterion.pyx":342
+        /* "_criterion.pyx":346
  *                 count_k = sum_right[c]
  *                 if count_k > 0.0:
  *                     count_k /= self.weighted_n_right             # <<<<<<<<<<<<<<
- *                     entropy_right -= count_k * ut.log(count_k)
+ *                     entropy_right -= count_k * log(count_k)
  * 
  */
         if (unlikely(__pyx_v_self->__pyx_base.__pyx_base.weighted_n_right == 0)) {
@@ -5976,31 +5996,31 @@ static void __pyx_f_10_criterion_7Entropy_children_impurity(struct __pyx_obj_10_
           #ifdef WITH_THREAD
           __Pyx_PyGILState_Release(__pyx_gilstate_save);
           #endif
-          __PYX_ERR(1, 342, __pyx_L1_error)
+          __PYX_ERR(1, 346, __pyx_L1_error)
         }
         __pyx_v_count_k = (__pyx_v_count_k / __pyx_v_self->__pyx_base.__pyx_base.weighted_n_right);
 
-        /* "_criterion.pyx":343
+        /* "_criterion.pyx":347
  *                 if count_k > 0.0:
  *                     count_k /= self.weighted_n_right
- *                     entropy_right -= count_k * ut.log(count_k)             # <<<<<<<<<<<<<<
+ *                     entropy_right -= count_k * log(count_k)             # <<<<<<<<<<<<<<
  * 
  *             sum_left += self.sum_stride
  */
         __pyx_v_entropy_right = (__pyx_v_entropy_right - (__pyx_v_count_k * __pyx_f_6_utils_log(__pyx_v_count_k)));
 
-        /* "_criterion.pyx":341
+        /* "_criterion.pyx":345
  * 
  *                 count_k = sum_right[c]
  *                 if count_k > 0.0:             # <<<<<<<<<<<<<<
  *                     count_k /= self.weighted_n_right
- *                     entropy_right -= count_k * ut.log(count_k)
+ *                     entropy_right -= count_k * log(count_k)
  */
       }
     }
 
-    /* "_criterion.pyx":345
- *                     entropy_right -= count_k * ut.log(count_k)
+    /* "_criterion.pyx":349
+ *                     entropy_right -= count_k * log(count_k)
  * 
  *             sum_left += self.sum_stride             # <<<<<<<<<<<<<<
  *             sum_right += self.sum_stride
@@ -6008,7 +6028,7 @@ static void __pyx_f_10_criterion_7Entropy_children_impurity(struct __pyx_obj_10_
  */
     __pyx_v_sum_left = (__pyx_v_sum_left + __pyx_v_self->__pyx_base.sum_stride);
 
-    /* "_criterion.pyx":346
+    /* "_criterion.pyx":350
  * 
  *             sum_left += self.sum_stride
  *             sum_right += self.sum_stride             # <<<<<<<<<<<<<<
@@ -6018,7 +6038,7 @@ static void __pyx_f_10_criterion_7Entropy_children_impurity(struct __pyx_obj_10_
     __pyx_v_sum_right = (__pyx_v_sum_right + __pyx_v_self->__pyx_base.sum_stride);
   }
 
-  /* "_criterion.pyx":348
+  /* "_criterion.pyx":352
  *             sum_right += self.sum_stride
  * 
  *         impurity_left[0] = entropy_left / self.n_outputs             # <<<<<<<<<<<<<<
@@ -6033,11 +6053,11 @@ static void __pyx_f_10_criterion_7Entropy_children_impurity(struct __pyx_obj_10_
     #ifdef WITH_THREAD
     __Pyx_PyGILState_Release(__pyx_gilstate_save);
     #endif
-    __PYX_ERR(1, 348, __pyx_L1_error)
+    __PYX_ERR(1, 352, __pyx_L1_error)
   }
   (__pyx_v_impurity_left[0]) = (__pyx_v_entropy_left / __pyx_v_self->__pyx_base.__pyx_base.n_outputs);
 
-  /* "_criterion.pyx":349
+  /* "_criterion.pyx":353
  * 
  *         impurity_left[0] = entropy_left / self.n_outputs
  *         impurity_right[0] = entropy_right / self.n_outputs             # <<<<<<<<<<<<<<
@@ -6052,11 +6072,11 @@ static void __pyx_f_10_criterion_7Entropy_children_impurity(struct __pyx_obj_10_
     #ifdef WITH_THREAD
     __Pyx_PyGILState_Release(__pyx_gilstate_save);
     #endif
-    __PYX_ERR(1, 349, __pyx_L1_error)
+    __PYX_ERR(1, 353, __pyx_L1_error)
   }
   (__pyx_v_impurity_right[0]) = (__pyx_v_entropy_right / __pyx_v_self->__pyx_base.__pyx_base.n_outputs);
 
-  /* "_criterion.pyx":321
+  /* "_criterion.pyx":325
  *         return entropy / self.n_outputs
  * 
  *     cdef void children_impurity(self, double* impurity_left,             # <<<<<<<<<<<<<<
@@ -6071,12 +6091,12 @@ static void __pyx_f_10_criterion_7Entropy_children_impurity(struct __pyx_obj_10_
   __pyx_L0:;
 }
 
-/* "_criterion.pyx":353
+/* "_criterion.pyx":357
  * cdef class Gini(ClassificationCriterion):
  * 
  *     cdef double node_impurity(self) nogil:             # <<<<<<<<<<<<<<
  * 
- *         cdef ut.SIZE_t* n_classes = self.n_classes
+ *         cdef SIZE_t* n_classes = self.n_classes
  */
 
 static double __pyx_f_10_criterion_4Gini_node_impurity(struct __pyx_obj_10_criterion_Gini *__pyx_v_self) {
@@ -6098,19 +6118,19 @@ static double __pyx_f_10_criterion_4Gini_node_impurity(struct __pyx_obj_10_crite
   __pyx_t_6_utils_SIZE_t __pyx_t_8;
   double __pyx_t_9;
 
-  /* "_criterion.pyx":355
+  /* "_criterion.pyx":359
  *     cdef double node_impurity(self) nogil:
  * 
- *         cdef ut.SIZE_t* n_classes = self.n_classes             # <<<<<<<<<<<<<<
+ *         cdef SIZE_t* n_classes = self.n_classes             # <<<<<<<<<<<<<<
  *         cdef double* sum_total = self.sum_total
  *         cdef double gini = 0.0
  */
   __pyx_t_1 = __pyx_v_self->__pyx_base.n_classes;
   __pyx_v_n_classes = __pyx_t_1;
 
-  /* "_criterion.pyx":356
+  /* "_criterion.pyx":360
  * 
- *         cdef ut.SIZE_t* n_classes = self.n_classes
+ *         cdef SIZE_t* n_classes = self.n_classes
  *         cdef double* sum_total = self.sum_total             # <<<<<<<<<<<<<<
  *         cdef double gini = 0.0
  *         cdef double sq_count
@@ -6118,8 +6138,8 @@ static double __pyx_f_10_criterion_4Gini_node_impurity(struct __pyx_obj_10_crite
   __pyx_t_2 = __pyx_v_self->__pyx_base.__pyx_base.sum_total;
   __pyx_v_sum_total = __pyx_t_2;
 
-  /* "_criterion.pyx":357
- *         cdef ut.SIZE_t* n_classes = self.n_classes
+  /* "_criterion.pyx":361
+ *         cdef SIZE_t* n_classes = self.n_classes
  *         cdef double* sum_total = self.sum_total
  *         cdef double gini = 0.0             # <<<<<<<<<<<<<<
  *         cdef double sq_count
@@ -6127,8 +6147,8 @@ static double __pyx_f_10_criterion_4Gini_node_impurity(struct __pyx_obj_10_crite
  */
   __pyx_v_gini = 0.0;
 
-  /* "_criterion.pyx":363
- *         cdef ut.SIZE_t c
+  /* "_criterion.pyx":367
+ *         cdef SIZE_t c
  * 
  *         for k in range(self.n_outputs):             # <<<<<<<<<<<<<<
  *             sq_count = 0.0
@@ -6139,7 +6159,7 @@ static double __pyx_f_10_criterion_4Gini_node_impurity(struct __pyx_obj_10_crite
   for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_k = __pyx_t_5;
 
-    /* "_criterion.pyx":364
+    /* "_criterion.pyx":368
  * 
  *         for k in range(self.n_outputs):
  *             sq_count = 0.0             # <<<<<<<<<<<<<<
@@ -6148,7 +6168,7 @@ static double __pyx_f_10_criterion_4Gini_node_impurity(struct __pyx_obj_10_crite
  */
     __pyx_v_sq_count = 0.0;
 
-    /* "_criterion.pyx":366
+    /* "_criterion.pyx":370
  *             sq_count = 0.0
  * 
  *             for c in range(n_classes[k]):             # <<<<<<<<<<<<<<
@@ -6160,7 +6180,7 @@ static double __pyx_f_10_criterion_4Gini_node_impurity(struct __pyx_obj_10_crite
     for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
       __pyx_v_c = __pyx_t_8;
 
-      /* "_criterion.pyx":367
+      /* "_criterion.pyx":371
  * 
  *             for c in range(n_classes[k]):
  *                 count_k = sum_total[c]             # <<<<<<<<<<<<<<
@@ -6169,7 +6189,7 @@ static double __pyx_f_10_criterion_4Gini_node_impurity(struct __pyx_obj_10_crite
  */
       __pyx_v_count_k = (__pyx_v_sum_total[__pyx_v_c]);
 
-      /* "_criterion.pyx":368
+      /* "_criterion.pyx":372
  *             for c in range(n_classes[k]):
  *                 count_k = sum_total[c]
  *                 sq_count += count_k * count_k             # <<<<<<<<<<<<<<
@@ -6179,7 +6199,7 @@ static double __pyx_f_10_criterion_4Gini_node_impurity(struct __pyx_obj_10_crite
       __pyx_v_sq_count = (__pyx_v_sq_count + (__pyx_v_count_k * __pyx_v_count_k));
     }
 
-    /* "_criterion.pyx":370
+    /* "_criterion.pyx":374
  *                 sq_count += count_k * count_k
  * 
  *             gini += 1.0 - sq_count / (self.weighted_n_node_samples *             # <<<<<<<<<<<<<<
@@ -6195,11 +6215,11 @@ static double __pyx_f_10_criterion_4Gini_node_impurity(struct __pyx_obj_10_crite
       #ifdef WITH_THREAD
       __Pyx_PyGILState_Release(__pyx_gilstate_save);
       #endif
-      __PYX_ERR(1, 370, __pyx_L1_error)
+      __PYX_ERR(1, 374, __pyx_L1_error)
     }
     __pyx_v_gini = (__pyx_v_gini + (1.0 - (__pyx_v_sq_count / __pyx_t_9)));
 
-    /* "_criterion.pyx":373
+    /* "_criterion.pyx":377
  *                                       self.weighted_n_node_samples)
  * 
  *             sum_total += self.sum_stride             # <<<<<<<<<<<<<<
@@ -6209,7 +6229,7 @@ static double __pyx_f_10_criterion_4Gini_node_impurity(struct __pyx_obj_10_crite
     __pyx_v_sum_total = (__pyx_v_sum_total + __pyx_v_self->__pyx_base.sum_stride);
   }
 
-  /* "_criterion.pyx":375
+  /* "_criterion.pyx":379
  *             sum_total += self.sum_stride
  * 
  *         return gini / self.n_outputs             # <<<<<<<<<<<<<<
@@ -6224,17 +6244,17 @@ static double __pyx_f_10_criterion_4Gini_node_impurity(struct __pyx_obj_10_crite
     #ifdef WITH_THREAD
     __Pyx_PyGILState_Release(__pyx_gilstate_save);
     #endif
-    __PYX_ERR(1, 375, __pyx_L1_error)
+    __PYX_ERR(1, 379, __pyx_L1_error)
   }
   __pyx_r = (__pyx_v_gini / __pyx_v_self->__pyx_base.__pyx_base.n_outputs);
   goto __pyx_L0;
 
-  /* "_criterion.pyx":353
+  /* "_criterion.pyx":357
  * cdef class Gini(ClassificationCriterion):
  * 
  *     cdef double node_impurity(self) nogil:             # <<<<<<<<<<<<<<
  * 
- *         cdef ut.SIZE_t* n_classes = self.n_classes
+ *         cdef SIZE_t* n_classes = self.n_classes
  */
 
   /* function exit code */
@@ -6245,7 +6265,7 @@ static double __pyx_f_10_criterion_4Gini_node_impurity(struct __pyx_obj_10_crite
   return __pyx_r;
 }
 
-/* "_criterion.pyx":377
+/* "_criterion.pyx":381
  *         return gini / self.n_outputs
  * 
  *     cdef void children_impurity(self, double* impurity_left,             # <<<<<<<<<<<<<<
@@ -6274,19 +6294,19 @@ static void __pyx_f_10_criterion_4Gini_children_impurity(struct __pyx_obj_10_cri
   __pyx_t_6_utils_SIZE_t __pyx_t_8;
   double __pyx_t_9;
 
-  /* "_criterion.pyx":380
+  /* "_criterion.pyx":384
  *                                 double* impurity_right) nogil:
  * 
- *         cdef ut.SIZE_t* n_classes = self.n_classes             # <<<<<<<<<<<<<<
+ *         cdef SIZE_t* n_classes = self.n_classes             # <<<<<<<<<<<<<<
  *         cdef double* sum_left = self.sum_left
  *         cdef double* sum_right = self.sum_right
  */
   __pyx_t_1 = __pyx_v_self->__pyx_base.n_classes;
   __pyx_v_n_classes = __pyx_t_1;
 
-  /* "_criterion.pyx":381
+  /* "_criterion.pyx":385
  * 
- *         cdef ut.SIZE_t* n_classes = self.n_classes
+ *         cdef SIZE_t* n_classes = self.n_classes
  *         cdef double* sum_left = self.sum_left             # <<<<<<<<<<<<<<
  *         cdef double* sum_right = self.sum_right
  *         cdef double gini_left = 0.0
@@ -6294,8 +6314,8 @@ static void __pyx_f_10_criterion_4Gini_children_impurity(struct __pyx_obj_10_cri
   __pyx_t_2 = __pyx_v_self->__pyx_base.__pyx_base.sum_left;
   __pyx_v_sum_left = __pyx_t_2;
 
-  /* "_criterion.pyx":382
- *         cdef ut.SIZE_t* n_classes = self.n_classes
+  /* "_criterion.pyx":386
+ *         cdef SIZE_t* n_classes = self.n_classes
  *         cdef double* sum_left = self.sum_left
  *         cdef double* sum_right = self.sum_right             # <<<<<<<<<<<<<<
  *         cdef double gini_left = 0.0
@@ -6304,7 +6324,7 @@ static void __pyx_f_10_criterion_4Gini_children_impurity(struct __pyx_obj_10_cri
   __pyx_t_2 = __pyx_v_self->__pyx_base.__pyx_base.sum_right;
   __pyx_v_sum_right = __pyx_t_2;
 
-  /* "_criterion.pyx":383
+  /* "_criterion.pyx":387
  *         cdef double* sum_left = self.sum_left
  *         cdef double* sum_right = self.sum_right
  *         cdef double gini_left = 0.0             # <<<<<<<<<<<<<<
@@ -6313,7 +6333,7 @@ static void __pyx_f_10_criterion_4Gini_children_impurity(struct __pyx_obj_10_cri
  */
   __pyx_v_gini_left = 0.0;
 
-  /* "_criterion.pyx":384
+  /* "_criterion.pyx":388
  *         cdef double* sum_right = self.sum_right
  *         cdef double gini_left = 0.0
  *         cdef double gini_right = 0.0             # <<<<<<<<<<<<<<
@@ -6322,8 +6342,8 @@ static void __pyx_f_10_criterion_4Gini_children_impurity(struct __pyx_obj_10_cri
  */
   __pyx_v_gini_right = 0.0;
 
-  /* "_criterion.pyx":391
- *         cdef ut.SIZE_t c
+  /* "_criterion.pyx":395
+ *         cdef SIZE_t c
  * 
  *         for k in range(self.n_outputs):             # <<<<<<<<<<<<<<
  *             sq_count_left = 0.0
@@ -6334,7 +6354,7 @@ static void __pyx_f_10_criterion_4Gini_children_impurity(struct __pyx_obj_10_cri
   for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_k = __pyx_t_5;
 
-    /* "_criterion.pyx":392
+    /* "_criterion.pyx":396
  * 
  *         for k in range(self.n_outputs):
  *             sq_count_left = 0.0             # <<<<<<<<<<<<<<
@@ -6343,7 +6363,7 @@ static void __pyx_f_10_criterion_4Gini_children_impurity(struct __pyx_obj_10_cri
  */
     __pyx_v_sq_count_left = 0.0;
 
-    /* "_criterion.pyx":393
+    /* "_criterion.pyx":397
  *         for k in range(self.n_outputs):
  *             sq_count_left = 0.0
  *             sq_count_right = 0.0             # <<<<<<<<<<<<<<
@@ -6352,7 +6372,7 @@ static void __pyx_f_10_criterion_4Gini_children_impurity(struct __pyx_obj_10_cri
  */
     __pyx_v_sq_count_right = 0.0;
 
-    /* "_criterion.pyx":395
+    /* "_criterion.pyx":399
  *             sq_count_right = 0.0
  * 
  *             for c in range(n_classes[k]):             # <<<<<<<<<<<<<<
@@ -6364,7 +6384,7 @@ static void __pyx_f_10_criterion_4Gini_children_impurity(struct __pyx_obj_10_cri
     for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
       __pyx_v_c = __pyx_t_8;
 
-      /* "_criterion.pyx":396
+      /* "_criterion.pyx":400
  * 
  *             for c in range(n_classes[k]):
  *                 count_k = sum_left[c]             # <<<<<<<<<<<<<<
@@ -6373,7 +6393,7 @@ static void __pyx_f_10_criterion_4Gini_children_impurity(struct __pyx_obj_10_cri
  */
       __pyx_v_count_k = (__pyx_v_sum_left[__pyx_v_c]);
 
-      /* "_criterion.pyx":397
+      /* "_criterion.pyx":401
  *             for c in range(n_classes[k]):
  *                 count_k = sum_left[c]
  *                 sq_count_left += count_k * count_k             # <<<<<<<<<<<<<<
@@ -6382,7 +6402,7 @@ static void __pyx_f_10_criterion_4Gini_children_impurity(struct __pyx_obj_10_cri
  */
       __pyx_v_sq_count_left = (__pyx_v_sq_count_left + (__pyx_v_count_k * __pyx_v_count_k));
 
-      /* "_criterion.pyx":399
+      /* "_criterion.pyx":403
  *                 sq_count_left += count_k * count_k
  * 
  *                 count_k = sum_right[c]             # <<<<<<<<<<<<<<
@@ -6391,7 +6411,7 @@ static void __pyx_f_10_criterion_4Gini_children_impurity(struct __pyx_obj_10_cri
  */
       __pyx_v_count_k = (__pyx_v_sum_right[__pyx_v_c]);
 
-      /* "_criterion.pyx":400
+      /* "_criterion.pyx":404
  * 
  *                 count_k = sum_right[c]
  *                 sq_count_right += count_k * count_k             # <<<<<<<<<<<<<<
@@ -6401,7 +6421,7 @@ static void __pyx_f_10_criterion_4Gini_children_impurity(struct __pyx_obj_10_cri
       __pyx_v_sq_count_right = (__pyx_v_sq_count_right + (__pyx_v_count_k * __pyx_v_count_k));
     }
 
-    /* "_criterion.pyx":402
+    /* "_criterion.pyx":406
  *                 sq_count_right += count_k * count_k
  * 
  *             gini_left += 1.0 - sq_count_left/(self.weighted_n_left *             # <<<<<<<<<<<<<<
@@ -6417,11 +6437,11 @@ static void __pyx_f_10_criterion_4Gini_children_impurity(struct __pyx_obj_10_cri
       #ifdef WITH_THREAD
       __Pyx_PyGILState_Release(__pyx_gilstate_save);
       #endif
-      __PYX_ERR(1, 402, __pyx_L1_error)
+      __PYX_ERR(1, 406, __pyx_L1_error)
     }
     __pyx_v_gini_left = (__pyx_v_gini_left + (1.0 - (__pyx_v_sq_count_left / __pyx_t_9)));
 
-    /* "_criterion.pyx":404
+    /* "_criterion.pyx":408
  *             gini_left += 1.0 - sq_count_left/(self.weighted_n_left *
  *                                               self.weighted_n_left)
  *             gini_right += 1.0 - sq_count_right/(self.weighted_n_right *             # <<<<<<<<<<<<<<
@@ -6437,11 +6457,11 @@ static void __pyx_f_10_criterion_4Gini_children_impurity(struct __pyx_obj_10_cri
       #ifdef WITH_THREAD
       __Pyx_PyGILState_Release(__pyx_gilstate_save);
       #endif
-      __PYX_ERR(1, 404, __pyx_L1_error)
+      __PYX_ERR(1, 408, __pyx_L1_error)
     }
     __pyx_v_gini_right = (__pyx_v_gini_right + (1.0 - (__pyx_v_sq_count_right / __pyx_t_9)));
 
-    /* "_criterion.pyx":407
+    /* "_criterion.pyx":411
  *                                                 self.weighted_n_right)
  * 
  *             sum_left += self.sum_stride             # <<<<<<<<<<<<<<
@@ -6450,7 +6470,7 @@ static void __pyx_f_10_criterion_4Gini_children_impurity(struct __pyx_obj_10_cri
  */
     __pyx_v_sum_left = (__pyx_v_sum_left + __pyx_v_self->__pyx_base.sum_stride);
 
-    /* "_criterion.pyx":408
+    /* "_criterion.pyx":412
  * 
  *             sum_left += self.sum_stride
  *             sum_right += self.sum_stride             # <<<<<<<<<<<<<<
@@ -6460,7 +6480,7 @@ static void __pyx_f_10_criterion_4Gini_children_impurity(struct __pyx_obj_10_cri
     __pyx_v_sum_right = (__pyx_v_sum_right + __pyx_v_self->__pyx_base.sum_stride);
   }
 
-  /* "_criterion.pyx":410
+  /* "_criterion.pyx":414
  *             sum_right += self.sum_stride
  * 
  *         impurity_left[0] = gini_left/self.n_outputs             # <<<<<<<<<<<<<<
@@ -6475,11 +6495,11 @@ static void __pyx_f_10_criterion_4Gini_children_impurity(struct __pyx_obj_10_cri
     #ifdef WITH_THREAD
     __Pyx_PyGILState_Release(__pyx_gilstate_save);
     #endif
-    __PYX_ERR(1, 410, __pyx_L1_error)
+    __PYX_ERR(1, 414, __pyx_L1_error)
   }
   (__pyx_v_impurity_left[0]) = (__pyx_v_gini_left / __pyx_v_self->__pyx_base.__pyx_base.n_outputs);
 
-  /* "_criterion.pyx":411
+  /* "_criterion.pyx":415
  * 
  *         impurity_left[0] = gini_left/self.n_outputs
  *         impurity_right[0] = gini_right/self.n_outputs             # <<<<<<<<<<<<<<
@@ -6493,11 +6513,11 @@ static void __pyx_f_10_criterion_4Gini_children_impurity(struct __pyx_obj_10_cri
     #ifdef WITH_THREAD
     __Pyx_PyGILState_Release(__pyx_gilstate_save);
     #endif
-    __PYX_ERR(1, 411, __pyx_L1_error)
+    __PYX_ERR(1, 415, __pyx_L1_error)
   }
   (__pyx_v_impurity_right[0]) = (__pyx_v_gini_right / __pyx_v_self->__pyx_base.__pyx_base.n_outputs);
 
-  /* "_criterion.pyx":377
+  /* "_criterion.pyx":381
  *         return gini / self.n_outputs
  * 
  *     cdef void children_impurity(self, double* impurity_left,             # <<<<<<<<<<<<<<
@@ -23079,8 +23099,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
   __pyx_builtin_TypeError = __Pyx_GetBuiltinName(__pyx_n_s_TypeError); if (!__pyx_builtin_TypeError) __PYX_ERR(0, 2, __pyx_L1_error)
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(1, 102, __pyx_L1_error)
-  __pyx_builtin_MemoryError = __Pyx_GetBuiltinName(__pyx_n_s_MemoryError); if (!__pyx_builtin_MemoryError) __PYX_ERR(1, 117, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(1, 106, __pyx_L1_error)
+  __pyx_builtin_MemoryError = __Pyx_GetBuiltinName(__pyx_n_s_MemoryError); if (!__pyx_builtin_MemoryError) __PYX_ERR(1, 121, __pyx_L1_error)
   __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(2, 272, __pyx_L1_error)
   __pyx_builtin_RuntimeError = __Pyx_GetBuiltinName(__pyx_n_s_RuntimeError); if (!__pyx_builtin_RuntimeError) __PYX_ERR(2, 856, __pyx_L1_error)
   __pyx_builtin_ImportError = __Pyx_GetBuiltinName(__pyx_n_s_ImportError); if (!__pyx_builtin_ImportError) __PYX_ERR(2, 1038, __pyx_L1_error)
@@ -23518,16 +23538,16 @@ static int __Pyx_modinit_type_init_code(void) {
   __pyx_vtable_10_criterion_Criterion.node_value = (void (*)(struct __pyx_obj_10_criterion_Criterion *, double *))__pyx_f_10_criterion_9Criterion_node_value;
   __pyx_vtable_10_criterion_Criterion.impurity_improvement = (double (*)(struct __pyx_obj_10_criterion_Criterion *, double))__pyx_f_10_criterion_9Criterion_impurity_improvement;
   __pyx_vtable_10_criterion_Criterion.proxy_impurity_improvement = (double (*)(struct __pyx_obj_10_criterion_Criterion *))__pyx_f_10_criterion_9Criterion_proxy_impurity_improvement;
-  if (PyType_Ready(&__pyx_type_10_criterion_Criterion) < 0) __PYX_ERR(1, 13, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_10_criterion_Criterion) < 0) __PYX_ERR(1, 17, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
   __pyx_type_10_criterion_Criterion.tp_print = 0;
   #endif
   if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_10_criterion_Criterion.tp_dictoffset && __pyx_type_10_criterion_Criterion.tp_getattro == PyObject_GenericGetAttr)) {
     __pyx_type_10_criterion_Criterion.tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
-  if (__Pyx_SetVtable(__pyx_type_10_criterion_Criterion.tp_dict, __pyx_vtabptr_10_criterion_Criterion) < 0) __PYX_ERR(1, 13, __pyx_L1_error)
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_Criterion, (PyObject *)&__pyx_type_10_criterion_Criterion) < 0) __PYX_ERR(1, 13, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_10_criterion_Criterion) < 0) __PYX_ERR(1, 13, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_type_10_criterion_Criterion.tp_dict, __pyx_vtabptr_10_criterion_Criterion) < 0) __PYX_ERR(1, 17, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_Criterion, (PyObject *)&__pyx_type_10_criterion_Criterion) < 0) __PYX_ERR(1, 17, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_10_criterion_Criterion) < 0) __PYX_ERR(1, 17, __pyx_L1_error)
   __pyx_ptype_10_criterion_Criterion = &__pyx_type_10_criterion_Criterion;
   __pyx_vtabptr_10_criterion_ClassificationCriterion = &__pyx_vtable_10_criterion_ClassificationCriterion;
   __pyx_vtable_10_criterion_ClassificationCriterion.__pyx_base = *__pyx_vtabptr_10_criterion_Criterion;
@@ -23539,58 +23559,58 @@ static int __Pyx_modinit_type_init_code(void) {
   __pyx_vtable_10_criterion_ClassificationCriterion.__pyx_base.children_impurity = (void (*)(struct __pyx_obj_10_criterion_Criterion *, double *, double *))__pyx_f_10_criterion_23ClassificationCriterion_children_impurity;
   __pyx_vtable_10_criterion_ClassificationCriterion.__pyx_base.node_value = (void (*)(struct __pyx_obj_10_criterion_Criterion *, double *))__pyx_f_10_criterion_23ClassificationCriterion_node_value;
   __pyx_type_10_criterion_ClassificationCriterion.tp_base = __pyx_ptype_10_criterion_Criterion;
-  if (PyType_Ready(&__pyx_type_10_criterion_ClassificationCriterion) < 0) __PYX_ERR(1, 73, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_10_criterion_ClassificationCriterion) < 0) __PYX_ERR(1, 77, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
   __pyx_type_10_criterion_ClassificationCriterion.tp_print = 0;
   #endif
   if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_10_criterion_ClassificationCriterion.tp_dictoffset && __pyx_type_10_criterion_ClassificationCriterion.tp_getattro == PyObject_GenericGetAttr)) {
     __pyx_type_10_criterion_ClassificationCriterion.tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
-  if (__Pyx_SetVtable(__pyx_type_10_criterion_ClassificationCriterion.tp_dict, __pyx_vtabptr_10_criterion_ClassificationCriterion) < 0) __PYX_ERR(1, 73, __pyx_L1_error)
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_ClassificationCriterion, (PyObject *)&__pyx_type_10_criterion_ClassificationCriterion) < 0) __PYX_ERR(1, 73, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_type_10_criterion_ClassificationCriterion.tp_dict, __pyx_vtabptr_10_criterion_ClassificationCriterion) < 0) __PYX_ERR(1, 77, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_ClassificationCriterion, (PyObject *)&__pyx_type_10_criterion_ClassificationCriterion) < 0) __PYX_ERR(1, 77, __pyx_L1_error)
   __pyx_ptype_10_criterion_ClassificationCriterion = &__pyx_type_10_criterion_ClassificationCriterion;
   __pyx_vtabptr_10_criterion_RegressionCriterion = &__pyx_vtable_10_criterion_RegressionCriterion;
   __pyx_vtable_10_criterion_RegressionCriterion.__pyx_base = *__pyx_vtabptr_10_criterion_Criterion;
   __pyx_type_10_criterion_RegressionCriterion.tp_base = __pyx_ptype_10_criterion_Criterion;
-  if (PyType_Ready(&__pyx_type_10_criterion_RegressionCriterion) < 0) __PYX_ERR(3, 47, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_10_criterion_RegressionCriterion) < 0) __PYX_ERR(3, 52, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
   __pyx_type_10_criterion_RegressionCriterion.tp_print = 0;
   #endif
   if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_10_criterion_RegressionCriterion.tp_dictoffset && __pyx_type_10_criterion_RegressionCriterion.tp_getattro == PyObject_GenericGetAttr)) {
     __pyx_type_10_criterion_RegressionCriterion.tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
-  if (__Pyx_SetVtable(__pyx_type_10_criterion_RegressionCriterion.tp_dict, __pyx_vtabptr_10_criterion_RegressionCriterion) < 0) __PYX_ERR(3, 47, __pyx_L1_error)
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_RegressionCriterion, (PyObject *)&__pyx_type_10_criterion_RegressionCriterion) < 0) __PYX_ERR(3, 47, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_type_10_criterion_RegressionCriterion.tp_dict, __pyx_vtabptr_10_criterion_RegressionCriterion) < 0) __PYX_ERR(3, 52, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_RegressionCriterion, (PyObject *)&__pyx_type_10_criterion_RegressionCriterion) < 0) __PYX_ERR(3, 52, __pyx_L1_error)
   __pyx_ptype_10_criterion_RegressionCriterion = &__pyx_type_10_criterion_RegressionCriterion;
   __pyx_vtabptr_10_criterion_Entropy = &__pyx_vtable_10_criterion_Entropy;
   __pyx_vtable_10_criterion_Entropy.__pyx_base = *__pyx_vtabptr_10_criterion_ClassificationCriterion;
   __pyx_vtable_10_criterion_Entropy.__pyx_base.__pyx_base.node_impurity = (double (*)(struct __pyx_obj_10_criterion_Criterion *))__pyx_f_10_criterion_7Entropy_node_impurity;
   __pyx_vtable_10_criterion_Entropy.__pyx_base.__pyx_base.children_impurity = (void (*)(struct __pyx_obj_10_criterion_Criterion *, double *, double *))__pyx_f_10_criterion_7Entropy_children_impurity;
   __pyx_type_10_criterion_Entropy.tp_base = __pyx_ptype_10_criterion_ClassificationCriterion;
-  if (PyType_Ready(&__pyx_type_10_criterion_Entropy) < 0) __PYX_ERR(1, 299, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_10_criterion_Entropy) < 0) __PYX_ERR(1, 303, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
   __pyx_type_10_criterion_Entropy.tp_print = 0;
   #endif
   if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_10_criterion_Entropy.tp_dictoffset && __pyx_type_10_criterion_Entropy.tp_getattro == PyObject_GenericGetAttr)) {
     __pyx_type_10_criterion_Entropy.tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
-  if (__Pyx_SetVtable(__pyx_type_10_criterion_Entropy.tp_dict, __pyx_vtabptr_10_criterion_Entropy) < 0) __PYX_ERR(1, 299, __pyx_L1_error)
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_Entropy, (PyObject *)&__pyx_type_10_criterion_Entropy) < 0) __PYX_ERR(1, 299, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_type_10_criterion_Entropy.tp_dict, __pyx_vtabptr_10_criterion_Entropy) < 0) __PYX_ERR(1, 303, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_Entropy, (PyObject *)&__pyx_type_10_criterion_Entropy) < 0) __PYX_ERR(1, 303, __pyx_L1_error)
   __pyx_ptype_10_criterion_Entropy = &__pyx_type_10_criterion_Entropy;
   __pyx_vtabptr_10_criterion_Gini = &__pyx_vtable_10_criterion_Gini;
   __pyx_vtable_10_criterion_Gini.__pyx_base = *__pyx_vtabptr_10_criterion_ClassificationCriterion;
   __pyx_vtable_10_criterion_Gini.__pyx_base.__pyx_base.node_impurity = (double (*)(struct __pyx_obj_10_criterion_Criterion *))__pyx_f_10_criterion_4Gini_node_impurity;
   __pyx_vtable_10_criterion_Gini.__pyx_base.__pyx_base.children_impurity = (void (*)(struct __pyx_obj_10_criterion_Criterion *, double *, double *))__pyx_f_10_criterion_4Gini_children_impurity;
   __pyx_type_10_criterion_Gini.tp_base = __pyx_ptype_10_criterion_ClassificationCriterion;
-  if (PyType_Ready(&__pyx_type_10_criterion_Gini) < 0) __PYX_ERR(1, 351, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_10_criterion_Gini) < 0) __PYX_ERR(1, 355, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
   __pyx_type_10_criterion_Gini.tp_print = 0;
   #endif
   if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_10_criterion_Gini.tp_dictoffset && __pyx_type_10_criterion_Gini.tp_getattro == PyObject_GenericGetAttr)) {
     __pyx_type_10_criterion_Gini.tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
-  if (__Pyx_SetVtable(__pyx_type_10_criterion_Gini.tp_dict, __pyx_vtabptr_10_criterion_Gini) < 0) __PYX_ERR(1, 351, __pyx_L1_error)
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_Gini, (PyObject *)&__pyx_type_10_criterion_Gini) < 0) __PYX_ERR(1, 351, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_type_10_criterion_Gini.tp_dict, __pyx_vtabptr_10_criterion_Gini) < 0) __PYX_ERR(1, 355, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_Gini, (PyObject *)&__pyx_type_10_criterion_Gini) < 0) __PYX_ERR(1, 355, __pyx_L1_error)
   __pyx_ptype_10_criterion_Gini = &__pyx_type_10_criterion_Gini;
   __pyx_vtabptr_array = &__pyx_vtable_array;
   __pyx_vtable_array.get_memview = (PyObject *(*)(struct __pyx_array_obj *))__pyx_array_get_memview;
@@ -23685,20 +23705,20 @@ static int __Pyx_modinit_type_import_code(void) {
    if (!__pyx_ptype_7sklearn_9neighbors_10_quad_tree__QuadTree) __PYX_ERR(5, 55, __pyx_L1_error)
   __pyx_vtabptr_7sklearn_9neighbors_10_quad_tree__QuadTree = (struct __pyx_vtabstruct_7sklearn_9neighbors_10_quad_tree__QuadTree*)__Pyx_GetVtable(__pyx_ptype_7sklearn_9neighbors_10_quad_tree__QuadTree->tp_dict); if (unlikely(!__pyx_vtabptr_7sklearn_9neighbors_10_quad_tree__QuadTree)) __PYX_ERR(5, 55, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyImport_ImportModule("_utils"); if (unlikely(!__pyx_t_1)) __PYX_ERR(6, 69, __pyx_L1_error)
+  __pyx_t_1 = PyImport_ImportModule("_utils"); if (unlikely(!__pyx_t_1)) __PYX_ERR(6, 79, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_ptype_6_utils_Stack = __Pyx_ImportType(__pyx_t_1, "_utils", "Stack", sizeof(struct __pyx_obj_6_utils_Stack), __Pyx_ImportType_CheckSize_Warn);
-   if (!__pyx_ptype_6_utils_Stack) __PYX_ERR(6, 69, __pyx_L1_error)
-  __pyx_vtabptr_6_utils_Stack = (struct __pyx_vtabstruct_6_utils_Stack*)__Pyx_GetVtable(__pyx_ptype_6_utils_Stack->tp_dict); if (unlikely(!__pyx_vtabptr_6_utils_Stack)) __PYX_ERR(6, 69, __pyx_L1_error)
+   if (!__pyx_ptype_6_utils_Stack) __PYX_ERR(6, 79, __pyx_L1_error)
+  __pyx_vtabptr_6_utils_Stack = (struct __pyx_vtabstruct_6_utils_Stack*)__Pyx_GetVtable(__pyx_ptype_6_utils_Stack->tp_dict); if (unlikely(!__pyx_vtabptr_6_utils_Stack)) __PYX_ERR(6, 79, __pyx_L1_error)
   __pyx_ptype_6_utils_PriorityHeap = __Pyx_ImportType(__pyx_t_1, "_utils", "PriorityHeap", sizeof(struct __pyx_obj_6_utils_PriorityHeap), __Pyx_ImportType_CheckSize_Warn);
-   if (!__pyx_ptype_6_utils_PriorityHeap) __PYX_ERR(6, 97, __pyx_L1_error)
-  __pyx_vtabptr_6_utils_PriorityHeap = (struct __pyx_vtabstruct_6_utils_PriorityHeap*)__Pyx_GetVtable(__pyx_ptype_6_utils_PriorityHeap->tp_dict); if (unlikely(!__pyx_vtabptr_6_utils_PriorityHeap)) __PYX_ERR(6, 97, __pyx_L1_error)
+   if (!__pyx_ptype_6_utils_PriorityHeap) __PYX_ERR(6, 107, __pyx_L1_error)
+  __pyx_vtabptr_6_utils_PriorityHeap = (struct __pyx_vtabstruct_6_utils_PriorityHeap*)__Pyx_GetVtable(__pyx_ptype_6_utils_PriorityHeap->tp_dict); if (unlikely(!__pyx_vtabptr_6_utils_PriorityHeap)) __PYX_ERR(6, 107, __pyx_L1_error)
   __pyx_ptype_6_utils_WeightedPQueue = __Pyx_ImportType(__pyx_t_1, "_utils", "WeightedPQueue", sizeof(struct __pyx_obj_6_utils_WeightedPQueue), __Pyx_ImportType_CheckSize_Warn);
-   if (!__pyx_ptype_6_utils_WeightedPQueue) __PYX_ERR(6, 119, __pyx_L1_error)
-  __pyx_vtabptr_6_utils_WeightedPQueue = (struct __pyx_vtabstruct_6_utils_WeightedPQueue*)__Pyx_GetVtable(__pyx_ptype_6_utils_WeightedPQueue->tp_dict); if (unlikely(!__pyx_vtabptr_6_utils_WeightedPQueue)) __PYX_ERR(6, 119, __pyx_L1_error)
+   if (!__pyx_ptype_6_utils_WeightedPQueue) __PYX_ERR(6, 129, __pyx_L1_error)
+  __pyx_vtabptr_6_utils_WeightedPQueue = (struct __pyx_vtabstruct_6_utils_WeightedPQueue*)__Pyx_GetVtable(__pyx_ptype_6_utils_WeightedPQueue->tp_dict); if (unlikely(!__pyx_vtabptr_6_utils_WeightedPQueue)) __PYX_ERR(6, 129, __pyx_L1_error)
   __pyx_ptype_6_utils_WeightedMedianCalculator = __Pyx_ImportType(__pyx_t_1, "_utils", "WeightedMedianCalculator", sizeof(struct __pyx_obj_6_utils_WeightedMedianCalculator), __Pyx_ImportType_CheckSize_Warn);
-   if (!__pyx_ptype_6_utils_WeightedMedianCalculator) __PYX_ERR(6, 138, __pyx_L1_error)
-  __pyx_vtabptr_6_utils_WeightedMedianCalculator = (struct __pyx_vtabstruct_6_utils_WeightedMedianCalculator*)__Pyx_GetVtable(__pyx_ptype_6_utils_WeightedMedianCalculator->tp_dict); if (unlikely(!__pyx_vtabptr_6_utils_WeightedMedianCalculator)) __PYX_ERR(6, 138, __pyx_L1_error)
+   if (!__pyx_ptype_6_utils_WeightedMedianCalculator) __PYX_ERR(6, 148, __pyx_L1_error)
+  __pyx_vtabptr_6_utils_WeightedMedianCalculator = (struct __pyx_vtabstruct_6_utils_WeightedMedianCalculator*)__Pyx_GetVtable(__pyx_ptype_6_utils_WeightedMedianCalculator->tp_dict); if (unlikely(!__pyx_vtabptr_6_utils_WeightedMedianCalculator)) __PYX_ERR(6, 148, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_RefNannyFinishContext();
   return 0;
@@ -23738,9 +23758,11 @@ static int __Pyx_modinit_function_import_code(void) {
   if (__Pyx_ImportFunction(__pyx_t_1, "__pyx_fuse_3safe_realloc", (void (**)(void))&__pyx_fuse_3__pyx_f_6_utils_safe_realloc, "struct __pyx_t_6_utils_WeightedPQueueRecord *(struct __pyx_t_6_utils_WeightedPQueueRecord **, size_t)") < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   if (__Pyx_ImportFunction(__pyx_t_1, "__pyx_fuse_4safe_realloc", (void (**)(void))&__pyx_fuse_4__pyx_f_6_utils_safe_realloc, "__pyx_t_6_utils_DOUBLE_t *(__pyx_t_6_utils_DOUBLE_t **, size_t)") < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   if (__Pyx_ImportFunction(__pyx_t_1, "__pyx_fuse_5safe_realloc", (void (**)(void))&__pyx_fuse_5__pyx_f_6_utils_safe_realloc, "__pyx_t_6_utils_DOUBLE_t **(__pyx_t_6_utils_DOUBLE_t ***, size_t)") < 0) __PYX_ERR(1, 1, __pyx_L1_error)
-  if (__Pyx_ImportFunction(__pyx_t_1, "__pyx_fuse_6safe_realloc", (void (**)(void))&__pyx_fuse_6__pyx_f_6_utils_safe_realloc, "struct __pyx_t_7sklearn_9neighbors_10_quad_tree_Cell **(struct __pyx_t_7sklearn_9neighbors_10_quad_tree_Cell ***, size_t)") < 0) __PYX_ERR(1, 1, __pyx_L1_error)
-  if (__Pyx_ImportFunction(__pyx_t_1, "__pyx_fuse_7safe_realloc", (void (**)(void))&__pyx_fuse_7__pyx_f_6_utils_safe_realloc, "struct __pyx_t_6_utils_StackRecord *(struct __pyx_t_6_utils_StackRecord **, size_t)") < 0) __PYX_ERR(1, 1, __pyx_L1_error)
-  if (__Pyx_ImportFunction(__pyx_t_1, "__pyx_fuse_8safe_realloc", (void (**)(void))&__pyx_fuse_8__pyx_f_6_utils_safe_realloc, "struct __pyx_t_6_utils_PriorityHeapRecord *(struct __pyx_t_6_utils_PriorityHeapRecord **, size_t)") < 0) __PYX_ERR(1, 1, __pyx_L1_error)
+  if (__Pyx_ImportFunction(__pyx_t_1, "__pyx_fuse_6safe_realloc", (void (**)(void))&__pyx_fuse_6__pyx_f_6_utils_safe_realloc, "struct __pyx_t_6_utils_Node *(struct __pyx_t_6_utils_Node **, size_t)") < 0) __PYX_ERR(1, 1, __pyx_L1_error)
+  if (__Pyx_ImportFunction(__pyx_t_1, "__pyx_fuse_7safe_realloc", (void (**)(void))&__pyx_fuse_7__pyx_f_6_utils_safe_realloc, "struct __pyx_t_7sklearn_9neighbors_10_quad_tree_Cell **(struct __pyx_t_7sklearn_9neighbors_10_quad_tree_Cell ***, size_t)") < 0) __PYX_ERR(1, 1, __pyx_L1_error)
+  if (__Pyx_ImportFunction(__pyx_t_1, "__pyx_fuse_8safe_realloc", (void (**)(void))&__pyx_fuse_8__pyx_f_6_utils_safe_realloc, "struct __pyx_t_6_utils_Node **(struct __pyx_t_6_utils_Node ***, size_t)") < 0) __PYX_ERR(1, 1, __pyx_L1_error)
+  if (__Pyx_ImportFunction(__pyx_t_1, "__pyx_fuse_9safe_realloc", (void (**)(void))&__pyx_fuse_9__pyx_f_6_utils_safe_realloc, "struct __pyx_t_6_utils_StackRecord *(struct __pyx_t_6_utils_StackRecord **, size_t)") < 0) __PYX_ERR(1, 1, __pyx_L1_error)
+  if (__Pyx_ImportFunction(__pyx_t_1, "__pyx_fuse_10safe_realloc", (void (**)(void))&__pyx_fuse_10__pyx_f_6_utils_safe_realloc, "struct __pyx_t_6_utils_PriorityHeapRecord *(struct __pyx_t_6_utils_PriorityHeapRecord **, size_t)") < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   Py_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_RefNannyFinishContext();
   return 0;

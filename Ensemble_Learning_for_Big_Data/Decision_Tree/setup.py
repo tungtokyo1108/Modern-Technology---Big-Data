@@ -27,6 +27,9 @@ setup(
                    include_dirs=[numpy.get_include()]),
                    Extension("_splitter",
                    sources=["_splitter.pyx"],
+                   include_dirs=[numpy.get_include()]),
+                   Extension("_Decision_Tree",
+                   sources=["Decision_Tree.pyx"],
                    include_dirs=[numpy.get_include()])],
       )
 
