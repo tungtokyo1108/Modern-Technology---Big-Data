@@ -75,7 +75,7 @@ cdef class Splitter:
                   DOUBLE_t* sample_weight,
                   np.ndarray X_idx_sorted=None) except -1:
         
-        #self.rand_r_state = self.random_state.randint(0, RAND_R_MAX)
+        self.rand_r_state = self.random_state.randint(0, RAND_R_MAX)
         cdef SIZE_t n_samples = X.shape[0]
 
         cdef SIZE_t* samples = safe_realloc(&self.samples, n_samples)

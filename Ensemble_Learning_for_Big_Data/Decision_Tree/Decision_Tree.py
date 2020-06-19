@@ -84,6 +84,8 @@ min_impurity_split = 0
 min_impurity_decrease = 0
 random_state = 42
 
+random_state = check_random_state(random_state)
+
 check_X_params = dict(dtype=DTYPE, accept_sparse="csc")
 check_y_params = dict(ensure_2d=False, dtype=None)
 
