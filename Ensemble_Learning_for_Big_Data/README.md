@@ -10,6 +10,8 @@
 - [2018 - Causal Random Forest](https://www.tandfonline.com/doi/full/10.1080/01621459.2017.1319839)
 - [2018 - Iterative Random Forests](https://www.pnas.org/content/115/8/1943)
 - [2018 - Generalized linear mixed-effects model trees](https://link.springer.com/article/10.3758%2Fs13428-017-0971-x)
+- [2019 - Feature Selection in Decision Trees](http://jmlr.org/papers/v20/18-035.html)
+- [2019 - Surrogate minimal depth in random forests](https://doi.org/10.1093/bioinformatics/btz149)
 - [2019 - Generalized Random Forests](https://projecteuclid.org/euclid.aos/1547197251)
 - [2019 - Spatial Lag Model Trees](https://onlinelibrary.wiley.com/doi/full/10.1111/geer.12146)
 - [2019 - Reinforced quasi-random forest](https://www.sciencedirect.com/science/article/abs/pii/S0031320319301888)
