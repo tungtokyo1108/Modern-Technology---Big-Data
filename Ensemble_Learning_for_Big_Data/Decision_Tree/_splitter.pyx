@@ -281,12 +281,13 @@ cdef class BestSplitter(BaseDenseSplitter):
                                     self.min_weight_leaf,
                                     self.random_state), self.__getstate__())
 
-    cdef int node_split(self, double impurity, SplitRecord* split, 
+
+    cdef int node_split(self, double impurity, SplitRecord* split,
                         SIZE_t* n_constant_features) nogil except -1:
         
         cdef SIZE_t* samples = self.samples
         cdef SIZE_t start = self.start
-        cdef SIZE_t end = self.end 
+        cdef SIZE_t end = self.end
 
         cdef SIZE_t* features = self.features
         cdef SIZE_t* constant_features = self.constant_features
@@ -306,11 +307,11 @@ cdef class BestSplitter(BaseDenseSplitter):
         cdef double best_proxy_improvement = -INFINITY
 
         cdef SIZE_t f_i = n_features
-        cdef SIZE_t f_j 
+        cdef SIZE_t f_j
         cdef SIZE_t p 
-        cdef SIZE_t feature_idx_offset 
-        cdef SIZE_t feature_offset 
-        cdef SIZE_t i
+        cdef SIZE_t feature_idx_offset
+        cdef SIZE_t feature_offset
+        cdef SIZE_t i 
         cdef SIZE_t j 
 
         cdef SIZE_t n_visited_features = 0
@@ -323,23 +324,31 @@ cdef class BestSplitter(BaseDenseSplitter):
 
         _init_split(&best, end)
 
-        while (f_i > n_total_constants and 
-               (n_visited_features < max_features or 
-                n_visited_features <= n_found_constants + n_drawn_constants)): 
+        """
+        Sample up to max_features without replacement using a Fisher-Yates based algorithm
+        Using the local variables f_i and f_j to compute a permutation of the features array 
+        """
+
+        while(f_i > n_total_constants and 
+                (n_visited_features < max_features or 
+                 n_visited_features <= n_found_constants + n_drawn_constants)):
             
             n_visited_features += 1
-            f_j = rand_int(n_drawn_constants, f_i - n_found_constants, 
-                                random_state)
+
+            # Draw a feature at random 
+            f_j = rand_int(n_drawn_constants, f_i - n_found_constants, random_state)
 
             if f_j < n_known_constants:
-                features[n_drawn_constants], features[f_j] = features[f_j], features[n_drawn_constants]
-                n_drawn_constants += 1 
 
+                features[n_drawn_constants], features[f_j] = features[f_j], features[n_drawn_constants]
+                n_drawn_constants += 1
+            
             else:
 
-                f_j += n_found_constants
+                f_j += n_found_constants 
                 current.feature = features[f_j]
 
+                # Sort samples along that feature 
                 for i in range(start, end):
                     Xf[i] = self.X[samples[i], current.feature]
 
@@ -347,12 +356,14 @@ cdef class BestSplitter(BaseDenseSplitter):
 
                 if Xf[end - 1] <= Xf[start] + FEATURE_THRESHOLD:
                     features[f_j], features[n_total_constants] = features[n_total_constants], features[f_j]
+
                     n_found_constants += 1
                     n_total_constants += 1
+
                 else:
                     f_i -= 1
                     features[f_i], features[f_j] = features[f_j], features[f_i]
-                    
+
                     self.criterion.reset()
                     p = start
 
@@ -360,39 +371,41 @@ cdef class BestSplitter(BaseDenseSplitter):
                         while (p + 1 < end and 
                                Xf[p + 1] <= Xf[p] + FEATURE_THRESHOLD):
                             p += 1
-
+                        
                         p += 1
 
                         if p < end:
                             current.pos = p 
 
+                            # Reject if min_samples_leaf is not guaranteed 
                             if (((current.pos - start) < min_samples_leaf) or 
-                                    ((end - current.pos) < min_samples_leaf)):
+                                ((end - current.pos) < min_samples_leaf)):
                                 continue
                             
                             self.criterion.update(current.pos)
 
+                            # Reject if min_weight_leaf is not statisfied 
                             if ((self.criterion.weighted_n_left < min_weight_leaf) or 
-                                    (self.criterion.weighted_n_right < min_weight_leaf)):
-                                continue
+                                 (self.criterion.weighted_n_right < min_weight_leaf)):
+                                 continue
                             
                             current_proxy_improvement = self.criterion.proxy_impurity_improvement()
 
                             if current_proxy_improvement > best_proxy_improvement:
                                 best_proxy_improvement = current_proxy_improvement
-                                current.threshold = Xf[p - 1]/2.0 + Xf[p]/2.0
+                                current.threshold = Xf[p - 1] / 2.0 + Xf[p] / 2.0
 
                                 if ((current.threshold == Xf[p]) or 
                                     (current.threshold == INFINITY) or 
-                                    (current.threshold == INFINITY)):
+                                    (current.threshold == -INFINITY)):
                                     current.threshold = Xf[p - 1]
-
+                                
                                 best = current
 
+        # Reorganize into samples[start:best.pos] + samples[best.pos:end]
         if best.pos < end:
-
             partition_end = end 
-            p = start 
+            p = start
 
             while p < partition_end:
                 if self.X[samples[p], best.feature] <= best.threshold:
@@ -400,19 +413,22 @@ cdef class BestSplitter(BaseDenseSplitter):
                 else:
                     partition_end -= 1
                     samples[p], samples[partition_end] = samples[partition_end], samples[p]
-
+            
             self.criterion.reset()
             self.criterion.update(best.pos)
             best.improvement = self.criterion.impurity_improvement(impurity)
-            self.criterion.children_impurity(&best.impurity_left, &best.impurity_right)
+            self.criterion.children_impurity(&best.impurity_left,
+                                             &best.impurity_right)
 
-        memcpy(features, constant_features, sizeof(ut.SIZE_t) * n_known_constants)
+        memcpy(features, constant_features, sizeof(SIZE_t) * n_known_constants)
+
         memcpy(constant_features + n_known_constants, 
-                features + n_known_constants, 
-                sizeof(ut.SIZE_t) * n_found_constants)
+                features + n_known_constants,
+                sizeof(SIZE_t) * n_found_constants)
         
-        split[0] = best
+        split[0] = best 
         n_constant_features[0] = n_total_constants
+        
         return 0
 
 cdef class RandomSplitter(BaseDenseSplitter):
