@@ -63,7 +63,13 @@ y = cdi_meta["DiseaseState"].apply(lambda x: 0
                                           if x == "ignore-nonCDI" else 2)
 class_name = ["CDI", "ignore-nonCDI", "Health"]
 X_train, X_test, y_train, y_test = train_test_split(microbiome, y, test_size=0.3, random_state=42)
-               
+
+# =============================================================================
+# Main function
+# =============================================================================
+
+
+
 # =============================================================================
 # Decision Tree Algorithm
 # =============================================================================            
@@ -145,6 +151,12 @@ builder = DepthFirstTreeBuilder(splitter, min_samples_split,
 builder.build(tree_, X_train, y_train)
 
 classes_ = classes_[0]
+
+n_classes_ = np.atleast_1d(n_classes_)
+pruned_tree = Tree(n_features_, n_classes_, n_outputs_)
+_build_pruned_tree_ccp(pruned_tree, tree_, 0)
+tree_ = pruned_tree
+
 X_test = check_array(X_test, dtype=DTYPE, accept_sparse="csr")
 proba = tree_.predict(X_test)
 n_samples = X_test.shape[0]

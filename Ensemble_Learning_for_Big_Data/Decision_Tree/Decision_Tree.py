@@ -67,14 +67,14 @@ class_name = ["CDI", "ignore-nonCDI", "Health"]
 X_train, X_test, y_train, y_test = train_test_split(microbiome, y, test_size=0.3, random_state=42)
                
 # =============================================================================
-# Decision Tree Algorithm
+# Decision Tree Algorithm - Training model
 # =============================================================================            
         
-max_depth = 10
-min_samples_leaf = 4
-min_samples_split = 4
-max_leaf_nodes = None
-max_features = "auto"
+max_depth = 10                              # The max depth of tree 
+min_samples_leaf = 4                        # The mim number of samples requires to be at a leaf node 
+min_samples_split = 4                       # The mim number of samples requires to split an internal node 
+max_leaf_nodes = None                       
+max_features = "auto"                       # The number of features to consider when looking for best split
 criterion = "gini"
 splitter = "best"
 expanded_class_weight = None
@@ -83,6 +83,7 @@ min_weight_leaf = 0.0
 min_impurity_split = 0
 min_impurity_decrease = 0
 random_state = 42
+ccp_alpha = 0.0
 
 random_state = check_random_state(random_state)
 
@@ -121,6 +122,8 @@ max_leaf_nodes = (-1 if max_leaf_nodes is None else max_leaf_nodes)
 
 max_features = max(1, int(np.sqrt(n_features_)))
 
+# Training Tree
+
 criterion = CRITERIA_CLF[criterion](n_outputs, n_classes_)
 SPLITTERS = DENSE_SPLITTERS
 splitter = SPLITTERS[splitter](criterion, 
@@ -137,6 +140,19 @@ builder = DepthFirstTreeBuilder(splitter, min_samples_split,
 
 builder.build(tree_, X_train, y_train)
 classes_ = classes[0]
+n_classes_ = n_classes_[0]
+
+# Prune tree 
+
+n_classes_ = np.atleast_1d(n_classes_)
+pruned_tree = Tree(n_features_, n_classes_, n_outputs)
+_build_pruned_tree_ccp(pruned_tree, tree_, ccp_alpha)
+tree_ = pruned_tree
+
+
+# =============================================================================
+# Decision Tree Algorithm - predicting
+# ============================================================================= 
 
 X_test = check_array(X_test, dtype=DTYPE, accept_sparse="csr")
 proba = tree_.predict(X_test)
@@ -144,11 +160,6 @@ n_samples = X_test.shape[0]
 predictions = classes_.take(np.argmax(proba, axis=1), axis=0)
 metrics.accuracy_score(y_test, predictions)
 
-tree_.apply(X_test)
-
-tree_.decision_path(X_test)
-
-tree_.compute_feature_importances()
 
 
 

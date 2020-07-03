@@ -385,17 +385,17 @@ cdef class Tree:
 
         return 0 
 
-    cdef SIZE_t _add_node(self, SIZE_t parent, bint is_left, bint is_leaf, 
-                          SIZE_t feature, double threshold, double impurity, 
-                          SIZE_t n_node_samples,
-                          double weighted_n_node_samples) nogil except -1:
+    cdef SIZE_t _add_node(self, SIZE_t parent, bint is_left, bint is_leaf,
+                            SIZE_t feature, double threshold, double impurity,
+                            SIZE_t n_node_samples, 
+                            double weighted_n_node_samples) nogil except -1:
         
         cdef SIZE_t node_id = self.node_count
 
         if node_id >= self.capacity:
             if self._resize_c() != 0:
                 return SIZE_MAX
-
+        
         cdef Node* node = &self.nodes[node_id]
         node.impurity = impurity
         node.n_node_samples = n_node_samples
@@ -406,20 +406,20 @@ cdef class Tree:
                 self.nodes[parent].left_child = node_id
             else:
                 self.nodes[parent].right_child = node_id
-
+        
         if is_leaf:
             node.left_child = _TREE_LEAF
             node.right_child = _TREE_LEAF
             node.feature = _TREE_UNDEFINED
             node.threshold = _TREE_UNDEFINED
-
         else:
             node.feature = feature
             node.threshold = threshold
-
-        self.node_count += 1
+        
+        self.node_count += 1 
 
         return node_id
+
 
     cpdef np.ndarray predict(self, object X):
 

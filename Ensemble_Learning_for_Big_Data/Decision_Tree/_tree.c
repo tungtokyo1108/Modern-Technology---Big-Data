@@ -8784,8 +8784,8 @@ static int __pyx_f_5_tree_4Tree__resize_c(struct __pyx_obj_5_tree_Tree *__pyx_v_
  *         return 0
  * 
  *     cdef SIZE_t _add_node(self, SIZE_t parent, bint is_left, bint is_leaf,             # <<<<<<<<<<<<<<
- *                           SIZE_t feature, double threshold, double impurity,
- *                           SIZE_t n_node_samples,
+ *                             SIZE_t feature, double threshold, double impurity,
+ *                             SIZE_t n_node_samples,
  */
 
 static __pyx_t_5_tree_SIZE_t __pyx_f_5_tree_4Tree__add_node(struct __pyx_obj_5_tree_Tree *__pyx_v_self, __pyx_t_5_tree_SIZE_t __pyx_v_parent, int __pyx_v_is_left, int __pyx_v_is_leaf, __pyx_t_5_tree_SIZE_t __pyx_v_feature, double __pyx_v_threshold, double __pyx_v_impurity, __pyx_t_5_tree_SIZE_t __pyx_v_n_node_samples, double __pyx_v_weighted_n_node_samples) {
@@ -8797,7 +8797,7 @@ static __pyx_t_5_tree_SIZE_t __pyx_f_5_tree_4Tree__add_node(struct __pyx_obj_5_t
   int __pyx_t_3;
 
   /* "_tree.pyx":393
- *                           double weighted_n_node_samples) nogil except -1:
+ *                             double weighted_n_node_samples) nogil except -1:
  * 
  *         cdef SIZE_t node_id = self.node_count             # <<<<<<<<<<<<<<
  * 
@@ -8984,7 +8984,7 @@ static __pyx_t_5_tree_SIZE_t __pyx_f_5_tree_4Tree__add_node(struct __pyx_obj_5_t
  *             node.right_child = _TREE_LEAF
  *             node.feature = _TREE_UNDEFINED             # <<<<<<<<<<<<<<
  *             node.threshold = _TREE_UNDEFINED
- * 
+ *         else:
  */
     __pyx_v_node->feature = __pyx_v_5_tree__TREE_UNDEFINED;
 
@@ -8992,8 +8992,8 @@ static __pyx_t_5_tree_SIZE_t __pyx_f_5_tree_4Tree__add_node(struct __pyx_obj_5_t
  *             node.right_child = _TREE_LEAF
  *             node.feature = _TREE_UNDEFINED
  *             node.threshold = _TREE_UNDEFINED             # <<<<<<<<<<<<<<
- * 
  *         else:
+ *             node.feature = feature
  */
     __pyx_v_node->threshold = __pyx_v_5_tree__TREE_UNDEFINED;
 
@@ -9007,8 +9007,8 @@ static __pyx_t_5_tree_SIZE_t __pyx_f_5_tree_4Tree__add_node(struct __pyx_obj_5_t
     goto __pyx_L7;
   }
 
-  /* "_tree.pyx":417
- * 
+  /* "_tree.pyx":416
+ *             node.threshold = _TREE_UNDEFINED
  *         else:
  *             node.feature = feature             # <<<<<<<<<<<<<<
  *             node.threshold = threshold
@@ -9017,7 +9017,7 @@ static __pyx_t_5_tree_SIZE_t __pyx_f_5_tree_4Tree__add_node(struct __pyx_obj_5_t
   /*else*/ {
     __pyx_v_node->feature = __pyx_v_feature;
 
-    /* "_tree.pyx":418
+    /* "_tree.pyx":417
  *         else:
  *             node.feature = feature
  *             node.threshold = threshold             # <<<<<<<<<<<<<<
@@ -9028,7 +9028,7 @@ static __pyx_t_5_tree_SIZE_t __pyx_f_5_tree_4Tree__add_node(struct __pyx_obj_5_t
   }
   __pyx_L7:;
 
-  /* "_tree.pyx":420
+  /* "_tree.pyx":419
  *             node.threshold = threshold
  * 
  *         self.node_count += 1             # <<<<<<<<<<<<<<
@@ -9037,12 +9037,12 @@ static __pyx_t_5_tree_SIZE_t __pyx_f_5_tree_4Tree__add_node(struct __pyx_obj_5_t
  */
   __pyx_v_self->node_count = (__pyx_v_self->node_count + 1);
 
-  /* "_tree.pyx":422
+  /* "_tree.pyx":421
  *         self.node_count += 1
  * 
  *         return node_id             # <<<<<<<<<<<<<<
  * 
- *     cpdef np.ndarray predict(self, object X):
+ * 
  */
   __pyx_r = __pyx_v_node_id;
   goto __pyx_L0;
@@ -9051,8 +9051,8 @@ static __pyx_t_5_tree_SIZE_t __pyx_f_5_tree_4Tree__add_node(struct __pyx_obj_5_t
  *         return 0
  * 
  *     cdef SIZE_t _add_node(self, SIZE_t parent, bint is_left, bint is_leaf,             # <<<<<<<<<<<<<<
- *                           SIZE_t feature, double threshold, double impurity,
- *                           SIZE_t n_node_samples,
+ *                             SIZE_t feature, double threshold, double impurity,
+ *                             SIZE_t n_node_samples,
  */
 
   /* function exit code */
@@ -9072,7 +9072,7 @@ static __pyx_t_5_tree_SIZE_t __pyx_f_5_tree_4Tree__add_node(struct __pyx_obj_5_t
 }
 
 /* "_tree.pyx":424
- *         return node_id
+ * 
  * 
  *     cpdef np.ndarray predict(self, object X):             # <<<<<<<<<<<<<<
  * 
@@ -9273,7 +9273,7 @@ static PyArrayObject *__pyx_f_5_tree_4Tree_predict(struct __pyx_obj_5_tree_Tree 
   goto __pyx_L0;
 
   /* "_tree.pyx":424
- *         return node_id
+ * 
  * 
  *     cpdef np.ndarray predict(self, object X):             # <<<<<<<<<<<<<<
  * 
